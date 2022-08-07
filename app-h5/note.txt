@@ -1,0 +1,16 @@
+
+
+node -v
+    v10.24.1
+
+npm -v
+    6.14.12
+
+
+## 自动打包静态文件
+
+ "File" -> "Settings"（或者 "Preferences"，如果您使用的是 Mac）
+ ->  "Build, Execution, Deployment" -> "Build Tools" -> "Maven"  -> "Runner"  ->  "Delegate IDE build/run actions to Maven"
+
+
+Edit Configurations  ->  Before launch  ->   +   ->  Run Maven Goal  ->  resources:resources@copy-custom-resources

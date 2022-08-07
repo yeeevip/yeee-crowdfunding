@@ -1,0 +1,32 @@
+server:
+  port: 8801
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: yeee-crowdfunding
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  web:
+    resources:
+      static-locations: classpath:/static/
+  datasource:
+    druid:
+      initial-size: 5
+      max-active: 100
+      min-idle: 5
+      max-wait: 600000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 1 FROM DUAL
+      validation-query-timeout: 60000
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:mapper/*.xml,**/mapper/*.xml

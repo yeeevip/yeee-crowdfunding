@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vip.yeee.app.crowdfunding.client.domain.mysql.mapper.ApiCfProjectMapper">
+
+
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != '' and id != null">
+                and id = #{id}
+            </if>
+            <if test="title != '' and title != null">
+                and title = #{title}
+            </if>
+            <if test="blurb != '' and blurb != null">
+                and blurb = #{blurb}
+            </if>
+            <if test="coverPath != '' and coverPath != null">
+                and cover_path = #{coverPath}
+            </if>
+            <if test="totalFundRaising != '' and totalFundRaising != null">
+                and total_fund_raising = #{totalFundRaising}
+            </if>
+            <if test="hasFundRaising != '' and hasFundRaising != null">
+                and has_fund_raising = #{hasFundRaising}
+            </if>
+            <if test="userId != '' and userId != null">
+                and user_id = #{userId}
+            </if>
+            <choose>
+                <when test="categoryId != null and categoryId != -1">
+                    and category_id = #{categoryId}
+                </when>
+                <when test="categoryId != null and categoryId == -1">
+                    and category_id not in (1)
+                </when>
+            </choose>
+            <if test="launchDateRaising != '' and launchDateRaising != null">
+                and launch_date_raising = #{launchDateRaising}
+            </if>
+            <if test="daysRaising != '' and daysRaising != null">
+                and days_raising = #{daysRaising}
+            </if>
+            <if test="hasFinish != null">
+                and has_finish = #{hasFinish}
+            </if>
+            <if test="hasDown != null">
+                and has_down = #{hasDown}
+            </if>
+            <if test="hasAudits != null">
+                and has_audits = #{hasAudits}
+            </if>
+            <if test="hasIndex != '' and hasIndex != null">
+                and has_index = #{hasIndex}
+            </if>
+            <if test="shenfen != '' and shenfen != null">
+                and shenfen = #{shenfen}
+            </if>
+            <if test="onlineTime != '' and onlineTime != null">
+                and online_time = #{onlineTime}
+            </if>
+            <if test="isSettlement != '' and isSettlement != null">
+                and is_settlement = #{isSettlement}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and (title like concat('%', #{keyword}, '%') or blurb like concat('%', #{keyword}, '%'))
+            </if>
+        </trim>
+    </sql>
+
+    <select id="getOrderLimitList" resultType="vip.yeee.app.common.domain.mysql.entity.CfProject">
+        SELECT
+            id,
+            title,
+            blurb,
+            cover_path,
+            total_fund_raising,
+            has_fund_raising,
+            user_id,
+            category_id,
+            launch_date_raising,
+            days_raising,
+            has_finish,
+            has_audits,
+            has_index,
+            shenfen,
+            online_time,
+            is_settlement
+        FROM
+            t_cf_project
+        where has_audits = 1 and has_down = 0
+        <if test="project.categoryId != '' and project.categoryId != null">
+            and category_id = #{project.categoryId}
+        </if>
+        <if test="params.orderField != null">
+            order by ${params.orderField} ${params.orderSort}
+        </if>
+        <if test="params.limit != null and params.limit != ''">
+            limit #{params.limit}
+        </if>
+    </select>
+
+    <select id="getProjectList" resultType="vip.yeee.app.common.domain.mysql.entity.CfProject">
+        SELECT
+            id,
+            title,
+            blurb,
+            cover_path,
+            total_fund_raising,
+            has_fund_raising,
+            user_id,
+            category_id,
+            launch_date_raising,
+            days_raising,
+            has_finish,
+            has_down,
+            has_audits,
+            has_index,
+            shenfen,
+            online_time,
+            is_settlement
+        FROM
+            t_cf_project
+        <include refid="searchBy"/>
+        ORDER BY ID DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,41 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/yeee_crowdfunding?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+# 授权配置
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://127.0.0.1:${server.port}${server.servlet.context-path}/oauth/check_token
+    client:
+      client-id: ${spring.application.name}
+      client-secret: 111111
+      #      grant-type: password
+      access-token-uri: http://127.0.0.1:${server.port}${server.servlet.context-path}/oauth/token
+yeee:
+  web:
+    cors:
+      enable: true
+  swagger:
+    enable: true
+    title: yeee众筹系统
+    description: yeee众筹系统
+    contact-name: yeee
+    version: 1.0
+  auth:
+    resource:
+      exclude:
+        - /api/cf/**
+  apiauth:
+    jwt:
+      secret: 111111
+      expire: 3600
+      fail-url: /pages/front/public/login.html
+      exclude:
+        - /manage/**
+  oss:
+    local:
+      upload:
+        base-dir: C:\

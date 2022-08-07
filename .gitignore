@@ -10,5 +10,6 @@ gen
 logs
 *.log
 target
-test
-/yeah-system/yeah-system-provider/src/test/
+node_modules
+unpackage
+.DS_Store
