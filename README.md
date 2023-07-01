@@ -31,7 +31,7 @@
 yeee-crowdfunding
 ├── app-h5
     ├── yeee-admin-ui -- 众筹后台管理系统｜vue
-    └── yeee-crowdfunding-web -- 众筹前台客户端｜vue
+    └── yeee-crowdfunding-web -- 众筹前台页面
 ├── doc -- 文档脚本
 ├── yeee-crowdfunding-bootstrap -- 主启动工程
 ├── yeee-crowdfunding-client -- 众筹客户端服务
@@ -67,7 +67,7 @@ cd app-h5/yeee-admin-ui && npm install && npm run dev
 
 ### 其他说明
 
-1. 欢迎提交 [PR](https://www.yeee.vip)，注意对应提交对应 `blog-dev` 分支
+1. 欢迎提交 [PR](https://www.yeee.vip)，注意对应提交对应 `crowdfunding-dev` 分支
 
 2. 欢迎提交 [issue](https://github.com/yeeevip/yeee-crowdfunding/issues)，请写清楚遇到问题的原因、开发环境、复显步骤。
 
