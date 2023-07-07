@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>yeee-crowdfunding-common</module>
+        <module>yeee-app-common</module>
         <module>yeee-sys-manage</module>
         <module>yeee-crowdfunding-client</module>
         <module>yeee-crowdfunding-manage</module>

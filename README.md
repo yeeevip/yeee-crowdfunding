@@ -35,7 +35,7 @@ yeee-crowdfunding
 ├── doc -- 文档脚本
 ├── yeee-crowdfunding-bootstrap -- 主启动工程
 ├── yeee-crowdfunding-client -- 众筹客户端服务
-├── yeee-crowdfunding-common -- 公共模块
+├── yeee-app-common -- 公共模块
 ├── yeee-crowdfunding-manage -- 众筹管理端服务
 ├── yeee-sys-manage -- 系统权限管理服务
 ```
@@ -49,13 +49,14 @@ yeee-crowdfunding
 - redis
 
 ```
-# 下载[通用web脚手架]yeee-memo
+# 下载yeee-memo工程
 git clone https://github.com/yeeevip/yeee-memo.git
 
+# 打包依赖[通用JavaWeb脚手架]memo-parent
 cd memo-parent && mvn clean install
 
-# 下载项目
-git clone https://github.com/yeeevip/yeee-memo.git
+# 下载众筹项目
+git clone https://github.com/yeeevip/yeee-crowdfunding.git
 
 # 运行web服务
 mvn clean install && java -jar -Dspring.profiles.active=test yeee-crowdfunding-bootstrap/target/yeee-crowdfunding-bootstrap-1.0.0-SNAPSHOT.jar
