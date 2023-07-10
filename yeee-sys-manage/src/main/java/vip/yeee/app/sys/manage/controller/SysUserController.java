@@ -1,8 +1,8 @@
 package vip.yeee.app.sys.manage.controller;
 
 import vip.yeee.app.sys.manage.model.vo.*;
+import vip.yeee.app.sys.manage.service.CustomUserDetailsService;
 import vip.yeee.app.sys.manage.service.SysUserService;
-import vip.yeee.app.sys.manage.service.UserAuthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -16,6 +16,7 @@ import vip.yeee.memo.base.model.rest.CommonResult;
 import vip.yeee.memo.base.model.vo.PageVO;
 import vip.yeee.memo.base.websecurityoauth2.context.SecurityContext;
 import vip.yeee.memo.base.websecurityoauth2.model.Oauth2TokenVo;
+import vip.yeee.memo.common.platformauth.client.service.WebAuthClientService;
 
 /**
  * description......
@@ -32,7 +33,9 @@ public class SysUserController {
 
     private final SysUserService sysUserService;
 
-    private final UserAuthService userAuthService;
+    private final CustomUserDetailsService customUserDetailsService;
+
+    private final WebAuthClientService webAuthClientService;
 
     @AnonymousAccess
     @ApiOperation("用户登录")
@@ -48,7 +51,7 @@ public class SysUserController {
     @ApiOperation("退出登录")
     @GetMapping(value = "/logout")
     public CommonResult<Object> logout() {
-        return CommonResult.success(userAuthService.userLogout(SecurityContext.getCurToken()));
+        return CommonResult.success(webAuthClientService.userLogout(SecurityContext.getCurToken()));
     }
 
     @ApiOperation("用户分页")

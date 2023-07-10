@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import vip.yeee.app.sys.manage.model.vo.*;
 import vip.yeee.app.sys.manage.convert.SysUserConvert;
 import vip.yeee.app.sys.manage.domain.mysql.mapper.SysUserDeptMapper;
@@ -23,6 +24,7 @@ import vip.yeee.memo.base.mybatisplus.warpper.MyPageWrapper;
 import vip.yeee.memo.base.websecurityoauth2.constant.SecurityUserTypeEnum;
 import vip.yeee.memo.base.websecurityoauth2.context.SecurityContext;
 import vip.yeee.memo.base.websecurityoauth2.model.Oauth2TokenVo;
+import vip.yeee.memo.common.platformauth.client.service.WebAuthClientService;
 
 import java.util.Date;
 import java.util.List;
@@ -39,7 +41,7 @@ import java.util.stream.Collectors;
 @Service
 public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> {
 
-    private final UserAuthService userAuthService;
+    private final WebAuthClientService webAuthClientService;
 
     private final SysUserMapper sysUserMapper;
 
@@ -49,8 +51,10 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> {
 
     private final SysUserDeptMapper sysUserDeptMapper;
 
+    private final PasswordEncoder passwordEncoder;
+
     public Oauth2TokenVo login(String username, String password) {
-        return userAuthService.getUserAccessToken(username, password, SecurityUserTypeEnum.SYSTEM_USER.getType());
+        return webAuthClientService.getUserAccessToken(SecurityUserTypeEnum.SYSTEM_USER.getType(), username, password);
     }
 
     public PageVO<UserVO> sysUserPageList(SysUserPageReqVO sysUserPageReqVO) {
@@ -85,7 +89,7 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> {
     @Transactional(rollbackFor = Exception.class)
     public Void addSysUser(SysUserEditVO editVO) {
         SysUser sysUser = sysUserConvert.editVO2Entity(editVO);
-        sysUser.setPassword(userAuthService.encodePassword(SecureUtil.md5("111111")));
+        sysUser.setPassword(passwordEncoder.encode(SecureUtil.md5("111111")));
         this.save(sysUser);
         this.setUserRoles(editVO.getRoleIds(), sysUser.getId());
         this.setUserDepts(editVO.getOrgIds(), sysUser.getId());
@@ -164,15 +168,15 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> {
 //        if (!userUpdPwdVO.getNewPassword1().equals(userUpdPwdVO.getNewPassword2())) {
 //            throw new BizException("两次新密码前后不一致");
 //        }
-        if (!userAuthService.matchPassword(userUpdPwdVO.getOldPassword(), sysUser.getPassword())) {
+        if (!passwordEncoder.matches(userUpdPwdVO.getOldPassword(), sysUser.getPassword())) {
             throw new BizException("旧密码不正确");
         }
         SysUser upd = new SysUser();
         upd.setId(sysUser.getId());
-        upd.setPassword(userAuthService.encodePassword(userUpdPwdVO.getNewPassword()));
+        upd.setPassword(passwordEncoder.encode(userUpdPwdVO.getNewPassword()));
         boolean res = this.updateById(upd);
         if (res) {
-            userAuthService.userLogout(SecurityContext.getCurToken());
+            webAuthClientService.userLogout(SecurityContext.getCurToken());
         }
         return null;
     }
