@@ -72,6 +72,12 @@ cd app-h5/yeee-admin-ui && npm install && npm run dev
 
 2. 欢迎提交 [issue](https://github.com/yeeevip/yeee-crowdfunding/issues)，请写清楚遇到问题的原因、开发环境、复显步骤。
 
-## 技术交流群
+## 交流群
 
-作者QQ：1324459373
+- 作者QQ：1324459373
+
+| 微信群                             | QQ群                                                                           |
+|---------------------------------|-------------------------------------------------------------------------------|
+| ![作者微信](doc/images/yeee_wp.jpg) | ![](doc/images/yeee-crowdfunding-qq.jpg)                                      |
+| 回复：加群，邀您加入群聊  | <a href="https://qm.qq.com/q/WNiHwithgy" target="_blank">点击加入QQ群：69405215</a> |
+
