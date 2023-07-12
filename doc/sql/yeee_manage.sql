@@ -692,8 +692,8 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'admin', '96e79218965eb72c92a549dd5a330112', '超级管理员', NULL, '13888888888', NULL, NULL, 8, NULL, 0, NULL, '2021-07-12 11:24:02', '2022-01-05 17:04:43', '1', '1', '管理员', 1);
-INSERT INTO `sys_user` VALUES (2, 'shenhe', '96e79218965eb72c92a549dd5a330112', '审核员', NULL, '13888888888', NULL, NULL, 131, NULL, 0, NULL, '2021-07-12 11:24:02', '2021-12-16 16:59:44', '1', '1', '管理员', 0);
+INSERT INTO `sys_user` VALUES (1, 'admin', '9db06bcff9248837f86d1a6bcf41c9e7', '超级管理员', NULL, '13888888888', NULL, NULL, 8, NULL, 0, NULL, '2021-07-12 11:24:02', '2022-01-05 17:04:43', '1', '1', '管理员', 1);
+INSERT INTO `sys_user` VALUES (2, 'shenhe', '9db06bcff9248837f86d1a6bcf41c9e7', '审核员', NULL, '13888888888', NULL, NULL, 131, NULL, 0, NULL, '2021-07-12 11:24:02', '2021-12-16 16:59:44', '1', '1', '管理员', 0);
 
 -- ----------------------------
 -- Table structure for sys_user_dept
