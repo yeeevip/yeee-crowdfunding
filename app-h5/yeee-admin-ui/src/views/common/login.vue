@@ -56,7 +56,7 @@
           </el-form>
         </div>
         <div class="login-footer">
-          <p><a href="/" target="_blank">管理系统</a>yeah一页</p>
+          <p><a href="/" target="_blank">综合管理平台</a>yeee一页</p>
         </div>
       </main>
     </div>

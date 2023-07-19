@@ -2,7 +2,7 @@
   "name": "yeee-admin-ui",
   "version": "1.2.2",
   "description": "yeee-admin-ui基于vue、element-ui构建开发，实现后台管理前端功能。",
-  "author": "yeah一页 <1324459373@qq.com>",
+  "author": "yeee一页 <quhailong1995@163.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
