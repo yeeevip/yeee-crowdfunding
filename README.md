@@ -8,13 +8,13 @@
 
 ### 前台
 
-![](doc/images/前台-首页.png)
+![](doc/crowdfunding/images/前台-首页.png)
 
 ### 后台
 
-![](doc/images/后台-首页.png)
+![](doc/crowdfunding/images/后台-首页v2.png)
 
-[详情预览](doc/detail.md)
+[详情预览](doc/crowdfunding/detail.md)
 
 ## 快速开始
 
@@ -76,8 +76,8 @@ cd app-h5/yeee-admin-ui && npm install && npm run dev
 
 - 作者QQ：1324459373
 
-| 微信群                             | QQ群                                                                           |
-|---------------------------------|-------------------------------------------------------------------------------|
-| ![作者微信](doc/images/yeee_wp.jpg) | ![](doc/images/yeee-crowdfunding-qq.jpg)                                      |
-| 回复：加群，邀您加入群聊  | <a href="https://qm.qq.com/q/WNiHwithgy" target="_blank">点击加入QQ群：69405215</a> |
+| 微信群                                  | QQ群                                                                           |
+|--------------------------------------|-------------------------------------------------------------------------------|
+| ![作者微信](doc/yeee/images/yeee_wp.jpg) | ![](doc/yeee/images/yeee-crowdfunding-qq.jpg)                                 |
+| 回复：加群，邀您加入群聊                         | <a href="https://qm.qq.com/q/WNiHwithgy" target="_blank">点击加入QQ群：69405215</a> |
 
