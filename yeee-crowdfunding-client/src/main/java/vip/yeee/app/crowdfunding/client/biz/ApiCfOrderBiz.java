@@ -113,7 +113,7 @@ public class ApiCfOrderBiz {
         order.setOrderDate(new Date());
 
         order.setUserSeller(project.getUserId());
-        order.setPayPrice(costBig.floatValue());
+        order.setPayPrice(costBig);
 
         apiCfOrderService.save(order);
 
@@ -134,17 +134,17 @@ public class ApiCfOrderBiz {
 
         CfUserAccount account = apiCfUserAccountService.getUserAccountByUserId(BusinessUtils.getCurUserId());
         if (account == null
-                || NumberUtil.isGreater(BigDecimal.valueOf(order.getPayPrice()), BigDecimal.valueOf(account.getBalance()))) {
+                || NumberUtil.isGreater(order.getPayPrice(), BigDecimal.valueOf(account.getBalance()))) {
             throw new BizException("钱包余额不足");
         }
 
         apiCfOrderService.updateById(new CfOrder().setId(order.getId()).setHasPay(1).setPayTime(new Date()));
 
         CfProject updProject = new CfProject().setId(project.getId());
-        updProject.setHasFundRaising(BigDecimal.valueOf(Optional.ofNullable(project.getHasFundRaising()).orElse(0)).add(BigDecimal.valueOf(order.getPayPrice())).intValue());
+        updProject.setHasFundRaising(BigDecimal.valueOf(Optional.ofNullable(project.getHasFundRaising()).orElse(0)).add(order.getPayPrice()).intValue());
         apiCfProjectService.updateById(updProject);
 
-        apiCfUserAccountService.increaseUserBalance(account, BigDecimal.valueOf(order.getPayPrice()).longValue() * (-1));
+        apiCfUserAccountService.increaseUserBalance(account, order.getPayPrice().longValue() * (-1));
 
         return null;
     }

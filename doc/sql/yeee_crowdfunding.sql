@@ -5,7 +5,7 @@
  Source Server Type    : MySQL
  Source Server Version : 50737
  Source Host           : localhost:3306
- Source Schema         : yeeee_crowdfunding
+ Source Schema         : yeee_crowdfunding
 
  Target Server Type    : MySQL
  Target Server Type    : MySQL
@@ -24,13 +24,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `t_cf_comment`;
 CREATE TABLE `t_cf_comment`  (
     `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '评论id主键',
-    `project` int(10) NULL DEFAULT NULL COMMENT '项目id',
-    `user_id` int(10) NULL DEFAULT NULL COMMENT '用户id',
-    `username` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
-    `content` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '评论内容',
-    `time` datetime(0) NULL DEFAULT NULL COMMENT '评论时间',
+    `project` int(10) NOT NULL COMMENT '项目id',
+    `user_id` int(10) NOT NULL COMMENT '用户id',
+    `username` varchar(64)  DEFAULT NULL COMMENT '用户名',
+    `content` varchar(512) DEFAULT NULL COMMENT '评论内容',
+    `time` datetime DEFAULT NULL COMMENT '评论时间',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 82 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='项目评论';
 
 -- ----------------------------
 -- Records of t_cf_comment
@@ -84,17 +84,17 @@ DROP TABLE IF EXISTS `t_cf_initiator_company_info`;
 CREATE TABLE `t_cf_initiator_company_info`  (
     `id` int(10) NOT NULL AUTO_INCREMENT,
     `project_id` int(10) NOT NULL,
-    `firm_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `business_number` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `slander_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `address` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `contact_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `contact_phone` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `license_pic` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `registered_num_pic` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `tax_pig` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `firm_name` varchar(255) DEFAULT NULL,
+    `business_number` varchar(100) DEFAULT NULL,
+    `slander_name` varchar(30) DEFAULT NULL,
+    `address` varchar(200) DEFAULT NULL,
+    `contact_name` varchar(50) DEFAULT NULL,
+    `contact_phone` varchar(50) DEFAULT NULL,
+    `license_pic` varchar(100) DEFAULT NULL,
+    `registered_num_pic` varchar(100) DEFAULT NULL,
+    `tax_pig` varchar(100) DEFAULT NULL,
     PRIMARY KEY (`id`, `project_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='';
 
 -- ----------------------------
 -- Records of t_cf_initiator_company_info
@@ -106,17 +106,17 @@ INSERT INTO `t_cf_initiator_company_info` VALUES (1, 221, '的说法阿的说法
 -- ----------------------------
 DROP TABLE IF EXISTS `t_cf_initiator_person_info`;
 CREATE TABLE `t_cf_initiator_person_info`  (
-    `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `id` int(10) NOT NULL AUTO_INCREMENT,
     `project_id` int(10) NOT NULL,
-    `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `id_number` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `phone` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `address` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `id_pic_face` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `id_pic_inverse` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `name` varchar(30) DEFAULT NULL,
+    `id_number` varchar(50) DEFAULT NULL,
+    `phone` varchar(30) DEFAULT NULL,
+    `address` varchar(200) DEFAULT NULL,
+    `id_pic_face` varchar(200) DEFAULT NULL,
+    `id_pic_inverse` varchar(200) DEFAULT NULL,
     PRIMARY KEY (`id`, `project_id`) USING BTREE,
     INDEX `foreignkey1`(`project_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 61 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='';
 
 -- ----------------------------
 -- Records of t_cf_initiator_person_info
@@ -137,23 +137,23 @@ INSERT INTO `t_cf_initiator_person_info` VALUES (0000000060, 224, '哈好的', '
 -- ----------------------------
 DROP TABLE IF EXISTS `t_cf_order`;
 CREATE TABLE `t_cf_order`  (
-    `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '订单idz主键',
-    `code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单号',
+    `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '订单id主键',
+    `code` varchar(64) NOT NULL COMMENT '订单号',
     `project_id` int(10) NOT NULL COMMENT '项目id',
     `user_id` int(10) NOT NULL COMMENT '下单用户',
     `project_repay_id` int(10) NOT NULL COMMENT '回报id',
-    `count` int(3) NULL DEFAULT NULL COMMENT '回报份数',
-    `has_pay` int(1) NULL DEFAULT 0 COMMENT '是否支付',
-    `has_send` int(1) NULL DEFAULT 0 COMMENT '是否发货',
-    `order_date` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+    `count` int(3) DEFAULT NULL COMMENT '回报份数',
+    `has_pay` int(1) DEFAULT 0 COMMENT '是否支付',
+    `has_send` int(1) DEFAULT 0 COMMENT '是否发货',
+    `order_date` datetime DEFAULT NULL COMMENT '创建时间',
     `has_receive` tinyint(1) DEFAULT '0',
     `receive_information` int(10) NULL DEFAULT NULL,
-    `user_seller` int(10) NULL DEFAULT NULL COMMENT '卖家id',
-    `pay_time` datetime(0) NULL DEFAULT NULL COMMENT '支付时间',
-    `pay_price` float(10, 0) NULL DEFAULT 0 COMMENT '支付金额',
-    `status` int(1) NULL DEFAULT 1 COMMENT '订单有效标志  1:有效  0：无效',
+    `user_seller` int(10) DEFAULT NULL COMMENT '卖家id',
+    `pay_time` datetime DEFAULT NULL COMMENT '支付时间',
+    `pay_price` decimal(8, 2) DEFAULT 0 COMMENT '支付金额',
+    `status` tinyint(1) DEFAULT 1 COMMENT '订单有效标志  1:有效  0：无效',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='';
 
 -- ----------------------------
 -- Records of t_cf_order
@@ -177,24 +177,24 @@ INSERT INTO `t_cf_order` VALUES (39, 'd9b0c56e4ca64a2486f83c719228a8c8', 201, 30
 DROP TABLE IF EXISTS `t_cf_project`;
 CREATE TABLE `t_cf_project`  (
     `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-    `title` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
-    `blurb` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '简介',
-    `cover_path` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '封面图片路径',
-    `total_fund_raising` int(10) NULL DEFAULT 0 COMMENT '目标集资',
-    `has_fund_raising` int(10) NULL DEFAULT 0 COMMENT '已经集资',
-    `user_id` int(10) NULL DEFAULT NULL COMMENT '发起人ID',
-    `category_id` int(10) NULL DEFAULT NULL COMMENT '分类ID',
-    `launch_date_raising` datetime(0) NULL DEFAULT NULL COMMENT '发起时间',
-    `days_raising` int(3) NULL DEFAULT NULL COMMENT '集资天数',
-    `has_finish` int(1) NULL DEFAULT 0 COMMENT '项目状态 0：进行中  -1：集资失败 1：成功',
-    `has_audits` int(1) NULL DEFAULT 0 COMMENT '-1:审核不通过 0:未审核 1:审核通过',
-    `has_index` int(1) NULL DEFAULT 0 COMMENT '是否首页展示',
-    `shenfen` varchar(4) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '发起身份',
-    `online_time` datetime(0) NULL DEFAULT NULL COMMENT '上线时间，审核通过后即上线',
-    `is_settlement` int(1) NULL DEFAULT -1 COMMENT '结算状态    -1：不可结算 0：未结算  1：已结算',
+    `title` varchar(64) DEFAULT NULL COMMENT '标题',
+    `blurb` varchar(255) DEFAULT NULL COMMENT '简介',
+    `cover_path` varchar(200) DEFAULT NULL COMMENT '封面图片路径',
+    `total_fund_raising` int(10) DEFAULT 0 COMMENT '目标集资',
+    `has_fund_raising` int(10) DEFAULT 0 COMMENT '已经集资',
+    `user_id` int(10) DEFAULT NULL COMMENT '发起人ID',
+    `category_id` int(10) DEFAULT NULL COMMENT '分类ID',
+    `launch_date_raising` datetime DEFAULT NULL COMMENT '发起时间',
+    `days_raising` int(3) DEFAULT NULL COMMENT '集资天数',
+    `has_finish` tinyint(1) DEFAULT 0 COMMENT '项目状态 0：进行中  -1：集资失败 1：成功',
+    `has_audits` tinyint(1) DEFAULT 0 COMMENT '-1:审核不通过 0:未审核 1:审核通过',
+    `has_index` tinyint(1) DEFAULT 0 COMMENT '是否首页展示',
+    `shenfen` varchar(4) DEFAULT NULL COMMENT '发起身份',
+    `online_time` datetime DEFAULT NULL COMMENT '上线时间，审核通过后即上线',
+    `is_settlement` tinyint(1) DEFAULT -1 COMMENT '结算状态    -1：不可结算 0：未结算  1：已结算',
     `has_down` tinyint(1) default 0 comment '',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 215 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '众筹项目表' ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='';
 
 -- ----------------------------
 -- Records of t_cf_project
@@ -227,13 +227,13 @@ INSERT INTO `t_cf_project` VALUES (214, '筹拍微电影——河流', '一群�
 DROP TABLE IF EXISTS `t_cf_project_category`;
 CREATE TABLE `t_cf_project_category`  (
     `id` int(10) NOT NULL,
-    `category_name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `note` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `create_date` datetime(0) NULL DEFAULT NULL,
-    `change_date` datetime(0) NULL DEFAULT NULL,
-    `change_person` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `category_name` varchar(64) DEFAULT NULL,
+    `note` varchar(50) DEFAULT NULL,
+    `create_date` datetime DEFAULT NULL,
+    `change_date` datetime DEFAULT NULL,
+    `change_person` varchar(64) DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='';
 
 -- ----------------------------
 -- Records of t_cf_project_category
@@ -252,10 +252,10 @@ DROP TABLE IF EXISTS `t_cf_project_detail`;
 CREATE TABLE `t_cf_project_detail`  (
     `id` int(10) NOT NULL AUTO_INCREMENT,
     `project_id` int(10) NOT NULL COMMENT '项目id',
-    `item_title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
-    `item_content` varchar(4000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '内容',
+    `item_title` varchar(255) DEFAULT NULL COMMENT '标题',
+    `item_content` text DEFAULT NULL COMMENT '内容',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 509 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='';
 
 -- ----------------------------
 -- Records of t_cf_project_detail
@@ -338,12 +338,12 @@ DROP TABLE IF EXISTS `t_cf_project_progress`;
 CREATE TABLE `t_cf_project_progress`  (
     `id` int(10) NOT NULL AUTO_INCREMENT,
     `project_id` int(10) NOT NULL COMMENT '项目id',
-    `content` varchar(5000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最新进展内容',
-    `publish_date` datetime(0) NULL DEFAULT NULL COMMENT '发布时间',
-    `pub_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `content` text DEFAULT NULL COMMENT '最新进展内容',
+    `publish_date` datetime DEFAULT NULL COMMENT '发布时间',
+    `pub_user` varchar(64) DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE,
     INDEX `foreign1`(`project_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='';
 
 -- ----------------------------
 -- Records of t_cf_project_progress
@@ -369,14 +369,14 @@ INSERT INTO `t_cf_project_progress` VALUES (14, 210, '<p>8888888888888888</p>', 
 DROP TABLE IF EXISTS `t_cf_project_repay`;
 CREATE TABLE `t_cf_project_repay`  (
     `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '回报id',
-    `project_id` int(10) NULL DEFAULT NULL COMMENT '项目id',
-    `pay_title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '回报标题',
-    `pay_content` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '回报内容',
-    `type` varchar(4) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '回报类型',
-    `time` int(4) NULL DEFAULT NULL COMMENT '回报时间',
-    `money` int(5) NULL DEFAULT NULL COMMENT '回报金额',
+    `project_id` int(10) DEFAULT NULL COMMENT '项目id',
+    `pay_title` varchar(255) DEFAULT NULL COMMENT '回报标题',
+    `pay_content` text DEFAULT NULL COMMENT '回报内容',
+    `type` varchar(4) DEFAULT NULL COMMENT '回报类型',
+    `time` int(4) DEFAULT NULL COMMENT '回报时间',
+    `money` int(5) DEFAULT NULL COMMENT '回报金额',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 208 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='';
 
 -- ----------------------------
 -- Records of t_cf_project_repay
@@ -450,11 +450,11 @@ INSERT INTO `t_cf_project_repay` VALUES (207, 224, '打发 按时发', '发送�
 -- ----------------------------
 DROP TABLE IF EXISTS `t_cf_province_city_district`;
 CREATE TABLE `t_cf_province_city_district`  (
-    `id` int(11) NOT NULL,
-    `pid` int(11) NULL DEFAULT NULL,
-    `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `id` int(10) NOT NULL,
+    `pid` int(10) NULL DEFAULT NULL,
+    `name` varchar(10) DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='';
 
 -- ----------------------------
 -- Records of t_cf_province_city_district
@@ -3989,12 +3989,12 @@ DROP TABLE IF EXISTS `t_cf_receive_information`;
 CREATE TABLE `t_cf_receive_information`  (
     `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '收货地址id主键',
     `user_id` int(10) NOT NULL COMMENT '用户id',
-    `receiver` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收货人',
-    `phone` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '电话',
-    `address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地址',
-    `set_default` int(1) NULL DEFAULT 0 COMMENT '默认',
+    `receiver` varchar(64) DEFAULT NULL COMMENT '收货人',
+    `phone` varchar(32) DEFAULT NULL COMMENT '电话',
+    `address` varchar(255) DEFAULT NULL COMMENT '地址',
+    `set_default` tinyint(1) NULL DEFAULT 0 COMMENT '默认',
     PRIMARY KEY (`id`, `user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='';
 
 -- ----------------------------
 -- Records of t_cf_receive_information
@@ -4017,20 +4017,20 @@ INSERT INTO `t_cf_receive_information` VALUES (34, 30, '嘤嘤嘤', '34123413412
 DROP TABLE IF EXISTS `t_cf_user`;
 CREATE TABLE `t_cf_user`  (
     `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '用户id主键',
-    `nick_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `username` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
-    `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '密码',
-    `real_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '真实姓名',
-    `sex` tinyint(2) NULL DEFAULT NULL COMMENT '性别（1：男，2：女）',
-    `id_number` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '身份证号',
-    `date_of_birth` date NULL DEFAULT NULL COMMENT '出生日期',
-    `date_of_registration` datetime(0) NULL DEFAULT NULL COMMENT '注册时间',
-    `mobile` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '联系电话',
-    `city` varchar(14) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '城市',
-    `img_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像路径',
-    `email` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '电子邮箱',
+    `nick_name` varchar(32) DEFAULT NULL,
+    `username` varchar(32) DEFAULT NULL COMMENT '用户名',
+    `password` varchar(255) DEFAULT NULL COMMENT '密码',
+    `real_name` varchar(20)  DEFAULT NULL COMMENT '真实姓名',
+    `sex` tinyint(2) DEFAULT NULL COMMENT '性别（1：男，2：女）',
+    `id_number` varchar(18) DEFAULT NULL COMMENT '身份证号',
+    `date_of_birth` date DEFAULT NULL COMMENT '出生日期',
+    `date_of_registration` datetime DEFAULT NULL COMMENT '注册时间',
+    `mobile` varchar(32) DEFAULT NULL COMMENT '联系电话',
+    `city` varchar(14) DEFAULT NULL COMMENT '城市',
+    `img_path` varchar(255) DEFAULT NULL COMMENT '头像路径',
+    `email` varchar(32) DEFAULT NULL COMMENT '电子邮箱',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '平台用户' ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='';
 
 -- ----------------------------
 -- Records of t_cf_user
@@ -4048,7 +4048,7 @@ INSERT INTO `t_cf_user` VALUES (43, NULL, '17855830003', '96e79218965eb72c92a549
 
 DROP TABLE IF EXISTS `t_cf_msg`;
 CREATE TABLE `t_cf_msg` (
-    `id` bigint(20) NOT NULL AUTO_INCREMENT,
+    `id` int(10) NOT NULL AUTO_INCREMENT,
     `subject_type` tinyint(2) NOT NULL COMMENT '1：项目',
     `subject_id` varchar(64) NOT NULL,
     `content` varchar(1024) DEFAULT NULL,
@@ -4059,16 +4059,16 @@ CREATE TABLE `t_cf_msg` (
     `update_time` datetime DEFAULT NULL,
     `update_by` varchar(32) DEFAULT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='';
 
 DROP TABLE IF EXISTS `t_cf_user_account`;
 CREATE TABLE `t_cf_user_account` (
     `id` int(10) NOT NULL AUTO_INCREMENT,
     `user_id` int(10) NOT NULL,
-    `balance` bigint(20) NOT NULL DEFAULT '0' COMMENT '余额',
+    `balance` int(10) NOT NULL DEFAULT '0' COMMENT '余额',
     `create_time` datetime DEFAULT NULL,
     `update_time` datetime DEFAULT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='';
 
 SET FOREIGN_KEY_CHECKS = 1;

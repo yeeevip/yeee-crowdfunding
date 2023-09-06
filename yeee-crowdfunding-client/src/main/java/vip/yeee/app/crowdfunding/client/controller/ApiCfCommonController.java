@@ -30,6 +30,7 @@ public class ApiCfCommonController {
     private final ApiCfCommonBiz apiCfCommonBiz;
 
     @ApiOperation("获取地区")
+    @AnonymousAccess
     @GetMapping("/region")
     public CommonResult<List<CfProvinceCityDistrict>> getRegion(Integer pid) {
         return CommonResult.success(apiCfCommonBiz.getRegion(pid));

@@ -115,6 +115,10 @@ public class CfProjectBiz {
     }
 
     public Void adminProjectAudits(AuditProjectVO auditProjectVO) {
+        CfProject cfProject = new CfProject();
+        cfProject.setId(auditProjectVO.getProjectId());
+        cfProject.setHasAudits(auditProjectVO.getHasAudits());
+        cfProjectService.updateById(cfProject);
         return null;
     }
 }

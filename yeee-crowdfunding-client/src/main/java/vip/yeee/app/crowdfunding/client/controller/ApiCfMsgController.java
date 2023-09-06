@@ -30,14 +30,12 @@ public class ApiCfMsgController {
     private final ApiCfMsgBiz apiCfMsgBiz;
 
     @ApiOperation("消息列表")
-    @AnonymousAccess
     @PostMapping("/list")
     public CommonResult<PageVO<MsgListVO>> frontMsgPageList(@RequestBody PageRequest request) {
         return CommonResult.success(apiCfMsgBiz.frontMsgPageList(request));
     }
 
     @ApiOperation("读取消息")
-    @AnonymousAccess
     @PostMapping("/read")
     public CommonResult<Void> frontReadMsgList(@RequestBody IdsRequest request) {
         return CommonResult.success(apiCfMsgBiz.frontReadMsgList(request));

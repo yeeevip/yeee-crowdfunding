@@ -1,9 +1,12 @@
 package vip.yeee.app.common.domain.mysql.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -13,6 +16,7 @@ public class CfOrder {
     /**
      * 订单主键
      */
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -72,7 +76,7 @@ public class CfOrder {
     /**
      * 支付金额
      */
-    private Float payPrice;
+    private BigDecimal payPrice;
 
     /**
      * 订单有效标志  1:有效  0：无效
