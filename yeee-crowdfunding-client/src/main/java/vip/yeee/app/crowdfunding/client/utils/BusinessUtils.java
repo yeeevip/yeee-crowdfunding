@@ -10,7 +10,8 @@ import vip.yeee.memo.common.appauth.client.context.ApiSecurityContext;
  */
 public class BusinessUtils {
     public static Integer getCurUserId() {
-        return Integer.valueOf(ApiSecurityContext.getCurUserId());
+        String curUserId = ApiSecurityContext.getCurUserId();
+        return curUserId == null ? null : Integer.valueOf(curUserId);
     }
 
     public static String geCurtUsername() {

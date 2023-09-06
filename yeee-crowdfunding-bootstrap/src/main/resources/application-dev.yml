@@ -35,7 +35,7 @@ yeee:
     jwt:
       secret: 111111
       expire: 3600
-      fail-url: /pages/front/public/login.html
+      ## fail-url: /pages/front/public/login.html
       exclude:
         - /manage/**
   oss:
