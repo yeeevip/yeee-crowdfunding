@@ -71,7 +71,6 @@ public class ApiCfProjectController {
     }
 
     @ApiOperation("项目下单预览页")
-    @AnonymousAccess
     @GetMapping("/orderPage")
     public CommonResult<OrderPageVO> frontProjectOrderPageDetail(@RequestParam Integer id) {
         return CommonResult.success(apiCfProjectBiz.frontProjectOrderPageDetail(id));
