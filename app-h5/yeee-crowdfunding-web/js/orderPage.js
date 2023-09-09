@@ -2,30 +2,14 @@ $(document).ready(function(){
 
     var projectId = getQueryVariable('projectId');
     let token = localStorage.getItem("crowdfunding-token");
-    $.ajax({
-        type: 'GET',
-        async: false,
-        url: API_BASE_URL + '/api/cf/project/orderPage',
-        //contentType: "application/json",
-        data: {
-            'id': projectId
-        },
-        headers: {
-            "Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-        },
-        dataType: 'json',
-        success: function (res) {
+    HttpRequest.getRequest(API_BASE_URL + '/api/cf/project/orderPage?id=' + projectId, {
+        "Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+    }).then(function (res) {
+        var order = res.data
 
-            var order = res.data
-
-            if (res.code == 401) {
-                layer.alert("登录失效，请重新登录！！！")
-                return
-            }
-
-            order.repayVOList.forEach(item => {
-                $(".tjdd_list").append(
-                    `
+        order.repayVOList.forEach(item => {
+            $(".tjdd_list").append(
+                `
   \t\t\t\t\t\t\t<div class="tjdd_item">
   \t\t\t\t\t\t\t<input type="hidden" name="repay_id" value="${item.id}">
   \t\t\t\t\t\t\t<input type="hidden" name="repay_money" value="${item.money}">
@@ -51,12 +35,12 @@ $(document).ready(function(){
 \t\t\t\t\t\t\t\t</div>
   \t\t\t\t\t\t\t</div>
                 `
-                )
-            })
+            )
+        })
 
-            if (order.receiveInfoVO && order.receiveInfoVO.id) {
-                $("#defultReceiveBOX").append(
-                    `
+        if (order.receiveInfoVO && order.receiveInfoVO.id) {
+            $("#defultReceiveBOX").append(
+                `
                 <input type="hidden" value="${order.receiveInfoVO.id}" id="receiveInfoVOID" />
   \t\t\t\t\t\t<div id="defultReceive" class="shdzForm_swBox">
   \t\t\t\t\t\t\t<div class="tjdd_formItem">
@@ -75,10 +59,10 @@ $(document).ready(function(){
   \t\t\t\t\t\t\t
   \t\t\t\t\t\t</div>
                 `
-                )
-            } else {
-                $("#shdzForm_swBoxBOX").append(
-                    `
+            )
+        } else {
+            $("#shdzForm_swBoxBOX").append(
+                `
 <div id="newReceive" class="shdzForm_swBox">
   \t\t\t\t\t\t\t<input name="is_defaultReceive" type="hidden" value="0" >
   \t\t\t\t\t\t\t<div class="tjdd_formItem">
@@ -114,56 +98,57 @@ $(document).ready(function(){
   \t\t\t\t\t\t\t
   \t\t\t\t\t\t</div>
                     `
-                )
-            }
-
+            )
         }
+
+
+        //提交订单效果
+
+        $(".supportVal_A").click(function(){
+            $(this).hide();
+            $(".tjdd_item").slideUp();
+            $(this).parent().parent().addClass("cur");
+            $(this).parent().parent().show();
+            $(".tjddCont h3.tjdd_h3").hide();
+            $(".tjddCont a.tjdd_h3").show();
+            $(".tjddCont").slideDown();
+            vv = $(this).parent().parent().find("input[name='repay_money']").val();
+            repayId = $(this).parent().parent().find("input[name='repay_id']").val();
+
+        })
+        $(".tjddCont a.tjdd_h3").click(function(){
+            $(".tjdd_item").slideDown();
+            $(".tjdd_item").removeClass("cur");
+            $(".supportVal_A").show();
+            $(".tjddCont:last").slideUp();
+        })
+
+        var vv ;
+        var dd = $(".NumInner input");
+        /*	$("a.det_btn1").click(function(){
+            var url = window.location.href;
+    // 		window.open(url);
+            $(".xqPageBox").hide();
+            $(".zhifuInnerBox").show();
+        })
+        */
+        $(".NumInner a:eq(0)").click(function(){
+
+
+            dd.val(parseInt($(".NumInner input").val()) - 1) ;
+            $(".shdzForm_xnBox .ng-binding").text(dd.val()*vv);
+        })
+        $(".NumInner a:eq(1)").click(function(){
+
+            $(".NumInner input").val(parseInt($(".NumInner input").val()) + 1) ;
+            $(".shdzForm_xnBox .ng-binding").text(dd.val()*vv);
+        })
+
+        bindSubmitOrder()
+
+    }).catch(function (res) {
+
     })
-
-
-    //提交订单效果
-
-    $(".supportVal_A").click(function(){
-        $(this).hide();
-        $(".tjdd_item").slideUp();
-        $(this).parent().parent().addClass("cur");
-        $(this).parent().parent().show();
-        $(".tjddCont h3.tjdd_h3").hide();
-        $(".tjddCont a.tjdd_h3").show();
-        $(".tjddCont").slideDown();
-        vv = $(this).parent().parent().find("input[name='repay_money']").val();
-        repayId = $(this).parent().parent().find("input[name='repay_id']").val();
-
-    })
-    $(".tjddCont a.tjdd_h3").click(function(){
-        $(".tjdd_item").slideDown();
-        $(".tjdd_item").removeClass("cur");
-        $(".supportVal_A").show();
-        $(".tjddCont:last").slideUp();
-    })
-
-    var vv ;
-    var dd = $(".NumInner input");
-    /*	$("a.det_btn1").click(function(){
-        var url = window.location.href;
-// 		window.open(url);
-        $(".xqPageBox").hide();
-        $(".zhifuInnerBox").show();
-    })
-    */
-    $(".NumInner a:eq(0)").click(function(){
-
-
-        dd.val(parseInt($(".NumInner input").val()) - 1) ;
-        $(".shdzForm_xnBox .ng-binding").text(dd.val()*vv);
-    })
-    $(".NumInner a:eq(1)").click(function(){
-
-        $(".NumInner input").val(parseInt($(".NumInner input").val()) + 1) ;
-        $(".shdzForm_xnBox .ng-binding").text(dd.val()*vv);
-    })
-
-    bindSubmitOrder()
 
 })
 
@@ -179,49 +164,35 @@ function bindSubmitOrder() {
             btn: ['确定','取消'], //按钮
             // closeBtn:0
         }, function(){
-            $.ajax({
-                url			:		API_BASE_URL +"/api/cf/order/create",
-                data		:		JSON.stringify(
-                    {
-                        'repayId'	: repayId,
-                        'payCount'		: $("input[name='pay_count']").val(),
-                        'receiveInfoVO': {
-                            'receiver'		: $("input[name='receiver']").val(),
-                            'address'			: address,
-                            'phone'			: $("input[name='phone']").val(),
-                            'id': $("#receiveInfoVOID").val()
-                        }
-
-                    }),
-                headers: {
-                    "Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-                },
-                async		:		false,
-                type		:		"POST",
-                dataType	:		"json",
-                contentType: "application/json;charset=utf-8",
-                success		:		function(res){
-
-                    if(res.code==200){
-                        layer.confirm(res.message, {
-                            btn: ['确定'], //按钮
-                            closeBtn:0
-                        }, function(){
-                            window.location.href='/pages/front/private/personal_info.html';
-                        });
-                    } else if (res.code==401) {
-                        layer.alert("登录失效，请重新登录！！！")
-                    } else{
-                        var index =layer.confirm(res.message, {
-                            btn: ['确定'], //按钮
-                            closeBtn:0
-                        }, function(){
-                            var index = layer.alert();
-                            layer.close(index);
-                        });
+            HttpRequest.postJson(API_BASE_URL +"/api/cf/order/create", JSON.stringify(
+                {
+                    'repayId'	: repayId,
+                    'payCount'		: $("input[name='pay_count']").val(),
+                    'receiveInfoVO': {
+                        'receiver'		: $("input[name='receiver']").val(),
+                        'address'			: address,
+                        'phone'			: $("input[name='phone']").val(),
+                        'id': $("#receiveInfoVOID").val()
                     }
-                }
-            });
+
+                }), {
+                "Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+            }).then(function (res) {
+                layer.confirm(res.message, {
+                    btn: ['确定'], //按钮
+                    closeBtn:0
+                }, function(){
+                    window.location.href='/pages/front/private/personal_info.html';
+                });
+            }).catch(function (res) {
+                var index =layer.confirm(res.message, {
+                    btn: ['确定'], //按钮
+                    closeBtn:0
+                }, function(){
+                    var index = layer.alert();
+                    layer.close(index);
+                });
+            })
         });
     });
 }

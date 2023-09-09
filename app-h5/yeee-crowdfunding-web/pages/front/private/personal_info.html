@@ -420,7 +420,7 @@ $(document).ready(function(){
 							</el-pagination>
 						</el-tab-pane>
 						<el-tab-pane label="我发出的评论" name="second">
-							<el-table :data="dataList2" border stripe v-loading="dataListLoading" :max-height="tableHeight" style="width: 100%;">
+							<el-table :data="dataList2" border stripe v-loading="dataListLoading2" :max-height="tableHeight" style="width: 100%;">
 								<el-table-column prop="id" label="编号" sortable="custom" header-align="center" align="center"  width="120"></el-table-column>
 								<el-table-column prop="projectTitle" label="项目名称" sortable="custom" header-align="center" align="center" width="250"></el-table-column>
 								<el-table-column prop="content" label="评论内容" sortable="custom" header-align="center" align="center"></el-table-column>

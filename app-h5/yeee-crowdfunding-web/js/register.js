@@ -7,29 +7,19 @@ $(document).ready(function(){
             $("#resMsgID").html("前后密码不一致")
             return
         }
-        $.ajax({
-            type: 'POST',
-            async: false,
-            url: API_BASE_URL + '/api/cf/user/register' ,
-            //contentType: "application/json",
-            data:  {
-                'username': $("#Account").val(),
-                'password': password,
-                'code': $("#ImgCode").val()
-            },
-            dataType: 'json',
-            success: function (res) {
-                if (res.code != 200) {
-                    $("#resMsgID").html(res.message)
-                } else {
-                    layer.confirm('注册成功，去登录？', {
-                        btn: ['确定'], //按钮
-                        closeBtn: 0
-                    }, function(){
-                        location.href = '/pages/front/public/login.html'
-                    });
-                }
-            }
-        });
+        HttpRequest.postForm(API_BASE_URL + '/api/cf/user/register', {
+            'username': $("#Account").val(),
+            'password': password,
+            'code': $("#ImgCode").val()
+        }).then(function (res) {
+            layer.confirm('注册成功，去登录？', {
+                btn: ['确定'], //按钮
+                closeBtn: 0
+            }, function(){
+                location.href = '/pages/front/public/login.html'
+            });
+        }).catch(function (res) {
+            $("#resMsgID").html(res.message)
+        })
     })
 })

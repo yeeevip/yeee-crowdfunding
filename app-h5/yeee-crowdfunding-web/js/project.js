@@ -18,40 +18,22 @@ $(document).ready(function(){
 			return;
 		}
 		let token = localStorage.getItem("crowdfunding-token");
-    	$.ajax({
-			type: 'POST',
-			async: false,
-			url: API_BASE_URL + '/api/cf/comment/add' ,
-			contentType: "application/json;charset=utf-8",
-			headers: {
-				"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-			},
-			data:  JSON.stringify({
-				'content': $content,
-				'projectId': projectId
-			}),
-			dataType: 'json',
-			success: function (res) {
-				if (res.code == 401) {
-					layer.alert("登录过期，请重新登录！！！")
-				} else if (res.code == 200) {
-					$("#plcontentBox .pl_contentBox").remove()
-					$.ajax({
-						type: 'POST',
-						async: false,
-						url: API_BASE_URL + '/api/cf/comment/list',
-						contentType: "application/json",
-						data: JSON.stringify({
-							'pageSize': 100,
-							'commentVO': {
-								'projectId': projectId
-							}
-						}),
-						dataType: 'json',
-						success: function (res) {
-							res.data.result.forEach(item => {
-								$("#plcontentBox").append(
-									`
+		HttpRequest.postJson(API_BASE_URL + '/api/cf/comment/add', JSON.stringify({
+			'content': $content,
+			'projectId': projectId
+		}), {
+			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		}).then(function (res) {
+			$("#plcontentBox .pl_contentBox").remove()
+			HttpRequest.postJson(API_BASE_URL + '/api/cf/comment/list', JSON.stringify({
+				'pageSize': 100,
+				'commentVO': {
+					'projectId': projectId
+				}
+			})).then(function (res) {
+				res.data.result.forEach(item => {
+					$("#plcontentBox").append(
+						`
 \t\t\t\t\t\t\t<div class="pl_contentBox">
 \t\t\t\t\t\t\t\t\t<div class="content_tx">
 \t\t\t\t\t\t\t\t\t\t<a href="javascript:;"><img src="" /></a>
@@ -69,17 +51,14 @@ $(document).ready(function(){
 \t\t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t</div>
 					`
-								)
-							})
-						}
-					})
-				} else {
-					layer.alert(res.message)
-				}
-            }
-          });
-    	
-    	
+					)
+				})
+			}).catch(function (res) {
+
+			})
+		}).catch(function (res) {
+			layer.alert(res.message)
+		})
 		
 	});
 
@@ -90,21 +69,9 @@ $(document).ready(function(){
 
 function initProjectDetail() {
 	let projectId = getQueryVariable('id');
-	$.ajax({
-		type: 'GET',
-		async: false,
-		url: API_BASE_URL + '/api/cf/project/detail' ,
-		//contentType: "application/json",
-		data:  {
-			'id': projectId
-		},
-		dataType: 'json',
-		success: function (res) {
-			if (res.code != 200) {
-				layer.alert(res.message)
-			} else {
-				let data = res.data
-				$(".xqTitle").append(`
+	HttpRequest.getRequest(API_BASE_URL + '/api/cf/project/detail?id=' + projectId).then(function (res) {
+		let data = res.data
+		$(".xqTitle").append(`
 					<div class="xqTitText">
 						<div class="text_h3_box">
 							<p class="text_h3">${data.title}<p>
@@ -117,9 +84,9 @@ function initProjectDetail() {
 					</div>
 				`)
 
-				let percent = (data.hasFundRaising/data.totalFundRaising*100).toFixed(2)
-				$(".xqDetailBox").append(
-					`
+		let percent = (data.hasFundRaising/data.totalFundRaising*100).toFixed(2)
+		$(".xqDetailBox").append(
+			`
             \t<span></span>
             \t<div class="det_left">
                 \t<img style="height: 400px;width: 534px;" src="${data.coverPath}" />
@@ -165,21 +132,21 @@ function initProjectDetail() {
                     </div>
                 </div>					
 					`
-				)
+		)
 
-				$(".xqTab .tab_box").append(
-					`
+		$(".xqTab .tab_box").append(
+			`
 				<ul class="tab_ul">
                 \t<li><a href="#xqMain_left" class="tab_li">项目详情</a></li>
                     <li><a href="#xq_plBox" class="tab_li">评论（${data.commentVOList.length}）</a></li>
                     <li><a href="#xq_zcBox" class="tab_li">支持记录（999）</a></li>
                 </ul>
 					`
-				)
+		)
 
-				data.progressVOList.forEach(item => {
-					$("#progressList").append(
-						`
+		data.progressVOList.forEach(item => {
+			$("#progressList").append(
+				`
 \t\t\t\t\t\t\t\t\t\t<div class="zxjz_navItemInner">
 \t\t\t\t\t\t\t\t\t\t\t<h3 class="zxjz_navItem_h3">
 \t\t\t\t\t\t\t\t\t\t\t\t<a href="javascript:void(0);" onclick="siXin(368862,'鬼影人间');sitePop.showSixin(368862);" class="colorALink">
@@ -196,12 +163,12 @@ function initProjectDetail() {
 \t\t\t\t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t\t\t</div>
 					`
-					)
-				})
+			)
+		})
 
-				data.itemVOList.forEach(item => {
-					$("#xqTextTitleContentId").append(
-						`
+		data.itemVOList.forEach(item => {
+			$("#xqTextTitleContentId").append(
+				`
                     \t<div class="xqTextTitle">
                             <p class="xqTextTitle_p"></p>
                             <div class="xqLeftTitleInner">
@@ -210,11 +177,11 @@ function initProjectDetail() {
                         </div>
                         ${item.itemContent}
 						`
-					)
-				})
+			)
+		})
 
-				$("#orderRecordDataPreview").append(
-					`
+		$("#orderRecordDataPreview").append(
+			`
 		\t\t\t\t\t<div class="xq_footerBox">
                     \t<div class="foot_date">
                         \t<p class="ftP">¥${data.hasFundRaising}</p>
@@ -231,11 +198,11 @@ function initProjectDetail() {
                         <a href="javascript:;">立即支持</a>
                     </div>
 					`
-				)
+		)
 
-				data.commentVOList.forEach(item => {
-					$("#plcontentBox").append(
-						`
+		data.commentVOList.forEach(item => {
+			$("#plcontentBox").append(
+				`
 \t\t\t\t\t\t\t<div class="pl_contentBox">
 \t\t\t\t\t\t\t\t\t<div class="content_tx">
 \t\t\t\t\t\t\t\t\t\t<a href="javascript:;"><img src="" /></a>
@@ -253,12 +220,12 @@ function initProjectDetail() {
 \t\t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t</div>
 					`
-					)
-				})
+			)
+		})
 
-				data.repayVOList.forEach(item => {
-					$("#zcje_ItemBox").append(
-						`
+		data.repayVOList.forEach(item => {
+			$("#zcje_ItemBox").append(
+				`
 \t                    <div class="zcje_ItemBox">
 \t                    \t<h3 class="zcje_h3"><b>¥${item.money}</b>99人已支持</h3>
 \t                        <div class="zcje_title">${item.payTitle}</div>
@@ -273,12 +240,11 @@ function initProjectDetail() {
 \t                        </div>
 \t                    </div>
 						`
-					)
-				})
-
-			}
-		}
-	});
+			)
+		})
+	}).catch(function (res) {
+		layer.alert(res.message)
+	})
 }
 
 function showScroll() {

@@ -83,31 +83,16 @@ $(document).ready(function(){
 
 	$("#logoutBtn").on('click', function () {
 		let token = localStorage.getItem("crowdfunding-token");
-		$.ajax({
-			type: 'GET',
-			async: false,
-			url: API_BASE_URL + '/api/cf/user/logout' ,
-			//contentType: "application/json;charset=utf-8",
-			data:  {},
-			headers: {
-				"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-			},
-			dataType: 'json',
-			success: function (res) {
-				if (res.code == 200 || res.code == 401) {
-					// 将token存储到本地
-					localStorage.removeItem('crowdfunding-token')
-					// 请求成功后跳转到首页
-					if (res.code == 200) {
-						location.href = '/'
-					} else {
-						location.href = '/pages/front/public/login.html'
-					}
-				} else {
-					layer.alert(res.message)
-				}
-			}
-		});
+		HttpRequest.getRequest(API_BASE_URL + '/api/cf/user/logout', {
+			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		}).then(function (res) {
+			// 将token存储到本地
+			localStorage.removeItem('crowdfunding-token')
+			// 请求成功后跳转到首页
+			location.href = '/'
+		}).catch(function (res) {
+			layer.alert(res.message)
+		})
 	})
 
 	$("#lunchProjectBtn").click(function () {

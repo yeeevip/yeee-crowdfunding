@@ -16,21 +16,14 @@ $(document).ready(function(){
 		"projectType": projectType,
 		"keyword": decodeURI(getQueryVariable("keyword")),
 	}}
-	$.ajax({
-		type: 'POST',
-		url: API_BASE_URL + '/api/cf/project/page' ,
-		contentType: "application/json;charset=utf-8",
-		data:  JSON.stringify(params),
-		dataType: 'json',
-		success: function (res) {
-			console.log(res)
-			var data = res.data
+	HttpRequest.postJson(API_BASE_URL + '/api/cf/project/page', JSON.stringify(params)).then(function (res) {
+		var data = res.data
 
-			var itemHtml = ``
-			data.result.forEach(item => {
-				var progress = (item.hasFundRaising / item.totalFundRaising*100).toFixed(2)
-				itemHtml +=
-					`
+		var itemHtml = ``
+		data.result.forEach(item => {
+			var progress = (item.hasFundRaising / item.totalFundRaising*100).toFixed(2)
+			itemHtml +=
+				`
 	<div class="searchCard">
          <a href="/pages/front/public/project.html?id=${item.id}" class="siteCardItemImgA">
          	<img src="${item.coverPath}" />
@@ -69,18 +62,18 @@ $(document).ready(function(){
         </div>
     </div>					
 					`
-			})
-			$("#searchIMainBox").append(itemHtml)
+		})
+		$("#searchIMainBox").append(itemHtml)
 
-			var pageFooterHtml = ``
-			for (var i = 0; i < data.pages; i++) {
-				pageFooterHtml +=
-					`<a href = "/pages/front/public/search.html?projectType=${getQueryVariable('projectType')}&&pageNum=${i+1}" class = "normalPage cu" >${i+1}</a>`
-			}
-			$("#searchPMainBox").prepend(pageFooterHtml)
-
+		var pageFooterHtml = ``
+		for (var i = 0; i < data.pages; i++) {
+			pageFooterHtml +=
+				`<a href = "/pages/front/public/search.html?projectType=${getQueryVariable('projectType')}&&pageNum=${i+1}" class = "normalPage cu" >${i+1}</a>`
 		}
-	});
+		$("#searchPMainBox").prepend(pageFooterHtml)
+	}).catch(function (res) {
+
+	})
 })
 
 

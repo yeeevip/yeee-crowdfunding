@@ -13,24 +13,13 @@ var f_display = function(divId){
 
 	let token = localStorage.getItem("crowdfunding-token");
 	if ('myZiliao' == divId) {
-		$.ajax({
-			type: 'GET',
-			async: false,
-			url: API_BASE_URL + '/api/cf/user/info' ,
-			contentType: "application/json",
-			headers: {
-				"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-			},
-			data:  '',
-			dataType: 'json',
-			success: function (res) {
-				if (res.code == 401) {
-					layer.alert("登录过期，请重新登录！！！")
-				} else if (res.code == 200) {
-					var user = res.data
-					$("#user_ziliaoBOX").remove()
-					$("#ziliaoBjBOX").append(
-						`
+		HttpRequest.getRequest(API_BASE_URL + '/api/cf/user/info', {
+			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		}).then(function (res) {
+			var user = res.data
+			$("#user_ziliaoBOX").remove()
+			$("#ziliaoBjBOX").append(
+				`
 					<ul id="user_ziliaoBOX">\t
 \t\t\t            \t<li>
 \t\t\t               \t\t<label class="ziLiao_form_label"><span>*</span>昵称：</label>
@@ -76,19 +65,21 @@ var f_display = function(divId){
 \t\t\t                 </li>
 \t\t\t               </ul> 
 					`
-					)
-					ziLiaoBoxSubmitClick()
-					calenderInit()
-					$.ajaxSettings.async = false;
-					provinceInit()
-					let city = user.city.split(',')
-					$("#user_ziliaoBOX select[name='province']").find('option:contains('+ city[0] +')').prop('selected', true)
-					$("#user_ziliaoBOX select[name='province']").trigger('change')
-					$("#user_ziliaoBOX select[name='city']").find('option:contains('+ city[1] +')').prop('selected', true)
-				} else {
-					layer.alert(res.message)
-				}
+			)
+			ziLiaoBoxSubmitClick()
+			calenderInit()
+			$.ajaxSettings.async = false;
+			provinceInit()
+
+			let city = ['', '']
+			if (user.city) {
+				user.city.split(',')
 			}
+			$("#user_ziliaoBOX select[name='province']").find('option:contains('+ city[0] +')').prop('selected', true)
+			$("#user_ziliaoBOX select[name='province']").trigger('change')
+			$("#user_ziliaoBOX select[name='city']").find('option:contains('+ city[1] +')').prop('selected', true)
+		}).catch(function (res) {
+			layer.alert(res.message)
 		})
 	} else if ('myLaunch' == divId) {
 		handleMyMsg();
@@ -123,38 +114,25 @@ function addReceiveInfo(){
 	var address =$("select[name='province'] option:selected").text()+"|"+$("select[name='city'] option:selected").text()+"|"+$("input[name='address']").val();
 
 	let token = localStorage.getItem('crowdfunding-token');
-	$.ajax({
-		url:API_BASE_URL + "/api/cf/receiveInfo/add",
-		data:JSON.stringify({
-			receiver:receiver,
-			phone:phone,
-			address:address
-		}),
-		headers: {
-			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-		},
-		async:false,
-		cache:false,
-		contentType: 'application/json;charset=utf-8',
-		type: "POST", //请求方式为POST
-		dataType:"json",
-		success:function(res){
-			if (res.code == 200) {
-				var index = layer.confirm('设置成功', {
-					btn: ['确定'], //按钮
-					closeBtn: 0
-				}, function(){
-					var index = parent.layer.getFrameIndex(window.name);
-					parent.layer.close(index);
-					//window.location.href('/pages/front/private/personal_info.html')
-					$("#showMyReceive").trigger('click')
-				});
-			} else {
-				layer.alert(res.message)
-			}
-
-		}
-	});
+	HttpRequest.postJson(API_BASE_URL + "/api/cf/receiveInfo/add", JSON.stringify({
+		receiver:receiver,
+		phone:phone,
+		address:address
+	}), {
+		"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+	}).then(function (res) {
+		var index = layer.confirm('设置成功', {
+			btn: ['确定'], //按钮
+			closeBtn: 0
+		}, function(){
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.layer.close(index);
+			//window.location.href('/pages/front/private/personal_info.html')
+			$("#showMyReceive").trigger('click')
+		});
+	}).catch(function (res) {
+		layer.alert(res.message)
+	})
 }
 
 
@@ -182,93 +160,78 @@ $(document).ready(function(){
 
 	let token = localStorage.getItem('crowdfunding-token');
 	let pageNum = 1
-	$.ajax({
-		type: 'POST',
-		async: false,
-		url: API_BASE_URL +'/api/cf/project/myself' ,
-		contentType: "application/json;charset=utf-8",
-		headers: {
-			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-		},
-		data:  JSON.stringify({
-			'pageNum': pageNum
-		}),
-		dataType: 'json',
-		success: function (res) {
-			if (res.code == 401) {
-				layer.alert("登录过期，请重新登录！！！")
-			} else if (res.code == 200) {
-				var Ojson = res.data.result
+	HttpRequest.postJson(API_BASE_URL + '/api/cf/project/myself', JSON.stringify({
+		'pageNum': pageNum
+	}), {
+		"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+	}).then(function (res) {
+		var Ojson = res.data.result
 
-				$("#myProject_tbody_ajax").find("tr").remove();
-				for(var i=0;i<Ojson.length;i++){
-					var projectState = convertProjectState(Ojson[i].hasAudits, Ojson[i].hasFinish)
+		$("#myProject_tbody_ajax").find("tr").remove();
+		for(var i=0;i<Ojson.length;i++){
+			var projectState = convertProjectState(Ojson[i].hasAudits, Ojson[i].hasFinish)
 
-					var percent=Ojson[i].hasFundRaising/Ojson[i].totalFundRaising*100;
+			var percent=Ojson[i].hasFundRaising/Ojson[i].totalFundRaising*100;
 
-					percent = percent.toFixed(2);
+			percent = percent.toFixed(2);
 
 
 
-					$("#myProject_tbody_ajax").append('<tr class="trfirst"><td colspan="4"></td></tr>'
-						+'<tr class="ftTr">'
-						+'<td colspan="4">创建时间：'+Ojson[i].launchDateRaising+'</td>'
-						+ (Ojson[i].hasDown == 0
-							? `<td><a href="javascript:updProjectDownOrUp(${Ojson[i].id}, 1)" class="ftTr_delA_down" title="下线"></a></td>`
-							: `<td><a href="javascript:updProjectDownOrUp(${Ojson[i].id}, 0)" class="ftTr_delA_up" title="上线"></a></td>`)
-						+'</tr>'
-						+'<tr class="inforTr" project_id="">'
-						+'<td>'
-						+'<div class="ddImgBox"><a href="/pages/front/public/project.html?id=' + Ojson[i].id + '" target="_blank"><img style="width:80px;height:60px;" src="'+Ojson[i].coverPath+'"></a></div>'
-						+'<div class="ddImgText"><a href="/pages/front/public/project.html?id=' + Ojson[i].id + '" target="_blank">'+Ojson[i].title+'</a></div>'
-						+'</td>'
-						+'<td>'
-						+'<div>'
-						+'<p class="inforText_p gray">'
-						+projectState
-						+'</p>'
-						+'</div></td>'
-						+'<td>'
-						+'<p class="inforText_p ">目标：'+Ojson[i].totalFundRaising +'元</p>'
+			$("#myProject_tbody_ajax").append('<tr class="trfirst"><td colspan="4"></td></tr>'
+				+'<tr class="ftTr">'
+				+'<td colspan="4">创建时间：'+Ojson[i].launchDateRaising+'</td>'
+				+ (Ojson[i].hasDown == 0
+					? `<td><a href="javascript:updProjectDownOrUp(${Ojson[i].id}, 1)" class="ftTr_delA_down" title="下线"></a></td>`
+					: `<td><a href="javascript:updProjectDownOrUp(${Ojson[i].id}, 0)" class="ftTr_delA_up" title="上线"></a></td>`)
+				+'</tr>'
+				+'<tr class="inforTr" project_id="">'
+				+'<td>'
+				+'<div class="ddImgBox"><a href="/pages/front/public/project.html?id=' + Ojson[i].id + '" target="_blank"><img style="width:80px;height:60px;" src="'+Ojson[i].coverPath+'"></a></div>'
+				+'<div class="ddImgText"><a href="/pages/front/public/project.html?id=' + Ojson[i].id + '" target="_blank">'+Ojson[i].title+'</a></div>'
+				+'</td>'
+				+'<td>'
+				+'<div>'
+				+'<p class="inforText_p gray">'
+				+projectState
+				+'</p>'
+				+'</div></td>'
+				+'<td>'
+				+'<p class="inforText_p ">目标：'+Ojson[i].totalFundRaising +'元</p>'
 
-						+'<div class="inforRatioBox">'
-						+'<div class="inforRatio"><div class="inner" style="width:'+percent+'%"></div></div>'
-						+'<span>'+percent+'%</span> '
-						+'</div>'
-						+'</td>'
-						+'<td><div><p class="inforText_p gray">不可结算</p></div></td>'
-						+'<td class="btnTd">'
-						+'<div class="operations">'
-						+'<a href="javascript:goProjectProcess('+Ojson[i].id +');" class="ddLastbtn_A">更新最新进展</a>'
+				+'<div class="inforRatioBox">'
+				+'<div class="inforRatio"><div class="inner" style="width:'+percent+'%"></div></div>'
+				+'<span>'+percent+'%</span> '
+				+'</div>'
+				+'</td>'
+				+'<td><div><p class="inforText_p gray">不可结算</p></div></td>'
+				+'<td class="btnTd">'
+				+'<div class="operations">'
+				+'<a href="javascript:goProjectProcess('+Ojson[i].id +');" class="ddLastbtn_A">更新最新进展</a>'
 
-						+'</td>'
-						+'</tr>');
-				}
-				for (var i = 0; i < res.data.pages; i++) {
-					if (pageNum == (i + 1)) {
-						$("#myprojectFlip").append(
-							`
+				+'</td>'
+				+'</tr>');
+		}
+		for (var i = 0; i < res.data.pages; i++) {
+			if (pageNum == (i + 1)) {
+				$("#myprojectFlip").append(
+					`
 							<a href="javascript:;" class="fy_page cur">${i+1 }</a>
 							`
-						)
-					} else {
-						$("#myprojectFlip").append(
-							`
+				)
+			} else {
+				$("#myprojectFlip").append(
+					`
 							<a href="javascript:;" class="fy_page">${i+1 }</a>
 							`
-						)
-					}
-
-				}
-
-				//registerChangePageMyProject();
-
-			} else {
-				layer.alert(res.message)
+				)
 			}
 
 		}
-	});
+
+		//registerChangePageMyProject();
+	}).catch(function (res) {
+		layer.alert(res.message)
+	})
 	
 	//收货地址
 	
@@ -292,26 +255,92 @@ $(document).ready(function(){
 	$("#myOrderShow").click(function(){
 		let token = localStorage.getItem("crowdfunding-token");
 		let pageNum = 1
-		$.ajax({
-			type: 'POST',
-			async: false,
-			url: API_BASE_URL + '/api/cf/order/buyer' ,
-			contentType: "application/json;charset=utf-8",
-			headers: {
-				"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-			},
-			data:  JSON.stringify({
-				'pageNum': pageNum,
-				'pageSize': 4
-			}),
-			dataType: 'json',
-			success: function (res) {
-				if (res.code == 401) {
-					layer.alert("登录过期，请重新登录！！！")
-				} else if (res.code == 200) {
+		HttpRequest.postJson(API_BASE_URL + '/api/cf/order/buyer', JSON.stringify({
+			'pageNum': pageNum,
+			'pageSize': 4
+		}), {
+			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		}).then(function (res) {
+			var Ojson = res.data.result
+			$("#myOrderTbody").find("tr").remove();
+			$("#myBuyOrderFlip .fy_page").remove()
+			for(var i=0;i<Ojson.length;i++){
+
+				var payState = "";
+				if(Ojson[i].hasPay==0){
+					payState="未支付"
+				}
+				if(Ojson[i].hasPay==1){
+					payState="支付成功"
+				}
+
+				var projectState = convertProjectState(Ojson[i].projectVO.hasAudits, Ojson[i].projectVO.hasFinish)
+
+				var html = '<tr class="trfirst"><td colspan="7"></td></tr>'+
+					'<tr class="ftTr">'+
+					'<td colspan="6">创建时间：'+Ojson[i].orderDate+
+					'<span class="dingdan">订单号码：'+Ojson[i].code+'</span><span  class="dingdan">发起人：'+Ojson[i].sellerVO.username+'</span>'+
+					'</td>'+
+					'<td><a href="javascript:;" class="ftTr_delA" title="删除"></a></td>'+
+					'</tr>'+
+					'<tr class="inforTr">'+
+					'<td>'+
+					'<div class="ddImgBox"><a href="/pages/front/public/project.html?id=' + Ojson[i].projectVO.id + '" target="_blank"><img style="width:80px;height:60px;" src="'+Ojson[i].projectVO.coverPath+'"></a></div>'+
+					'<div class="ddImgText"><a href="/pages/front/public/project.html?id=' + Ojson[i].projectVO.id + '" target="_blank">'+Ojson[i].projectVO.title+'</a></div>'+
+					'</td>'+
+					'<td><div><p class="inforText_p gray">'+projectState+'</p></div></td>'+
+					'	<td>'+
+					'<div class="ddImgText"><a href="/pages/front/public/project.html?id=' + Ojson[i].projectVO.id + '" target="_blank" title="'+Ojson[i].projectRepayVO.payTitle+'----'+Ojson[i].projectRepayVO.payContent+'">'+Ojson[i].projectRepayVO.payTitle+'----'+Ojson[i].projectRepayVO.payContent+'</a></div>'+
+					'</td>'+
+					'<td><div><p class="inforText_p gray">'+Ojson[i].payPrice+'元</p></div></td>'+
+					'<td><div><p class="inforText_p gray">'+Ojson[i].count+'</p></div></td>'+
+					'<td><div><p class="inforText_p gray">'+payState+'</p></div></td>'+
+					'<td class="btnTd">'+
+					'<div class="operations">';
+
+				if(Ojson[i].hasPay==1){
+					if(Ojson[i].hasReceive!=1) {
+						html = html + '<a href="javascript:toConfirmReceive('+Ojson[i].id+');" class="ddLastbtn_A">确认收货</a>'
+					}
+					html = html+'<a href="/pages/front/public/project.html?id=' + Ojson[i].projectVO.id + '#xq_plBox" target="_blank" class="ddLastbtn_A">我要投诉</a></td></tr>';
+				}else{
+					html = html+'<a href="javascript:toPay('+Ojson[i].id+');" class="ddLastbtn_A">去支付</a></td></tr>';
+				}
+				$("#myOrderTbody").append(html);
+			}
+			for (var i = 0; i < res.data.pages; i++) {
+				if (pageNum == (i + 1)) {
+					$("#myBuyOrderFlip").append(
+						`
+							<a href="javascript:;" class="fy_page cur">${i+1 }</a>
+							`
+					)
+				} else {
+					$("#myBuyOrderFlip").append(
+						`
+							<a href="javascript:;" class="fy_page">${i+1 }</a>
+							`
+					)
+				}
+
+			}
+
+			$("#myBuyOrderFlip .fy_page").click(function(){
+
+				var $this = $(this);
+				let token = localStorage.getItem("crowdfunding-token");
+				let pageNum = $this.html()
+				HttpRequest.postJson(API_BASE_URL + '/api/cf/order/buyer', JSON.stringify({
+					'pageNum': pageNum,
+					'pageSize': 4
+				}), {
+					"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+				}).then(function (res) {
+					$("#myBuyOrderFlip .fy_page").removeClass("cur");
+
 					var Ojson = res.data.result
+
 					$("#myOrderTbody").find("tr").remove();
-					$("#myBuyOrderFlip .fy_page").remove()
 					for(var i=0;i<Ojson.length;i++){
 
 						var payState = "";
@@ -346,9 +375,9 @@ $(document).ready(function(){
 							'<td class="btnTd">'+
 							'<div class="operations">';
 
-						if(Ojson[i].hasPay==1){
+						if(Ojson[i].is_pay==1){
 							if(Ojson[i].hasReceive!=1) {
-								html = html + '<a href="javascript:toConfirmReceive('+Ojson[i].id+');" class="ddLastbtn_A">确认收货</a>'
+								html = html+'<a href="javascript:toConfirmReceive('+Ojson[i].id+');" class="ddLastbtn_A">确认收货</a>'
 							}
 							html = html+'<a href="/pages/front/public/project.html?id=' + Ojson[i].projectVO.id + '#xq_plBox" target="_blank" class="ddLastbtn_A">我要投诉</a></td></tr>';
 						}else{
@@ -356,111 +385,15 @@ $(document).ready(function(){
 						}
 						$("#myOrderTbody").append(html);
 					}
-					for (var i = 0; i < res.data.pages; i++) {
-						if (pageNum == (i + 1)) {
-							$("#myBuyOrderFlip").append(
-								`
-							<a href="javascript:;" class="fy_page cur">${i+1 }</a>
-							`
-							)
-						} else {
-							$("#myBuyOrderFlip").append(
-								`
-							<a href="javascript:;" class="fy_page">${i+1 }</a>
-							`
-							)
-						}
-
-					}
-
-					$("#myBuyOrderFlip .fy_page").click(function(){
-
-						var $this = $(this);
-						let token = localStorage.getItem("crowdfunding-token");
-						let pageNum = $this.html()
-						$.ajax({
-							type: 'POST',
-							async: false,
-							url: API_BASE_URL + '/api/cf/order/buyer' ,
-							contentType: "application/json;charset=utf-8",
-							headers: {
-								"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-							},
-							data:  JSON.stringify({
-								'pageNum': pageNum,
-								'pageSize': 4
-							}),
-							dataType: 'json',
-							success: function (res) {
-								if (res.code == 401) {
-									layer.alert("登录过期，请重新登录！！！")
-								} else if (res.code == 200) {
-
-									$("#myBuyOrderFlip .fy_page").removeClass("cur");
-
-									var Ojson = res.data.result
-
-									$("#myOrderTbody").find("tr").remove();
-									for(var i=0;i<Ojson.length;i++){
-
-										var payState = "";
-										if(Ojson[i].hasPay==0){
-											payState="未支付"
-										}
-										if(Ojson[i].hasPay==1){
-											payState="支付成功"
-										}
-
-										var projectState = convertProjectState(Ojson[i].projectVO.hasAudits, Ojson[i].projectVO.hasFinish)
-
-										var html = '<tr class="trfirst"><td colspan="7"></td></tr>'+
-											'<tr class="ftTr">'+
-											'<td colspan="6">创建时间：'+Ojson[i].orderDate+
-											'<span class="dingdan">订单号码：'+Ojson[i].code+'</span><span  class="dingdan">发起人：'+Ojson[i].sellerVO.username+'</span>'+
-											'</td>'+
-											'<td><a href="javascript:;" class="ftTr_delA" title="删除"></a></td>'+
-											'</tr>'+
-											'<tr class="inforTr">'+
-											'<td>'+
-											'<div class="ddImgBox"><a href="/pages/front/public/project.html?id=' + Ojson[i].projectVO.id + '" target="_blank"><img style="width:80px;height:60px;" src="'+Ojson[i].projectVO.coverPath+'"></a></div>'+
-											'<div class="ddImgText"><a href="/pages/front/public/project.html?id=' + Ojson[i].projectVO.id + '" target="_blank">'+Ojson[i].projectVO.title+'</a></div>'+
-											'</td>'+
-											'<td><div><p class="inforText_p gray">'+projectState+'</p></div></td>'+
-											'	<td>'+
-											'<div class="ddImgText"><a href="/pages/front/public/project.html?id=' + Ojson[i].projectVO.id + '" target="_blank" title="'+Ojson[i].projectRepayVO.payTitle+'----'+Ojson[i].projectRepayVO.payContent+'">'+Ojson[i].projectRepayVO.payTitle+'----'+Ojson[i].projectRepayVO.payContent+'</a></div>'+
-											'</td>'+
-											'<td><div><p class="inforText_p gray">'+Ojson[i].payPrice+'元</p></div></td>'+
-											'<td><div><p class="inforText_p gray">'+Ojson[i].count+'</p></div></td>'+
-											'<td><div><p class="inforText_p gray">'+payState+'</p></div></td>'+
-											'<td class="btnTd">'+
-											'<div class="operations">';
-
-										if(Ojson[i].is_pay==1){
-											if(Ojson[i].hasReceive!=1) {
-												html = html+'<a href="javascript:toConfirmReceive('+Ojson[i].id+');" class="ddLastbtn_A">确认收货</a>'
-											}
-											html = html+'<a href="/pages/front/public/project.html?id=' + Ojson[i].projectVO.id + '#xq_plBox" target="_blank" class="ddLastbtn_A">我要投诉</a></td></tr>';
-										}else{
-											html = html+'<a href="javascript:toPay('+Ojson[i].id+');" class="ddLastbtn_A">去支付</a></td></tr>';
-										}
-										$("#myOrderTbody").append(html);
-									}
-									$this.addClass("cur");
-
-								} else {
-									layer.alert(res.message)
-								}
-
-							}
-						});
-
-					});
-
-				} else {
+					$this.addClass("cur");
+				}).catch(function (res) {
 					layer.alert(res.message)
-				}
-			}
-		});
+				})
+
+			});
+		}).catch(function (res) {
+			layer.alert(res.message)
+		})
 	});
 	
 	/**
@@ -468,59 +401,45 @@ $(document).ready(function(){
 	 */
 	$("#myProjectShow").click(function(){
 		let token = localStorage.getItem("crowdfunding-token");
-		$.ajax({
-			url			:		API_BASE_URL + "/api/cf/order/seller",
-			async		:		false,
-			type: 'POST',
-			contentType: "application/json;charset=utf-8",
-			headers: {
-				"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-			},
-			data:  JSON.stringify({
-				'pageSize': 1000
-			}),
-			dataType: 'json',
-			success: function (res) {
-				Ojson = res.data.result
-				if (res.code == 401) {
-					layer.alert("登录过期，请重新登录！！！")
-				} else if (res.code == 200) {
-					$("#allOrderCount").html(res.data.total)
-					$("#myProjectTbody").find("tr").remove();
-					for(var i=0;i<Ojson.length;i++){
+		HttpRequest.postJson(API_BASE_URL + "/api/cf/order/seller", JSON.stringify({
+			'pageSize': 1000
+		}), {
+			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		}).then(function (res) {
+			var Ojson = res.data.result
+			$("#allOrderCount").html(res.data.total)
+			$("#myProjectTbody").find("tr").remove();
+			for(var i=0;i<Ojson.length;i++){
 
-						var payState = "";
-						if(Ojson[i].hasPay==0){
-							payState="未支付"
-						}
-						if(Ojson[i].hasPay==1){
-							payState="支付成功"
-						}
-
-						$("#myProjectTbody").append('<tr class="trfirst"><td colspan="4"></td></tr><tr class="u_tbg_tr" style="height:50px;margin-bottom:10px">'+
-							'<td>'+Ojson[i].code+'</td>'+
-							'<td>'+Ojson[i].projectVO.title+'</td>'+
-							'<td>'+Ojson[i].repayVO.payTitle+'</td>'+
-							'<td>'+Ojson[i].buyerVO.username+'</td>'+
-							'<td>'+Ojson[i].orderDate+'</td>'+
-							'<td>'+Ojson[i].count+'</td>'+
-							'<td>'+Ojson[i].payPrice+'</td>'+
-							'<td>'+Ojson[i].receiveInfoVO.receiver+'</td>'+
-							'<td>'+Ojson[i].receiveInfoVO.address+'</td>'+
-							'<td>'+Ojson[i].receiveInfoVO.phone+'</td>'+
-							'<td>'+payState+'</td>'+
-							'<td>' + (
-								!Ojson[i].hasSend ? '<a href="javascript:deliverGoods(' + Ojson[i].id + ');" target="" class="search_btn">发货</a>' : ''
-							) +'</td>'+
-
-							'</tr>');
-					}
-				} else {
-					layer.alert(res.message)
+				var payState = "";
+				if(Ojson[i].hasPay==0){
+					payState="未支付"
 				}
-				
+				if(Ojson[i].hasPay==1){
+					payState="支付成功"
+				}
+
+				$("#myProjectTbody").append('<tr class="trfirst"><td colspan="4"></td></tr><tr class="u_tbg_tr" style="height:50px;margin-bottom:10px">'+
+					'<td>'+Ojson[i].code+'</td>'+
+					'<td>'+Ojson[i].projectVO.title+'</td>'+
+					'<td>'+Ojson[i].repayVO.payTitle+'</td>'+
+					'<td>'+Ojson[i].buyerVO.username+'</td>'+
+					'<td>'+Ojson[i].orderDate+'</td>'+
+					'<td>'+Ojson[i].count+'</td>'+
+					'<td>'+Ojson[i].payPrice+'</td>'+
+					'<td>'+Ojson[i].receiveInfoVO.receiver+'</td>'+
+					'<td>'+Ojson[i].receiveInfoVO.address+'</td>'+
+					'<td>'+Ojson[i].receiveInfoVO.phone+'</td>'+
+					'<td>'+payState+'</td>'+
+					'<td>' + (
+						!Ojson[i].hasSend ? '<a href="javascript:deliverGoods(' + Ojson[i].id + ');" target="" class="search_btn">发货</a>' : ''
+					) +'</td>'+
+
+					'</tr>');
 			}
-		});
+		}).catch(function (res) {
+			layer.alert(res.message)
+		})
 	});
 	
 	
@@ -530,44 +449,35 @@ $(document).ready(function(){
 	 */
 	$("#showMyReceive").click(function(){
 		let token = localStorage.getItem("crowdfunding-token");
-		$.ajax({
-			url			:		API_BASE_URL + "/api/cf/receiveInfo/page",
-			async		:		false,
-			cache		:   	false,
-			type		:		"POST",
-			data		:		JSON.stringify({
-				pageSize: 1000
-			}),
-			headers: {
-				"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-			},
-			contentType	:		'application/json;charset=utf-8',
-			dataType	:		"json",
-			success		:		function(res){
-				var Ojson = res.data.result
-				$("#myReceive_tbody").find("tr").remove();
-				for(var i=0;i<Ojson.length;i++){
-				
-					var html = '<tr class="trfirst"><td colspan="4"></td></tr>'
-						+'<tr class="u_tbg_tr" style="height:50px;margin-bottom:10px">'
-						+'<td>'+handleNull(Ojson[i].receiver)+'</td>'
-						+'<td>'+handleNull(Ojson[i].address)+'</td>'
-						+'<td>'+handleNull(Ojson[i].zippost)+'</td>'
-						+'<td>'+handleNull(Ojson[i].phone)+'</td>';
-					if(Ojson[i].setDefault=="0"){
-						html =html +'<td><a style="color: #50abf2" onclick="setDefaultReceiveInfo('+Ojson[i].id+')">设为默认</a></td></tr>';
-					}else if(Ojson[i].setDefault=="1"){
-						html =html +'<td>默认</td></tr>';
-					}else{
-						html =html +'<td></td></tr>';
-					}
-					
-					$("#myReceive_tbody").append(html);
-							
+		HttpRequest.postJson(API_BASE_URL + "/api/cf/receiveInfo/page", JSON.stringify({
+			pageSize: 1000
+		}), {
+			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		}).then(function (res) {
+			var Ojson = res.data.result
+			$("#myReceive_tbody").find("tr").remove();
+			for(var i=0;i<Ojson.length;i++){
+
+				var html = '<tr class="trfirst"><td colspan="4"></td></tr>'
+					+'<tr class="u_tbg_tr" style="height:50px;margin-bottom:10px">'
+					+'<td>'+handleNull(Ojson[i].receiver)+'</td>'
+					+'<td>'+handleNull(Ojson[i].address)+'</td>'
+					+'<td>'+handleNull(Ojson[i].zippost)+'</td>'
+					+'<td>'+handleNull(Ojson[i].phone)+'</td>';
+				if(Ojson[i].setDefault=="0"){
+					html =html +'<td><a style="color: #50abf2" onclick="setDefaultReceiveInfo('+Ojson[i].id+')">设为默认</a></td></tr>';
+				}else if(Ojson[i].setDefault=="1"){
+					html =html +'<td>默认</td></tr>';
+				}else{
+					html =html +'<td></td></tr>';
 				}
-				
+
+				$("#myReceive_tbody").append(html);
+
 			}
-		});
+		}).catch(function (res) {
+
+		})
 	});
 
 	
@@ -576,95 +486,79 @@ $(document).ready(function(){
 		var $this = $(this);
 		let token = localStorage.getItem("crowdfunding-token");
 		let pageNum = $this.html()
-		$.ajax({
-			type: 'POST',
-			async: false,
-			url: API_BASE_URL + '/api/cf/project/myself' ,
-			contentType: "application/json;charset=utf-8",
-			headers: {
-				"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-			},
-			data:  JSON.stringify({
-				'pageNum': pageNum
-			}),
-			dataType: 'json',
-			success: function (res) {
-				if (res.code == 401) {
-					layer.alert("登录过期，请重新登录！！！")
-				} else if (res.code == 200) {
+		HttpRequest.postJson(API_BASE_URL + '/api/cf/project/myself', JSON.stringify({
+			'pageNum': pageNum
+		}), {
+			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		}).then(function (res) {
+			$("#myprojectFlip .fy_page").removeClass("cur");
 
-					$("#myprojectFlip .fy_page").removeClass("cur");
+			$("#myProject_tbody_ajax").find("tr").remove();
 
-					$("#myProject_tbody_ajax").find("tr").remove();
+			var Ojson = res.data.result
 
-					var Ojson = res.data.result
-
-					$("#myProject_tbody_ajax").find("tr").remove();
-					for(var i=0;i<Ojson.length;i++){
-						var projectState = "";
-						if(Ojson[i].hasAudits==1&&Ojson[i].hasFinish==0){
-							projectState ="正在集资";
-						}
-						if(Ojson[i].hasAudits==1&&Ojson[i].hasFinish==-1 ){
-							projectState = "集资失败";
-						}
-						if(Ojson[i].hasAudits==1&&Ojson[i].hasFinish==1 ){
-							projectState = "集资成功";
-						}
-						if(Ojson[i].hasAudits==0 ){
-							projectState = "未审核";
-						}
-						if(Ojson[i].hasAudits==-1 ){
-							projectState = "未通过审核";
-						}
-
-						var percent=Ojson[i].hasFundRaising/Ojson[i].totalFundRaising*100;
-
-						percent = percent.toFixed(2);
-
-
-
-						$("#myProject_tbody_ajax").append('<tr class="trfirst"><td colspan="4"></td></tr>'
-							+'<tr class="ftTr">'
-							+'<td colspan="4">创建时间：'+Ojson[i].launchDateRaising+'</td>'
-							+ (Ojson[i].hasDown == 0
-								? `<td><a href="javascript:updProjectDownOrUp(${Ojson[i].id}, 1)" class="ftTr_delA_down" title="下线"></a></td>`
-								: `<td><a href="javascript:updProjectDownOrUp(${Ojson[i].id}, 0)" class="ftTr_delA_up" title="上线"></a></td>`)							+'</tr>'
-							+'<tr class="inforTr" project_id="">'
-							+'<td>'
-							+'<div class="ddImgBox"><a href="/pages/front/public/project.html?id=' + Ojson[i].id + '" target="_blank"><img style="width:80px;height:60px;" src="'+Ojson[i].coverPath+'"></a></div>'
-							+'<div class="ddImgText"><a href="/pages/front/public/project.html?id=' + Ojson[i].id + '" target="_blank">'+Ojson[i].title+'</a></div>'
-							+'</td>'
-							+'<td>'
-							+'<div>'
-							+'<p class="inforText_p gray">'
-							+projectState
-							+'</p>'
-							+'</div></td>'
-							+'<td>'
-							+'<p class="inforText_p ">目标：'+Ojson[i].totalFundRaising +'元</p>'
-
-							+'<div class="inforRatioBox">'
-							+'<div class="inforRatio"><div class="inner" style="width:'+percent+'%"></div></div>'
-							+'<span>'+percent+'%</span> '
-							+'</div>'
-							+'</td>'
-							+'<td><div><p class="inforText_p gray">不可结算</p></div></td>'
-							+'<td class="btnTd">'
-							+'<div class="operations">'
-							+'<a href="javascript:goProjectProcess('+Ojson[i].id +');" class="ddLastbtn_A">更新最新进展</a>'
-
-							+'</td>'
-							+'</tr>');
-					}
-					$this.addClass("cur");
-
-				} else {
-					layer.alert(res.message)
+			$("#myProject_tbody_ajax").find("tr").remove();
+			for(var i=0;i<Ojson.length;i++){
+				var projectState = "";
+				if(Ojson[i].hasAudits==1&&Ojson[i].hasFinish==0){
+					projectState ="正在集资";
+				}
+				if(Ojson[i].hasAudits==1&&Ojson[i].hasFinish==-1 ){
+					projectState = "集资失败";
+				}
+				if(Ojson[i].hasAudits==1&&Ojson[i].hasFinish==1 ){
+					projectState = "集资成功";
+				}
+				if(Ojson[i].hasAudits==0 ){
+					projectState = "未审核";
+				}
+				if(Ojson[i].hasAudits==-1 ){
+					projectState = "未通过审核";
 				}
 
+				var percent=Ojson[i].hasFundRaising/Ojson[i].totalFundRaising*100;
+
+				percent = percent.toFixed(2);
+
+
+
+				$("#myProject_tbody_ajax").append('<tr class="trfirst"><td colspan="4"></td></tr>'
+					+'<tr class="ftTr">'
+					+'<td colspan="4">创建时间：'+Ojson[i].launchDateRaising+'</td>'
+					+ (Ojson[i].hasDown == 0
+						? `<td><a href="javascript:updProjectDownOrUp(${Ojson[i].id}, 1)" class="ftTr_delA_down" title="下线"></a></td>`
+						: `<td><a href="javascript:updProjectDownOrUp(${Ojson[i].id}, 0)" class="ftTr_delA_up" title="上线"></a></td>`)							+'</tr>'
+					+'<tr class="inforTr" project_id="">'
+					+'<td>'
+					+'<div class="ddImgBox"><a href="/pages/front/public/project.html?id=' + Ojson[i].id + '" target="_blank"><img style="width:80px;height:60px;" src="'+Ojson[i].coverPath+'"></a></div>'
+					+'<div class="ddImgText"><a href="/pages/front/public/project.html?id=' + Ojson[i].id + '" target="_blank">'+Ojson[i].title+'</a></div>'
+					+'</td>'
+					+'<td>'
+					+'<div>'
+					+'<p class="inforText_p gray">'
+					+projectState
+					+'</p>'
+					+'</div></td>'
+					+'<td>'
+					+'<p class="inforText_p ">目标：'+Ojson[i].totalFundRaising +'元</p>'
+
+					+'<div class="inforRatioBox">'
+					+'<div class="inforRatio"><div class="inner" style="width:'+percent+'%"></div></div>'
+					+'<span>'+percent+'%</span> '
+					+'</div>'
+					+'</td>'
+					+'<td><div><p class="inforText_p gray">不可结算</p></div></td>'
+					+'<td class="btnTd">'
+					+'<div class="operations">'
+					+'<a href="javascript:goProjectProcess('+Ojson[i].id +');" class="ddLastbtn_A">更新最新进展</a>'
+
+					+'</td>'
+					+'</tr>');
 			}
-		});
+			$this.addClass("cur");
+		}).catch(function (res) {
+			layer.alert(res.message)
+		})
 
 	});
 
@@ -683,37 +577,22 @@ $(document).ready(function(){
 		}
 
 		let token = localStorage.getItem("crowdfunding-token");
-
-		$.ajax({
-			url: API_BASE_URL + "/api/cf/user/updatePassword",
-			data: JSON.stringify({
-				oldPassword: oldPassword,
-				newPassword: newPassword
-			}),
-			contentType: 'application/json;charset=utf-8',
-			headers: {
-				'Utoken': 'Bearer ' + token ? ('Bearer ' + JSON.parse(token).token) : ''
-			},
-			async: false,
-			cache: false,
-			type: "POST",
-			dataType: "json",
-			success: function(res){
-				if (res.code == 401) {
-					layer.alert("登录过期，请重新登录！！！")
-				} else if (res.code == 200) {
-					localStorage.removeItem("crowdfunding-token");
-					layer.confirm('修改成功，请重新登录？', {
-						btn: ['确定'], //按钮
-						closeBtn: 0
-					}, function(){
-						location.href = '/pages/front/public/login.html'
-					});
-				} else {
-					layer.alert(res.message)
-				}
-			}
-		});
+		HttpRequest.postJson(API_BASE_URL + "/api/cf/user/updatePassword", JSON.stringify({
+			oldPassword: oldPassword,
+			newPassword: newPassword
+		}), {
+			'Utoken': 'Bearer ' + token ? ('Bearer ' + JSON.parse(token).token) : ''
+		}).then(function (res) {
+			localStorage.removeItem("crowdfunding-token");
+			layer.confirm('修改成功，请重新登录？', {
+				btn: ['确定'], //按钮
+				closeBtn: 0
+			}, function(){
+				location.href = '/pages/front/public/login.html'
+			});
+		}).catch(function (res) {
+			layer.alert(res.message)
+		})
 
 })
 
@@ -739,34 +618,22 @@ function goProjectProcess(project_id){
 // 设为默认收货地址
 function setDefaultReceiveInfo(receiveId){
 	let token = localStorage.getItem("crowdfunding-token");
-	$.ajax({
-		url			:		API_BASE_URL + "/api/cf/receiveInfo/update",
-		async		:		false,
-		cache		:   	false,
-		type		:		"POST",
-		data		:		JSON.stringify({
-			id: receiveId,
-			setDefault: 1
-		}),
-		headers: {
-			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-		},
-		contentType	:		'application/json;charset=utf-8',
-		dataType	:		"json",
-		success		:		function(res){
-			if (res.code == 200) {
-				var index = layer.confirm('设置成功', {
-					btn: ['确定'], //按钮
-					closeBtn: 0
-				}, function(){
-					layer.close(index);
-					$("#showMyReceive").trigger('click')
-				});
-			} else {
-				layer.alert(res.message)
-			}
-		}
-	});
+	HttpRequest.postJson(API_BASE_URL + "/api/cf/receiveInfo/update", JSON.stringify({
+		id: receiveId,
+		setDefault: 1
+	}), {
+		"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+	}).then(function (res) {
+		var index = layer.confirm('设置成功', {
+			btn: ['确定'], //按钮
+			closeBtn: 0
+		}, function(){
+			layer.close(index);
+			$("#showMyReceive").trigger('click')
+		});
+	}).catch(function (res) {
+		layer.alert(res.message)
+	})
 }
 
 //去支付
@@ -777,39 +644,26 @@ function toPay(order_id){
 		 // closeBtn:0
 		}, function(){
 		let token = localStorage.getItem("crowdfunding-token");
-		$.ajax({
-			url			:		API_BASE_URL + "/api/cf/order/pay",
-			data		:		JSON.stringify({
-				'subjectId': order_id
-			}),
-			headers: {
-				"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-			},
-			async		:		false,
-			type		:		"POST",
-			dataType	:		"json",
-			contentType: "application/json;charset=utf-8",
-			success		:		function(res){
-				//data = eval('('+data+')');
-				//alert(data);
-				if(res.code==200){
-					layer.confirm(res.message, {
-						  btn: ['确定'], //按钮
-						  closeBtn:0
-						}, function(){
-						window.location.href='/pages/front/private/personal_info.html';
-						});
-				}else{
-					var index =layer.confirm(res.message, {
-						  btn: ['确定'], //按钮
-						  closeBtn:0
-						}, function(){
-							var index = layer.alert();
-							layer.close(index);
-						});
-				}
-			}
-		});
+		HttpRequest.postJson(API_BASE_URL + "/api/cf/order/pay", JSON.stringify({
+			'subjectId': order_id
+		}), {
+			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		}).then(function (res) {
+			layer.confirm(res.message, {
+				btn: ['确定'], //按钮
+				closeBtn:0
+			}, function(){
+				window.location.href='/pages/front/private/personal_info.html';
+			});
+		}).catch(function (res) {
+			var index =layer.confirm(res.message, {
+				btn: ['确定'], //按钮
+				closeBtn:0
+			}, function(){
+				var index = layer.alert();
+				layer.close(index);
+			});
+		})
 	
 });
 
@@ -829,39 +683,23 @@ function ziLiaoBoxSubmitClick() {
 
 		let token = localStorage.getItem("crowdfunding-token");
 
-		$.ajax({
-			url: API_BASE_URL + "/api/cf/user/update",//要请求的服务器url
-			//这是一个对象，表示请求的参数，两个参数：method=ajax&val=xxx，服务器可以通过request.getParameter()来获取
-			//data:{method:"ajaxTest",val:value},
-			data: JSON.stringify({
-				sex: sex,
-				nickName: user_name,
-				mobile: phone,
-				email: email,
-				realName: real_name,
-				idNumber: id_number,
-				dateOfBirth: dateOfBirth,
-				city: city
+		HttpRequest.postJson(API_BASE_URL + "/api/cf/user/update", JSON.stringify({
+			sex: sex,
+			nickName: user_name,
+			mobile: phone,
+			email: email,
+			realName: real_name,
+			idNumber: id_number,
+			dateOfBirth: dateOfBirth,
+			city: city
 
-			}),
-			contentType: 'application/json;charset=utf-8',
-			headers: {
-				'Utoken': 'Bearer ' + token ? ('Bearer ' + JSON.parse(token).token) : ''
-			},
-			async: false,   //是否为异步请求
-			cache: false,  //是否缓存结果
-			type: "POST", //请求方式为POST
-			dataType: "json",   //服务器返回的数据是什么类型
-			success: function(res){  //这个方法会在服务器执行成功是被调用 ，参数result就是服务器返回的值(现在是json类型)
-				if (res.code == 401) {
-					layer.alert("登录过期，请重新登录！！！")
-				} else if (res.code == 200) {
-					layer.alert('修改成功')
-				} else {
-					layer.alert(res.message)
-				}
-			}
-		});
+		}), {
+			'Utoken': 'Bearer ' + token ? ('Bearer ' + JSON.parse(token).token) : ''
+		}).then(function (res) {
+			layer.alert('修改成功')
+		}).catch(function (res) {
+			layer.alert(res.message)
+		})
 
 	})
 }
@@ -894,82 +732,48 @@ function provinceInit() {
 
 function handleMyMsg() {
 	let token = localStorage.getItem('crowdfunding-token');
-	$.ajax({
-		url:API_BASE_URL + "/api/cf/msg/list",
-		data:JSON.stringify({
-			pageNum: 1,
-			pageSize: 20
-		}),
-		headers: {
-			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-		},
-		async:false,
-		cache:false,
-		contentType: 'application/json;charset=utf-8',
-		type: "POST", //请求方式为POST
-		dataType:"json",
-		success:function(res){
-			if (res.code == 200) {
-				if (res.data.result) {
-					confirmMsg(0, res.data.result)
-				}
-			} else {
-				layer.alert(res.message)
-			}
-
+	HttpRequest.postJson(API_BASE_URL + "/api/cf/msg/list", JSON.stringify({
+		pageNum: 1,
+		pageSize: 20
+	}), {
+		"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+	}).then(function (res) {
+		if (res.data.result) {
+			confirmMsg(0, res.data.result)
 		}
-	});
+	}).catch(function (res) {
+		layer.alert(res.message)
+	})
 }
 
 function handleMyMsg() {
 	let token = localStorage.getItem('crowdfunding-token');
-	$.ajax({
-		url:API_BASE_URL + "/api/cf/msg/list",
-		data:JSON.stringify({
-			pageNum: 1,
-			pageSize: 20
-		}),
-		headers: {
-			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-		},
-		async:false,
-		cache:false,
-		contentType: 'application/json;charset=utf-8',
-		type: "POST", //请求方式为POST
-		dataType:"json",
-		success:function(res){
-			if (res.code == 200) {
-				if (res.data.result) {
-					confirmMsg(0, res.data.result)
-				}
-			} else {
-				layer.alert(res.message)
-			}
-
+	HttpRequest.postJson(API_BASE_URL + "/api/cf/msg/list", JSON.stringify({
+		pageNum: 1,
+		pageSize: 20
+	}), {
+		"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+	}).then(function (res) {
+		if (res.data.result) {
+			confirmMsg(0, res.data.result)
 		}
-	});
+	}).catch(function (res) {
+		layer.alert(res.message)
+	})
 }
 
 function handleMyAccount() {
 	let token = localStorage.getItem('crowdfunding-token');
-	$.ajax({
-		url:API_BASE_URL + "/api/cf/userAccount/my",
-		headers: {
-			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-		},
-		type: "GET",
-		dataType:"json",
-		success:function(res){
-			if (res.code == 200) {
-				let data = res.data
-				$("#myAccountInfo input[name = 'balance']").val(data.balance);
-				$("#myAccountInfo input[name = 'createTime']").val(data.createTime);
-				$("#myAccountInfo input[name = 'updateTime']").val(data.updateTime);
-			} else {
-				layer.alert(res.message)
-			}
-		}
-	});
+	HttpRequest.getRequest(API_BASE_URL + "/api/cf/userAccount/my", {
+		"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+	}).then(function (res) {
+		var data = res.data
+		$("#myAccountInfo input[name = 'balance']").val(data.balance);
+		$("#myAccountInfo input[name = 'createTime']").val(data.createTime);
+		$("#myAccountInfo input[name = 'updateTime']").val(data.updateTime);
+	}).catch(function (res) {
+		layer.alert(res.message)
+	})
 }
 
 function fillMyAccount() {
@@ -986,27 +790,17 @@ function fillMyAccount() {
 				return
 			}
 			let token = localStorage.getItem('crowdfunding-token');
-			$.ajax({
-				url:API_BASE_URL + "/api/cf/userAccount/fill",
-				headers: {
-					"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-				},
-				data:JSON.stringify({
-					id: 1,
-					balance: reason
-				}),
-				contentType: 'application/json;charset=utf-8',
-				type: "POST",
-				dataType:"json",
-				success:function(res){
-					if (res.code == 200) {
-						f_display('myAccount')
-						layer.close(index);
-					} else {
-						layer.alert(res.message)
-					}
-				}
-			});
+			HttpRequest.postJson(API_BASE_URL + "/api/cf/userAccount/fill", JSON.stringify({
+				id: 1,
+				balance: reason
+			}), {
+				"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			}).then(function (res) {
+				f_display('myAccount')
+				layer.close(index);
+			}).catch(function (res) {
+				layer.alert(res.message)
+			})
 	});
 }
 
@@ -1019,28 +813,16 @@ function confirmMsg(i, msg) {
 		btn: ['确定'], //按钮
 		closeBtn: 0
 	}, function(){
-		$.ajax({
-			url:API_BASE_URL + "/api/cf/msg/read",
-			data:JSON.stringify({
-				ids: [msg[i].id]
-			}),
-			headers: {
-				"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-			},
-			async:false,
-			cache:false,
-			contentType: 'application/json;charset=utf-8',
-			type: "POST", //请求方式为POST
-			dataType:"json",
-			success:function(res){
-				if (res.code == 200) {
-					confirmMsg(i + 1, msg)
-					layer.close(index)
-				} else {
-					layer.alert(res.message)
-				}
-			}
-		});
+		HttpRequest.postJson(API_BASE_URL + "/api/cf/msg/read", JSON.stringify({
+			ids: [msg[i].id]
+		}), {
+			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		}).then(function (res) {
+			confirmMsg(i + 1, msg)
+			layer.close(index)
+		}).catch(function (res) {
+			layer.alert(res.message)
+		})
 	});
 }
 
@@ -1049,26 +831,16 @@ function toConfirmReceive(orderId) {
 		btn: ['确定', '取消'] //可以无限个按钮
 	}, function(index){
 		let token = localStorage.getItem('crowdfunding-token');
-		$.ajax({
-			url:API_BASE_URL + "/api/cf/order/receive-confirm",
-			headers: {
-				"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-			},
-			data:JSON.stringify({
-				subjectId: orderId
-			}),
-			contentType: 'application/json;charset=utf-8',
-			type: "POST",
-			dataType:"json",
-			success:function(res){
-				if (res.code == 200) {
-					$("#myOrderShow").trigger('click')
-					layer.close(index);
-				} else {
-					layer.alert(res.message)
-				}
-			}
-		});
+		HttpRequest.postJson(API_BASE_URL + "/api/cf/order/receive-confirm", JSON.stringify({
+			subjectId: orderId
+		}), {
+			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		}).then(function (res) {
+			$("#myOrderShow").trigger('click')
+			layer.close(index);
+		}).catch(function (res) {
+			layer.alert(res.message)
+		})
 	}, function(index){
 		layer.close(index)
 	});
@@ -1080,26 +852,16 @@ function deliverGoods(orderId) {
 		btn: ['确定', '取消'] //可以无限个按钮
 	}, function(index){
 		let token = localStorage.getItem('crowdfunding-token');
-		$.ajax({
-			url:API_BASE_URL + "/api/cf/order/deliver",
-			headers: {
-				"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-			},
-			data:JSON.stringify({
-				subjectId: orderId
-			}),
-			contentType: 'application/json;charset=utf-8',
-			type: "POST",
-			dataType:"json",
-			success:function(res){
-				if (res.code == 200) {
-					$("#myProjectShow").trigger('click')
-					layer.close(index);
-				} else {
-					layer.alert(res.message)
-				}
-			}
-		});
+		HttpRequest.postJson(API_BASE_URL + "/api/cf/order/deliver", JSON.stringify({
+			subjectId: orderId
+		}), {
+			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		}).then(function (res) {
+			$("#myProjectShow").trigger('click')
+			layer.close(index);
+		}).catch(function (res) {
+			layer.alert(res.message)
+		})
 	}, function(index){
 		layer.close(index)
 	});
@@ -1107,30 +869,16 @@ function deliverGoods(orderId) {
 
 function updProjectDownOrUp (id, downUp) {
 	let token = localStorage.getItem("crowdfunding-token");
-	$.ajax({
-		type: 'POST',
-		async: false,
-		url: API_BASE_URL + '/api/cf/project/updUpOrDown' ,
-		contentType: "application/json;charset=utf-8",
-		headers: {
-			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-		},
-		data:  JSON.stringify({
-			'id': id,
-			'hasDown': downUp
-		}),
-		dataType: 'json',
-		success: function (res) {
-			if (res.code == 401) {
-				layer.alert("登录过期，请重新登录！！！")
-			} else if (res.code == 200) {
-				window.location.href= '/pages/front/private/personal_info.html'
-				// layer.alert("操作成功，请刷新页面！！！")
-			} else {
-				layer.alert(res.message)
-			}
-
-		}
-	});
+	HttpRequest.postJson(API_BASE_URL + '/api/cf/project/updUpOrDown', JSON.stringify({
+		'id': id,
+		'hasDown': downUp
+	}), {
+		"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+	}).then(function (res) {
+		window.location.href= '/pages/front/private/personal_info.html'
+		// layer.alert("操作成功，请刷新页面！！！")
+	}).catch(function (res) {
+		layer.alert(res.message)
+	})
 }
 

@@ -83,44 +83,25 @@ function updateProjectProcess(){
 	var content = $("#updateProjectProgress textarea[name='detail_content1']").val();
 
 	let token = localStorage.getItem("crowdfunding-token");
-	$.ajax({
-		url: API_BASE_URL + "/api/cf/project/updateProgress",
-		data:JSON.stringify({projectId:projectId,content:content}),
-		async:false,
-		headers: {
-			"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-		},
-		type: "POST", //请求方式为POST
-		contentType: 'application/json;charset=utf-8',
-		dataType:"json",
-		success:function(res){
-
-			if (res.code == 401) {
-				layer.alert("登录过期！！！")
-			} else if(res.code==200){
-				layer.confirm(res.message, {
-					btn: ['确定'], //按钮
-				}, function(){
-					var index = parent.layer.getFrameIndex(window.name);
-					parent.layer.close(index);
-				});
-			}else{
-				var index =layer.confirm(res.message, {
-					btn: ['确定'], //按钮
-					closeBtn:0
-				}, function(){
-					layer.close(index);
-				});
-			}
-
-
-
-
-			renewText();
-		}
-	});
-
-
+	HttpRequest.postJson(API_BASE_URL + "/api/cf/project/updateProgress", JSON.stringify({projectId:projectId,content:content}), {
+		"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+	}).then(function (res) {
+		layer.confirm(res.message, {
+			btn: ['确定'], //按钮
+		}, function(){
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.layer.close(index);
+		});
+		// renewText();
+	}).catch(function (res) {
+		var index =layer.confirm(res.message, {
+			btn: ['确定'], //按钮
+			closeBtn:0
+		}, function(){
+			layer.close(index);
+		});
+		// renewText();
+	})
 
 
 	/*

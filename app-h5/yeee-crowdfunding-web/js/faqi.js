@@ -158,44 +158,31 @@ $(document).ready(function(){
 					console.log(param);
 
 			let token = localStorage.getItem("crowdfunding-token");
-				$.ajax({
-					url: API_BASE_URL + "/api/cf/project/lunch",
-					data: JSON.stringify(param),
-					headers: {
-						"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
-					},
-					async: false,
-					contentType: 'application/json;charset=utf-8',
-					type: "POST", //请求方式为POST
-					dataType: "json",
-					success: function(res){
-
-						if (res.code==401) {
-							layer.alert("登录过期，请重新登录！！！")
-						} else if(res.code==200){
-							layer.confirm(res.message, {
-								  btn: ['确定'], //按钮
-								  closeBtn:0
-								}, function(){
-									window.location.href='/pages/front/private/personal_info.html';
-								});
-						}else{
-							var index =layer.confirm(res.message, {
-								  btn: ['确定'], //按钮
-								  closeBtn:0
-								}, function(){
-								  //layer.msg('的确很重要', {icon: 1});
-//									var index = parent.layer.getFrameIndex(window.name); 
-//							        parent.layer.close(index);
-								//	window.location.href='showPerson.jhtml';
-									layer.close(index);
-								});
-						}
-						renewText();
-					}
+			HttpRequest.postJson(API_BASE_URL + "/api/cf/project/lunch"
+				, JSON.stringify(param), {
+					"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			}).then(function (res) {
+				layer.confirm(res.message, {
+					btn: ['确定'], //按钮
+					closeBtn:0
+				}, function(){
+					window.location.href='/pages/front/private/personal_info.html';
 				});
-				
-			});
+				renewText();
+			}).catch(function (res) {
+				var index =layer.confirm(res.message, {
+					btn: ['确定'], //按钮
+					closeBtn:0
+				}, function(){
+					//layer.msg('的确很重要', {icon: 1});
+//									var index = parent.layer.getFrameIndex(window.name);
+//							        parent.layer.close(index);
+					//	window.location.href='showPerson.jhtml';
+					layer.close(index);
+				});
+				renewText();
+			})
+		});
 		
 	})
 

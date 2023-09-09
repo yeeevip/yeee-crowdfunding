@@ -5,6 +5,7 @@ function initVuePersonal() {
             return {
                 activeName: 'first',
                 dataListLoading: false,
+                dataListLoading2: false,
                 dataList: [],
                 dataList2: [],
                 tableHeight: this.getClientHeight() - 300,
@@ -25,44 +26,30 @@ function initVuePersonal() {
             listData () {
                 this.dataListLoading = true
                 let token = localStorage.getItem('crowdfunding-token');
-                this.$http.post(API_BASE_URL + '/api/cf/comment/receive'
-                    , JSON.stringify(this.queryForm)
-                    , {'headers': {"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''}}
-                    , {emulateJSON:true})
-                    .then(function(res){
-                        res = res.body
-                        if (res.code !== 200) {
-                            this.dataList = []
-                            this.total = 0
-                            return this.$message.error(res.message)
-                        }
-                        this.dataListLoading = false
-                        this.dataList = res.data.result
-                        this.total = res.data.total
-                    },function(){
-                        return this.$message.error("请求失败")
-                    });
+                var $$this = this
+                HttpRequest.postJson(API_BASE_URL + '/api/cf/comment/receive', JSON.stringify(this.queryForm), {"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''}).then(function (res) {
+                    $$this.dataListLoading = false
+                    $$this.dataList = res.data.result
+                    $$this.total = res.data.total
+                }).catch(function (res) {
+                    $$this.dataList = []
+                    $$this.total = 0
+                    return $$this.$message.error(res.message)
+                })
             },
             listData2 () {
-                this.dataListLoading = true
+                this.dataListLoading2 = true
                 let token = localStorage.getItem('crowdfunding-token');
-                this.$http.post(API_BASE_URL + '/api/cf/comment/send'
-                    , JSON.stringify(this.queryForm2)
-                    , {'headers': {"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''}}
-                    , {emulateJSON:true})
-                    .then(function(res){
-                        res = res.body
-                        if (res.code !== 200) {
-                            this.dataList = []
-                            this.total = 0
-                            return this.$message.error(res.message)
-                        }
-                        this.dataListLoading = false
-                        this.dataList2 = res.data.result
-                        this.total2 = res.data.total
-                    },function(){
-                        return this.$message.error("请求失败")
-                    });
+                var $$this = this
+                HttpRequest.postJson(API_BASE_URL + '/api/cf/comment/send', JSON.stringify(this.queryForm2), {"Utoken": token ? ('Bearer ' + JSON.parse(token).token) : ''}).then(function (res) {
+                    $$this.dataListLoading2 = false
+                    $$this.dataList2 = res.data.result
+                    $$this.total2 = res.data.total
+                }).catch(function (res) {
+                    $$this.dataList = []
+                    $$this.total = 0
+                    return $$this.$message.error(res.message)
+                })
             },
             init () {
                 this.setTableHeight()

@@ -81,6 +81,7 @@ public class ApiCfUserBiz {
 
         CfUser user = apiCfUserConvert.vo2Entity(userVO);
         user.setId(currentUserId);
+        user.setUsername(null);
 
         apiCfUserService.updateById(user);
 

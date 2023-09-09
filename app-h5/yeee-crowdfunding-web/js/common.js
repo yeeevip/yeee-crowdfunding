@@ -38,3 +38,88 @@ function getQueryVariable(variable) {
 	return('');
 
 }
+
+
+
+var HttpRequest = (function () {
+	function postForm(url, data, headers) {
+		return new Promise(function(resolve, reject) {
+			$.ajax({
+				type: 'POST',
+				async: false,
+				url: url,
+				data: data,
+				headers: headers,
+				dataType: 'json',
+				success: function(res) {
+					if (res.code == 401) {
+						localStorage.removeItem('crowdfunding-token')
+						window.location.href = "/pages/front/public/login.html"
+					} else if (res.code != 200) {
+						reject(res);
+					} else {
+						resolve(res);
+					}
+				},
+				error: function(xhr, status, error) {
+					reject(error);
+				}
+			});
+		});
+	}
+	function postJson(url, data, headers) {
+		return new Promise(function(resolve, reject) {
+			$.ajax({
+				type: 'POST',
+				async: false,
+				url: url,
+				contentType: "application/json;charset=utf-8",
+				data: data,
+				headers: headers,
+				dataType: 'json',
+				success: function(res) {
+					if (res.code == 401) {
+						localStorage.removeItem('crowdfunding-token')
+						window.location.href = "/pages/front/public/login.html"
+					} else if (res.code != 200) {
+						reject(res);
+					} else {
+						resolve(res);
+					}
+				},
+				error: function(xhr, status, error) {
+					reject(error);
+				}
+			});
+		});
+	}
+	function getRequest(url, headers) {
+		return new Promise(function(resolve, reject) {
+			$.ajax({
+				type: 'GET',
+				async: false,
+				url: url,
+				dataType: 'json',
+				headers: headers,
+				success: function(res) {
+					if (res.code == 401) {
+						localStorage.removeItem('crowdfunding-token')
+						window.location.href = "/pages/front/public/login.html"
+					} else if (res.code != 200) {
+						reject(res);
+					} else {
+						resolve(res);
+					}
+				},
+				error: function(xhr, status, error) {
+					reject(error);
+				}
+			});
+		});
+	}
+	return {
+		postForm: postForm,
+		postJson: postJson,
+		getRequest: getRequest
+	}
+})()
