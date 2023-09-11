@@ -28,6 +28,7 @@ yeee:
     contact-name: yeee
     version: 1.0
   auth:
+    jwtSecret: 123456
     resource:
       exclude:
         - /api/cf/**
