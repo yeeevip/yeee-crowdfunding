@@ -72,10 +72,7 @@ INSERT INTO `t_cf_comment` VALUES (74, 5, 30, '17855830787', '梵蒂冈的双方
 INSERT INTO `t_cf_comment` VALUES (75, 5, 30, '17855830787', '发的更好发挥地方和对方过后对方过后对方过后东方红地方', '2022-05-01 10:57:52');
 INSERT INTO `t_cf_comment` VALUES (76, 2, 30, '17855830787', '广东佛山给第三方孤独颂歌', '2022-05-01 10:58:33');
 INSERT INTO `t_cf_comment` VALUES (77, 2, 30, '17855830787', '发送到发的说法是', '2022-05-01 10:59:32');
-INSERT INTO `t_cf_comment` VALUES (78, 217, 30, '17855830787', '范德萨发顺丰', '2022-05-01 11:01:38');
 INSERT INTO `t_cf_comment` VALUES (79, 1, 30, '17855830787', 'dsfdasfsadsa', '2022-05-01 11:33:41');
-INSERT INTO `t_cf_comment` VALUES (80, 223, 41, '17855830001', '打法发顺丰', '2022-05-02 01:01:06');
-INSERT INTO `t_cf_comment` VALUES (81, 223, 43, '17855830003', 'ewrewqrwrqwrqwrewqr', '2022-05-02 03:20:18');
 
 -- ----------------------------
 -- Table structure for t_cf_initiator_company_info
@@ -99,7 +96,7 @@ CREATE TABLE `t_cf_initiator_company_info`  (
 -- ----------------------------
 -- Records of t_cf_initiator_company_info
 -- ----------------------------
-INSERT INTO `t_cf_initiator_company_info` VALUES (1, 221, '的说法阿的说法是撒旦法的', '打发点放散阀的发', '打发大水发大大发', '发的发送到发送到发放按时', '发达省份打发', '465465465', NULL, NULL, NULL);
+
 
 -- ----------------------------
 -- Table structure for t_cf_initiator_person_info
@@ -121,16 +118,10 @@ CREATE TABLE `t_cf_initiator_person_info`  (
 -- ----------------------------
 -- Records of t_cf_initiator_person_info
 -- ----------------------------
-INSERT INTO `t_cf_initiator_person_info` VALUES (0000000048, 201, '渠急急急', '2222299503207232', '1324459373', NULL, '/img/project/IDphoto/ef0164cf-2c05-48a5-9aa6-b8a7c62e62d7.jpg', NULL);
-INSERT INTO `t_cf_initiator_person_info` VALUES (0000000049, 209, 'eekdsjhf', '45465465', '1212546545', NULL, '/img/project/IDphoto/d7d44e8f-269c-49b8-8f34-49208eb5a60f.jpg', '/img/project/IDphoto/d7d44e8f-269c-49b8-8f34-49208eb5a60f.jpg');
-INSERT INTO `t_cf_initiator_person_info` VALUES (0000000050, 210, '11', '150122665656565', '44645', NULL, '/img/project/IDphoto/0cfc2d91-ae27-4347-aaf7-638593a19776.jpg', '/img/project/IDphoto/0cfc2d91-ae27-4347-aaf7-638593a19776.jpg');
-INSERT INTO `t_cf_initiator_person_info` VALUES (0000000054, 214, '青海湖', '56454', '11212', NULL, '/img/project/IDphoto/109b5ecb-f598-47e8-a2de-ff830f31a49d.jpg', '/img/project/IDphoto/ee70efc2-fcc9-4efe-a7c8-1ea4c4bc2f67.jpg');
-INSERT INTO `t_cf_initiator_person_info` VALUES (0000000055, 218, '学大教育api', '1501211', '17800000001', NULL, '/img/project/IDphoto/39e002a7-0ce6-4c80-9332-c2a158cfd5b9.png', '/img/project/IDphoto/3ea2c835-6235-4b7c-9fad-58e4c9954066.jpg');
-INSERT INTO `t_cf_initiator_person_info` VALUES (0000000056, 219, '17855830787', '11515151', '441554545', NULL, '/img/project/IDphoto/6d9d5187-ece9-49b8-ab05-0953517c260a.jpg', '/img/project/IDphoto/0c427139-0254-492a-a19e-619210cc1fed.jpg');
-INSERT INTO `t_cf_initiator_person_info` VALUES (0000000057, 220, '大幅度发', NULL, '87845166565', NULL, NULL, NULL);
-INSERT INTO `t_cf_initiator_person_info` VALUES (0000000058, 222, '测试姓名', NULL, '178555830001', NULL, '/upload/project/IDphoto/56565u=91673060,7145840&fm=193&f=GIF.jpg', '/upload/project/IDphoto/88779u=737555197,308540855&fm=193&f=GIF.jpg');
-INSERT INTO `t_cf_initiator_person_info` VALUES (0000000059, 223, '测试姓名2', '6546546546546546546546546', '17855830001', '湖南/湘西土家族苗族自治州', '/upload/project/IDphoto/09973u=1819248061,230866778&fm=193&f=GIF.jpg', '/upload/project/IDphoto/66208u=2291349828,4144427007&fm=193&f=GIF.jpg');
-INSERT INTO `t_cf_initiator_person_info` VALUES (0000000060, 224, '哈好的', '4654646464546465465', '454654654654646', '吉林/延边朝鲜族自治州', '/upload/project/IDphoto/31934u=1575628574,1150213623&fm=193&f=GIF.jpg', '/upload/project/IDphoto/97111u=4283365501,347124022&fm=193&f=GIF.jpg');
+INSERT INTO `t_cf_initiator_person_info` VALUES (48, 201, '渠急急急', '2222299503207232', '1324459373', NULL, '/img/project/IDphoto/ef0164cf-2c05-48a5-9aa6-b8a7c62e62d7.jpg', NULL);
+INSERT INTO `t_cf_initiator_person_info` VALUES (49, 209, 'eekdsjhf', '45465465', '1212546545', NULL, '/img/project/IDphoto/d7d44e8f-269c-49b8-8f34-49208eb5a60f.jpg', '/img/project/IDphoto/d7d44e8f-269c-49b8-8f34-49208eb5a60f.jpg');
+INSERT INTO `t_cf_initiator_person_info` VALUES (50, 210, '11', '150122665656565', '44645', NULL, '/img/project/IDphoto/0cfc2d91-ae27-4347-aaf7-638593a19776.jpg', '/img/project/IDphoto/0cfc2d91-ae27-4347-aaf7-638593a19776.jpg');
+INSERT INTO `t_cf_initiator_person_info` VALUES (54, 214, '青海湖', '56454', '11212', NULL, '/img/project/IDphoto/109b5ecb-f598-47e8-a2de-ff830f31a49d.jpg', '/img/project/IDphoto/ee70efc2-fcc9-4efe-a7c8-1ea4c4bc2f67.jpg');
 
 -- ----------------------------
 -- Table structure for t_cf_order
@@ -164,12 +155,6 @@ INSERT INTO `t_cf_order` VALUES (12, 'FTQ02204308344082', 9, 30, 107, 4, 0, 0, '
 INSERT INTO `t_cf_order` VALUES (29, 'CUS02204300282632', 210, 30, 186, 1, 1, 0, '2018-01-03 03:41:59', 0, 20, 30, NULL, 30, 1);
 INSERT INTO `t_cf_order` VALUES (30, 'FTQ02204301252085', 210, 30, 186, 201, 1, 0, '2018-01-10 06:48:02', 0, 13, 30, NULL, 6030, 1);
 INSERT INTO `t_cf_order` VALUES (33, 'FTQ02204302384281', 214, 34, 192, 4, 1, 0, '2018-01-12 03:33:19', 0, 23, 35, NULL, 800, 1);
-INSERT INTO `t_cf_order` VALUES (34, 'be7bea2d729945879e7ff88cb84198e7', 223, 41, 204, 4, 0, 0, '2022-05-02 00:56:06', 0, 24, 41, NULL, 84, 1);
-INSERT INTO `t_cf_order` VALUES (35, '22853a3398984edbb2ec37fc5f7e0bc4', 223, 41, 205, 27, 1, 0, '2022-05-02 01:00:08', 0, 24, 41, '2022-05-02 01:17:19', 621, 1);
-INSERT INTO `t_cf_order` VALUES (36, 'fcb70d220dfa40049b281d80845dd598', 223, 41, 204, 98, 1, 0, '2022-05-02 01:00:47', 0, 24, 41, '2022-05-02 01:17:04', 2058, 1);
-INSERT INTO `t_cf_order` VALUES (37, 'fbb18783e4534f7694c97964d9a99789', 223, 43, 205, 3, 1, 0, '2022-05-02 03:20:45', 0, 25, 41, '2022-05-02 03:21:03', 69, 1);
-INSERT INTO `t_cf_order` VALUES (38, '564718037c9c4913b384f522f6b5e123', 224, 41, 207, 5, 1, 0, '2022-05-02 03:24:58', 0, 24, 43, '2022-05-02 03:25:29', 3000, 1);
-INSERT INTO `t_cf_order` VALUES (39, 'd9b0c56e4ca64a2486f83c719228a8c8', 201, 30, 175, 1, 1, 0, '2022-05-08 17:00:41', 0, 9, 30, '2022-05-08 17:00:56', 198, 1);
 
 -- ----------------------------
 -- Table structure for t_cf_project
@@ -311,25 +296,6 @@ INSERT INTO `t_cf_project_detail` VALUES (474, 212, '', '<p></p>');
 INSERT INTO `t_cf_project_detail` VALUES (478, 214, '主创人员', '<p>片名：《河流》</p><p>影片类型：励志片</p><p>时长：40—50分钟</p><p>拍摄周期：15—20天</p><p>拍摄地点：广东</p><p>导演：张羽达</p><p>成员：李玉清 唐静梦 黄秋芬 梁启洪</p><img src=\'/img/project/detail/2c904eb0-8cae-4dd8-a4bf-9f97cb971093.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />');
 INSERT INTO `t_cf_project_detail` VALUES (479, 214, '', '<p></p>');
 INSERT INTO `t_cf_project_detail` VALUES (480, 214, '', '<p></p>');
-INSERT INTO `t_cf_project_detail` VALUES (490, 218, '打法是的法师法士大夫撒', '<p>打发士大夫撒法师法师</p><img src=\'/img/project/detail/a6555607-f330-41b4-8f7f-c25a38cbdcae.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' /><img src=\'/img/project/detail/4d189b48-0ef8-4983-97bf-f2ce06ce52a0.png\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (491, 218, '打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒', '<p>打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒</p><img src=\'/img/project/detail/db37155f-beb2-4dcf-b73a-a21c715fe812.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' /><img src=\'/img/project/detail/127cd4fe-c20b-4246-b43f-0c00d5dfd376.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (492, 218, '打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒', '<p>打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒</p><img src=\'/img/project/detail/4caf7b02-d65e-4acb-9174-db2d5fc53756.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' /><img src=\'/img/project/detail/6bfdd413-07ef-47aa-89c6-b2bb7ee45b72.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (493, 219, '发的发生发的发生', '<p>发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生</p><img src=\'/img/project/detail/c162bef7-702a-4ac9-95c1-6dcf444cdc93.png\' class=\'lazy\' style=\'width:670px; height:100%\' /><img src=\'/img/project/detail/b888b51a-061f-4a89-a7cd-8d314b07d1f1.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (494, 219, '发的发生发的发生', '<p>发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生</p><img src=\'/img/project/detail/6bd518bc-16c5-4522-97db-e0b071c923f5.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' /><img src=\'/img/project/detail/c223496b-8c54-42d6-98d5-fef77093777e.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (495, 219, '发的发生发的发生', '<p>发的发生发的发生发的发生发的发生</p><img src=\'/img/project/detail/5ad2091d-87e5-4ef4-93a7-d8dd7717c5c0.png\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (496, 220, NULL, NULL);
-INSERT INTO `t_cf_project_detail` VALUES (497, 221, '对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚', '<p>对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚对方的发达省份打发发达省份阿道夫阿斯蒂芬安抚</p><img src=\'/upload/project/item/174ee6aef989f7ca1a0cc3d0d5d086af.png\' class=\'lazy\' style=\'width:670px; height:100%\' /><img src=\'/upload/project/item/af9916d575d48694f93ac7f6cf07fdc4.png\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (498, 221, '发的发生发的发生', '<p>发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生发的发生</p><img src=\'/upload/project/item/174ee6aef989f7ca1a0cc3d0d5d086af.png\' class=\'lazy\' style=\'width:670px; height:100%\' /><img src=\'/upload/project/item/v2-bf7daae4aa145478dd55fc339ee57ec7_1440w.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' /><img src=\'/upload/project/item/af9916d575d48694f93ac7f6cf07fdc4.png\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (499, 221, '打发大水发', '<p>打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发打发大水发</p><img src=\'/upload/project/item/v2-bf7daae4aa145478dd55fc339ee57ec7_1440w.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' /><img src=\'/upload/project/item/v2-0a21bff27b5f037748292aa338965d65_1440w\' class=\'lazy\' style=\'width:670px; height:100%\' /><img src=\'/upload/project/item/20210319105349399.png\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (500, 222, '你好，我采用第一种方式进行单点注销，但是他会302重定向页面到白板页面，怎么处理呢，还是我这样子写的问题，我是和你写上的代码写的一样', '<p>你好，我采用第一种方式进行单点注销，但是他会302重定向页面到白板页面，怎么处理呢，还是我这样子写的问题，我是和你写上的代码写的一样你好，我采用第一种方式进行单点注销，但是他会302重定向页面到白板页面，怎么处理呢，还是我这样子写的问题，我是和你写上的代码写的一样你好，我采用第一种方式进行单点注销，但是他会302重定向页面到白板页面，怎么处理呢，还是我这样子写的问题，我是和你写上的代码写的一样你好，我采用第一种方式进行单点注销，但是他会302重定向页面到白板页面，怎么处理呢，还是我这样子写的问题，我是和你写上的代码写的一样</p><img src=\'/upload/project/item/66444u=1575628574,1150213623&fm=193&f=GIF.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' /><img src=\'/upload/project/item/41695u=2291349828,4144427007&fm=193&f=GIF.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (501, 222, '板页面是指什么，地址栏是空的？有一种情况是http跳转到htt', '<p>板页面是指什么，地址栏是空的？有一种情况是http跳转到htt板页面是指什么，地址栏是空的？有一种情况是http跳转到htt板页面是指什么，地址栏是空的？有一种情况是http跳转到htt板页面是指什么，地址栏是空的？有一种情况是http跳转到htt板页面是指什么，地址栏是空的？有一种情况是http跳转到htt板页面是指什么，地址栏是空的？有一种情况是http跳转到htt板页面是指什么，地址栏是空的？有一种情况是http跳转到htt板页面是指什么，地址栏是空的？有一种情况是http跳转到htt</p><img src=\'/upload/project/item/86745u=1575628574,1150213623&fm=193&f=GIF.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (502, 222, '但是发大水发大水发啊 ', '<p>但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 但是发大水发大水发啊 </p><img src=\'/upload/project/item/79250u=963301259,1982396977&fm=193&f=GIF.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' /><img src=\'/upload/project/item/88763u=1575628574,1150213623&fm=193&f=GIF.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (503, 223, '多个豆腐干豆腐', '<p>的范德萨发生</p><img src=\'/upload/project/item/39208u=1575628574,1150213623&fm=193&f=GIF.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (504, 223, '', '<p></p>');
-INSERT INTO `t_cf_project_detail` VALUES (505, 223, '发达省份', '<p>东方大厦法发大水</p><img src=\'/upload/project/item/25564u=4240641596,3235181048&fm=193&f=GIF.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (506, 224, '哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的', '<p>哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的吧吧打的舒服舒服</p><img src=\'/upload/project/item/51886u=4240641596,3235181048&fm=193&f=GIF.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' /><img src=\'/upload/project/item/59779u=4036010509,3445021118&fm=193&f=GIF.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (507, 224, '发的发生发的发生', '<p>的说法是的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的</p><img src=\'/upload/project/item/52799u=963301259,1982396977&fm=193&f=GIF.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />');
-INSERT INTO `t_cf_project_detail` VALUES (508, 224, '发的发生发的发生', '<p>哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的哈好的</p><img src=\'/upload/project/item/20748u=4036010509,3445021118&fm=193&f=GIF.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />');
 
 -- ----------------------------
 -- Table structure for t_cf_project_progress
@@ -358,9 +324,6 @@ INSERT INTO `t_cf_project_progress` VALUES (7, 1, '<p>手动阀发送到是</p>'
 INSERT INTO `t_cf_project_progress` VALUES (8, 1, '<p>是打发点发啥地方撒地方</p>', '2017-11-14 11:56:26', '17855830787');
 INSERT INTO `t_cf_project_progress` VALUES (9, 210, '<p>我们已经开始；额</p>', '2018-01-03 15:39:21', '1324459373');
 INSERT INTO `t_cf_project_progress` VALUES (10, 210, '<p>1111</p>', '2018-01-03 15:40:34', '1324459373');
-INSERT INTO `t_cf_project_progress` VALUES (11, 222, '<p>打发大水发防守打法</p><img src=\'/upload/project/item/32862u=1819248061,230866778&fm=193&f=GIF.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />', '2022-05-02 02:42:43', '17855830001');
-INSERT INTO `t_cf_project_progress` VALUES (12, 223, '<p>撒旦法懂法守法</p><img src=\'/upload/project/item/30561u=963301259,1982396977&fm=193&f=GIF.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />', '2022-05-02 02:42:51', '17855830001');
-INSERT INTO `t_cf_project_progress` VALUES (13, 223, '<p>打发大水发生的打发的</p><img src=\'/upload/project/item/72153u=2291349828,4144427007&fm=193&f=GIF.jpg\' class=\'lazy\' style=\'width:670px; height:100%\' />', '2022-05-02 02:43:24', '17855830001');
 INSERT INTO `t_cf_project_progress` VALUES (14, 210, '<p>8888888888888888</p>', '2022-05-08 17:00:12', '17855830787');
 
 -- ----------------------------
@@ -432,18 +395,6 @@ INSERT INTO `t_cf_project_repay` VALUES (177, 201, '《70岁的旅行箱》+30�
 INSERT INTO `t_cf_project_repay` VALUES (185, 209, '手动阀的撒范德萨', '沙发上', '实物', 10, 10);
 INSERT INTO `t_cf_project_repay` VALUES (186, 210, '支持1元+1次中奖机会', '众筹成功结束后，每满168人，由众筹网官方抽出1名幸运用户获得(不满168人，按168人抽取。)', '实物', 30, 30);
 INSERT INTO `t_cf_project_repay` VALUES (192, 214, '回复的世纪浩劫', '卡萨丁就分开来的 ', '实物', 30, 200);
-INSERT INTO `t_cf_project_repay` VALUES (196, 218, '打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫', '打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒', '实物', 1, 5);
-INSERT INTO `t_cf_project_repay` VALUES (197, 219, '打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫', '发的发生发的发生发的发生', '实物', 3, 20);
-INSERT INTO `t_cf_project_repay` VALUES (198, 220, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `t_cf_project_repay` VALUES (199, 221, '打发士大夫撒发生撒旦法撒旦法阿斯蒂芬撒打发士大夫', '讽德诵功的说法撒发的发讽德诵功的说法撒发的发讽德诵功的说法撒发的发讽德诵功的说法撒发的发讽德诵功的说法撒发的发讽德诵功的说法撒发的发讽德诵功的说法撒发的发讽德诵功的说法撒发的发讽德诵功的说法撒发的发讽德诵功的说法撒发的发', '实物', 3, 2);
-INSERT INTO `t_cf_project_repay` VALUES (200, 221, '发的说法', '发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发', '实物', 3, 6);
-INSERT INTO `t_cf_project_repay` VALUES (201, 221, '法法师的', '发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发发给打发', '虚拟', 5, 1);
-INSERT INTO `t_cf_project_repay` VALUES (202, 222, '饭都发达省份啊', '饭都发达省份啊饭都发达省份啊饭都发达省份啊饭都发达省份啊', '虚拟', 6, 600);
-INSERT INTO `t_cf_project_repay` VALUES (203, 222, '打打打发大水', '都是发的说法是否按时按时发生大师傅阿斯蒂芬安抚', '实物', 3, 60);
-INSERT INTO `t_cf_project_repay` VALUES (204, 223, '打啊', '多个范德萨发顺丰沙发', '实物', 0, 21);
-INSERT INTO `t_cf_project_repay` VALUES (205, 223, '打发点', '的啥发达省份大师傅按时', '实物', 5, 23);
-INSERT INTO `t_cf_project_repay` VALUES (206, 224, '打发大水发', '的说法阿士大夫撒阿萨德撒', '实物', 3, 60);
-INSERT INTO `t_cf_project_repay` VALUES (207, 224, '打发 按时发', '发送到发阿斯蒂芬a46546546', '实物', 6, 600);
 
 -- ----------------------------
 -- Table structure for t_cf_province_city_district
@@ -4035,13 +3986,8 @@ CREATE TABLE `t_cf_user`  (
 -- ----------------------------
 -- Records of t_cf_user
 -- ----------------------------
-INSERT INTO `t_cf_user` VALUES (30, 'wo shi shui 111', '17855830787', '96e79218965eb72c92a549dd5a330112', '打算发', 1, '565465465', '2022-05-21', '2017-09-22 09:22:40', '178558307879', '湖南,张家界', '', 'lvfengxian88@163.com');
-INSERT INTO `t_cf_user` VALUES (34, NULL, '13754113543', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, '2017-12-29 04:48:33', '13754113543', NULL, NULL, NULL);
-INSERT INTO `t_cf_user` VALUES (35, NULL, '1324459373', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, '2017-12-29 07:17:59', '1324459373', NULL, NULL, NULL);
-INSERT INTO `t_cf_user` VALUES (37, NULL, '123456', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `t_cf_user` VALUES (38, NULL, '111111', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `t_cf_user` VALUES (39, NULL, '1111111', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `t_cf_user` VALUES (40, NULL, '11111111', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `t_cf_user` VALUES (30, 'QQ1324459373', 'QQ1324459373', '96e79218965eb72c92a549dd5a330112', '打算发', 1, '565465465', '2022-05-21', '2017-09-22 09:22:40', '178558307879', '湖南,张家界', '', 'lvfengxian88@163.com');
+INSERT INTO `t_cf_user` VALUES (35, NULL, 'qq1324459373', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, '2017-12-29 07:17:59', '1324459373', NULL, NULL, NULL);
 INSERT INTO `t_cf_user` VALUES (41, NULL, '17855830001', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `t_cf_user` VALUES (42, NULL, '17855830002', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `t_cf_user` VALUES (43, NULL, '17855830003', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
