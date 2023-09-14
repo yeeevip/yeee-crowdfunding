@@ -22,19 +22,18 @@
 
 | 依赖                          | 版本                                                   |
 |-----------------------------|------------------------------------------------------|
-| Spring Boot                 | 2.6.3                                                |
-| yeee-memo                   | [通用web脚手架](https://github.com/yeeevip/yeee-memo.git) |
+| Spring Boot                 | 2.6.3                                                ||
 
-### 模块说明
+### 模块说明/结构目录
 
 ```lua
 yeee-crowdfunding
 ├── app-h5
-    ├── yeee-admin-ui -- 众筹后台管理系统｜vue
-    └── yeee-crowdfunding-web -- 众筹前台页面
-├── doc -- 文档脚本
+    ├── yeee-admin-ui -- 后台管理系统｜vue
+    └── yeee-crowdfunding-web -- 前台用户页面
+├── doc -- 文档sql脚本
 ├── yeee-crowdfunding-bootstrap -- 主启动工程
-├── yeee-crowdfunding-client -- 众筹客户端服务
+├── yeee-crowdfunding-client -- 众筹前台用户服务
 ├── yeee-app-common -- 公共模块
 ├── yeee-crowdfunding-manage -- 众筹管理端服务
 ├── yeee-sys-manage -- 系统权限管理服务
@@ -46,14 +45,9 @@ yeee-crowdfunding
 
 - jdk1.8
 - mysql >= 5.7
-- redis
+- maven 3.6+
 
 ```
-# 下载yeee-memo工程
-git clone https://github.com/yeeevip/yeee-memo.git
-
-# 打包依赖[通用JavaWeb脚手架]memo-parent
-cd memo-parent && mvn clean install
 
 # 下载众筹项目
 git clone https://github.com/yeeevip/yeee-crowdfunding.git
