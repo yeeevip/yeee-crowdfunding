@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vip.yeee.memo.base.model.rest.CommonResult;
 import vip.yeee.memo.base.model.vo.PageVO;
+import vip.yeee.memo.base.websecurityoauth2.context.SecurityContext;
 
 import java.util.List;
 
@@ -33,13 +34,14 @@ public class SysMenuController {
     }
 
     @GetMapping("/list")
-    public CommonResult<PageVO<SysMenuVO>> getSysMenuListTreenode(String query) {
-        return CommonResult.success(sysMenuService.getSysMenuListTreenode(query));
+    public CommonResult<PageVO<SysMenuVO>> getSysMenuListTreeNode(String query) {
+        return CommonResult.success(sysMenuService.getSysMenuListTreeNode(query));
     }
 
     @GetMapping("/getAuthz")
     public CommonResult<Object> getMenuAuthz() {
-        return CommonResult.success(sysMenuService.getMenuAuthz());
+        Integer userId = Integer.valueOf(SecurityContext.getCurUserId());
+        return CommonResult.success(sysMenuService.getMenuAuthz(userId));
     }
 
     @ApiOperation("创建菜单")

@@ -39,7 +39,7 @@ export const mainRoutes = {
     // { path: '/demo-ueditor', component: _import('demo/ueditor'), name: 'demo-ueditor', meta: { title: 'demo-ueditor', isTab: true } }
   ],
   beforeEnter (to, from, next) {
-    let token = Vue.cookie.get('yeee-manageweb-token')
+    let token = localStorage.getItem('yeee-manageweb-token')
     if (!token || !/\S/.test(token)) {
       clearLoginInfo()
       next({ name: 'login' })

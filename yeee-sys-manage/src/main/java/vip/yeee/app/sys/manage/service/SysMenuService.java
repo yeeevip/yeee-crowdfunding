@@ -84,7 +84,7 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         return parentMenu;
     }
 
-    public PageVO<SysMenuVO> getSysMenuListTreenode(String query) {
+    public PageVO<SysMenuVO> getSysMenuListTreeNode(String query) {
         MyPageWrapper<SysMenu> pageWrapper = new MyPageWrapper<>(query);
         QueryWrapper<SysMenu> queryWrapper = pageWrapper.getQueryWrapper();
         List<SysMenu> sysMenuList = this.list(queryWrapper);
@@ -103,10 +103,9 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         return new PageVO<>(0, 0, 0, 0L, parentMenu);
     }
 
-    public Map<String, Object> getMenuAuthz() {
+    public Map<String, List<String>> getMenuAuthz(Integer userId) {
         List<String> roles = Lists.newArrayList();
         List<String> stringPermissions = Lists.newArrayList();
-        Integer userId = Integer.valueOf(SecurityContext.getCurUserId());
         List<SysUserRole> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(userId));
         if (CollectionUtil.isNotEmpty(userRoles)) {
             userRoles.forEach(role -> {

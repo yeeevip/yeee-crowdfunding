@@ -99,7 +99,7 @@ export default {
           password: md5(this.dataForm.password)
         }).then(({data: res}) => {
           if (res && res.code === 200) {
-            this.$cookie.set('yeee-manageweb-token', res.data.token)
+            localStorage.setItem('yeee-manageweb-token', res.data.token)
             this.$router.replace({ name: 'home' })
           } else {
             this.$message.error(res.message)

@@ -1,17 +1,11 @@
 package vip.yeee.app.sys.manage.service;
 
-import cn.hutool.core.collection.CollectionUtil;
-import com.google.common.collect.Sets;
 import vip.yeee.app.common.constant.MessageConstant;
 import vip.yeee.memo.base.model.exception.BizException;
 import vip.yeee.memo.base.websecurityoauth2.constant.SecurityUserTypeEnum;
 import vip.yeee.memo.base.websecurityoauth2.model.AuthUser;
-import vip.yeee.app.sys.manage.domain.mysql.mapper.SysRoleMapper;
 import vip.yeee.app.sys.manage.domain.mysql.mapper.SysUserMapper;
-import vip.yeee.app.sys.manage.domain.mysql.mapper.SysUserRoleMapper;
-import vip.yeee.app.common.domain.mysql.entity.SysRole;
 import vip.yeee.app.common.domain.mysql.entity.SysUser;
-import vip.yeee.app.common.domain.mysql.entity.SysUserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,9 +25,8 @@ import java.util.*;
 public class CustomUserDetailsService extends AbstractCustomUserDetailsService {
 
     private final SysUserMapper sysUserMapper;
-    private final SysRoleMapper sysRoleMapper;
-    private final SysUserRoleMapper sysUserRoleMapper;
     //private final UserMapper userMapper;
+    private final SysMenuService sysMenuService;
 
     @Override
     public AuthUser getUserByUserTypeAndUsername(String userType, String username) {
@@ -48,24 +41,17 @@ public class CustomUserDetailsService extends AbstractCustomUserDetailsService {
         if (sysUser == null) {
             throw new BizException(MessageConstant.USER_NOT_EXIST);
         }
-        // find roles
-        List<SysUserRole> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(sysUser.getId()));
-        if (CollectionUtil.isEmpty(userRoles)) {
-            throw new BizException(MessageConstant.USER_NO_ROLES);
-        }
-        Set<String> roles = Sets.newHashSet();
-        userRoles.forEach(ur -> {
-            SysRole role = sysRoleMapper.getOne(new SysRole().setId(ur.getRoleId()));
-            if (role != null) {
-                roles.add(role.getCode());
-            }
-        });
+
         AuthUser authUser = new AuthUser();
         authUser.setUserId(sysUser.getId().toString());
         authUser.setUsername(sysUser.getUsername());
         authUser.setPassword(sysUser.getPassword());
         authUser.setState(sysUser.getState());
-        authUser.setRoles(roles);
+
+        Map<String, List<String>> menuAuthz = sysMenuService.getMenuAuthz(sysUser.getId());
+        authUser.setRoles(new HashSet<>(menuAuthz.get("roles")));
+        authUser.setPermissions(new HashSet<>(menuAuthz.get("stringPermissions")));
+
         return authUser;
     }
 }

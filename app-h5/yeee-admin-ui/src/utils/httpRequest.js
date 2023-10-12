@@ -33,9 +33,9 @@ http.json = () => {
  * 请求拦截
  */
 http.interceptors.request.use(config => {
-  var token = Vue.cookie.get('yeee-manageweb-token')
+  var token = localStorage.getItem('yeee-manageweb-token')
   if (token) {
-    config.headers['Authorization'] = 'Bearer ' + Vue.cookie.get('yeee-manageweb-token') // 请求头带上token
+    config.headers['Authorization'] = 'Bearer ' + localStorage.getItem('yeee-manageweb-token') // 请求头带上token
   }
   if (http.type === 'form') {
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
