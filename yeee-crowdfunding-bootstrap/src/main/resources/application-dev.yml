@@ -12,8 +12,6 @@ security:
     client:
       client-id: ${spring.application.name}
       client-secret: 111111
-      #      grant-type: password
-      access-token-uri: http://127.0.0.1:${server.port}${server.servlet.context-path}/oauth/token
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
@@ -27,8 +25,11 @@ yeee:
     description: yeee众筹系统
     contact-name: yeee
     version: 1.0
-  auth:
-    jwtSecret: 123456
+  webauth:
+    token-store:
+      jwt-secret: 123456
+      jwt:
+        enabled: true
     resource:
       exclude:
         - /api/cf/**

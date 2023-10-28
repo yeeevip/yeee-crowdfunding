@@ -24,7 +24,6 @@ import vip.yeee.memo.base.mybatisplus.warpper.MyPageWrapper;
 import vip.yeee.memo.base.websecurityoauth2.constant.SecurityUserTypeEnum;
 import vip.yeee.memo.base.websecurityoauth2.context.SecurityContext;
 import vip.yeee.memo.base.websecurityoauth2.model.Oauth2TokenVo;
-import vip.yeee.memo.common.platformauth.client.service.WebAuthClientService;
 
 import java.util.Date;
 import java.util.List;
@@ -41,8 +40,6 @@ import java.util.stream.Collectors;
 @Service
 public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> {
 
-    private final WebAuthClientService webAuthClientService;
-
     private final SysUserMapper sysUserMapper;
 
     private final SysUserConvert sysUserConvert;
@@ -53,8 +50,15 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final CustomUserDetailsService customUserDetailsService;
+
     public Oauth2TokenVo login(String username, String password) {
-        return webAuthClientService.getUserAccessToken(SecurityUserTypeEnum.SYSTEM_USER.getType(), username, password);
+        return customUserDetailsService.oauthToken(SecurityUserTypeEnum.SYSTEM_USER.getType(), username, password);
+    }
+
+    public Void userLogout() {
+        customUserDetailsService.logout();
+        return null;
     }
 
     public PageVO<UserVO> sysUserPageList(SysUserPageReqVO sysUserPageReqVO) {
@@ -176,8 +180,9 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> {
         upd.setPassword(passwordEncoder.encode(userUpdPwdVO.getNewPassword()));
         boolean res = this.updateById(upd);
         if (res) {
-            webAuthClientService.userLogout(SecurityContext.getCurToken());
+            customUserDetailsService.logout();
         }
         return null;
     }
+
 }
