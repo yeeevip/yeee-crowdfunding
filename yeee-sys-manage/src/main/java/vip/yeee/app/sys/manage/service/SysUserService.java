@@ -160,6 +160,9 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> {
     }
 
     public Void delSysUser(SysUserEditVO editVO) {
+        if (editVO.getIds().contains(Integer.parseInt(SecurityContext.getCurUserId()))) {
+            throw new BizException("不能删除自己！");
+        }
         this.removeByIds(editVO.getIds());
         return null;
     }

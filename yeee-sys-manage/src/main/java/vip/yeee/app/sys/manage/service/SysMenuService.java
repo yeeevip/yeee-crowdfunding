@@ -2,7 +2,9 @@ package vip.yeee.app.sys.manage.service;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -53,14 +55,22 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
 
     public List<SysMenuVO> getMenuListTree() {
 
-        Integer userId = Integer.valueOf(SecurityContext.getCurUserId());
+        List<SysMenu> sysMenuList;
 
-        List<SysUserRole> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(userId));
-        if (CollectionUtil.isEmpty(userRoles)) {
-            return Collections.emptyList();
+        if (SecurityContext.isSuperAdmin()) {
+            LambdaQueryWrapper<SysMenu> query = Wrappers.lambdaQuery();
+            query.orderByAsc(SysMenu::getSeq);
+            query.eq(SysMenu::getType, SysMenuTypeEnum.menu.getCode());
+            sysMenuList = sysMenuMapper.selectList(query);
+        } else {
+            Integer userId = Integer.valueOf(SecurityContext.getCurUserId());
+            List<SysUserRole> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(userId));
+            if (CollectionUtil.isEmpty(userRoles)) {
+                return Collections.emptyList();
+            }
+            sysMenuList = sysMenuMapper.getListByRoleIds(userRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList()), SysMenuTypeEnum.menu.getCode());
         }
 
-        List<SysMenu> sysMenuList = sysMenuMapper.getListByRoleIds(userRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList()), SysMenuTypeEnum.menu.getCode());
         if (CollectionUtil.isEmpty(sysMenuList)) {
             return Collections.emptyList();
         }
@@ -106,17 +116,25 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
     public Map<String, List<String>> getMenuAuthz(Integer userId) {
         List<String> roles = Lists.newArrayList();
         List<String> stringPermissions = Lists.newArrayList();
-        List<SysUserRole> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(userId));
-        if (CollectionUtil.isNotEmpty(userRoles)) {
-            userRoles.forEach(role -> {
-                SysRole sysRole = sysRoleMapper.getOne(new SysRole().setId(role.getRoleId()));
-                if (sysRole != null && StrUtil.isNotEmpty(sysRole.getCode())) {
-                    roles.add(sysRole.getCode());
-                }
-            });
+        List<SysMenu> sysMenuList;
+        if (SecurityContext.isSuperAdmin()) {
+            LambdaQueryWrapper<SysMenu> query = Wrappers.lambdaQuery();
+            query.orderByAsc(SysMenu::getSeq);
+            query.eq(SysMenu::getType, SysMenuTypeEnum.func.getCode());
+            sysMenuList = sysMenuMapper.selectList(query);
+        } else {
+            List<SysUserRole> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(userId));
+            if (CollectionUtil.isNotEmpty(userRoles)) {
+                userRoles.forEach(role -> {
+                    SysRole sysRole = sysRoleMapper.getOne(new SysRole().setId(role.getRoleId()));
+                    if (sysRole != null && StrUtil.isNotEmpty(sysRole.getCode())) {
+                        roles.add(sysRole.getCode());
+                    }
+                });
+            }
+            sysMenuList = sysMenuMapper.getListByRoleIds(userRoles.stream()
+                    .map(SysUserRole::getRoleId).collect(Collectors.toList()), SysMenuTypeEnum.func.getCode());
         }
-        List<SysMenu> sysMenuList = sysMenuMapper.getListByRoleIds(userRoles.stream()
-                .map(SysUserRole::getRoleId).collect(Collectors.toList()), SysMenuTypeEnum.func.getCode());
         if (CollectionUtil.isNotEmpty(sysMenuList)) {
             sysMenuList.forEach(menu -> {
                 if (StrUtil.isNotEmpty(menu.getPerm())) {
