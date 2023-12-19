@@ -114,10 +114,14 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
     }
 
     public Map<String, List<String>> getMenuAuthz(Integer userId) {
+        return getMenuAuthz(userId, SecurityContext.isSuperAdmin());
+    }
+
+    public Map<String, List<String>> getMenuAuthz(Integer userId, boolean isSuperAdmin) {
         List<String> roles = Lists.newArrayList();
         List<String> stringPermissions = Lists.newArrayList();
         List<SysMenu> sysMenuList;
-        if (SecurityContext.isSuperAdmin()) {
+        if (isSuperAdmin) {
             LambdaQueryWrapper<SysMenu> query = Wrappers.lambdaQuery();
             query.orderByAsc(SysMenu::getSeq);
             query.eq(SysMenu::getType, SysMenuTypeEnum.func.getCode());
@@ -131,9 +135,11 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
                         roles.add(sysRole.getCode());
                     }
                 });
+                sysMenuList = sysMenuMapper.getListByRoleIds(userRoles.stream()
+                        .map(SysUserRole::getRoleId).collect(Collectors.toList()), SysMenuTypeEnum.func.getCode());
+            } else {
+                sysMenuList = Collections.emptyList();
             }
-            sysMenuList = sysMenuMapper.getListByRoleIds(userRoles.stream()
-                    .map(SysUserRole::getRoleId).collect(Collectors.toList()), SysMenuTypeEnum.func.getCode());
         }
         if (CollectionUtil.isNotEmpty(sysMenuList)) {
             sysMenuList.forEach(menu -> {
