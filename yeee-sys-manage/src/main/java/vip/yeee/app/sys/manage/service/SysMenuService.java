@@ -121,20 +121,20 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         List<String> roles = Lists.newArrayList();
         List<String> stringPermissions = Lists.newArrayList();
         List<SysMenu> sysMenuList;
+        List<SysUserRole> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(userId));
+        userRoles.forEach(role -> {
+            SysRole sysRole = sysRoleMapper.getOne(new SysRole().setId(role.getRoleId()));
+            if (sysRole != null && StrUtil.isNotEmpty(sysRole.getCode())) {
+                roles.add(sysRole.getCode());
+            }
+        });
         if (isSuperAdmin) {
             LambdaQueryWrapper<SysMenu> query = Wrappers.lambdaQuery();
             query.orderByAsc(SysMenu::getSeq);
             query.eq(SysMenu::getType, SysMenuTypeEnum.func.getCode());
             sysMenuList = sysMenuMapper.selectList(query);
         } else {
-            List<SysUserRole> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(userId));
             if (CollectionUtil.isNotEmpty(userRoles)) {
-                userRoles.forEach(role -> {
-                    SysRole sysRole = sysRoleMapper.getOne(new SysRole().setId(role.getRoleId()));
-                    if (sysRole != null && StrUtil.isNotEmpty(sysRole.getCode())) {
-                        roles.add(sysRole.getCode());
-                    }
-                });
                 sysMenuList = sysMenuMapper.getListByRoleIds(userRoles.stream()
                         .map(SysUserRole::getRoleId).collect(Collectors.toList()), SysMenuTypeEnum.func.getCode());
             } else {
