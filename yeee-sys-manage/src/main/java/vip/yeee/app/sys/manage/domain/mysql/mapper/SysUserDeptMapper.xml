@@ -13,4 +13,26 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
+    <select id="getList" resultType="vip.yeee.app.sys.manage.model.dto.SysUserDeptDto">
+        SELECT
+            ud.id,
+            ud.user_id,
+            ud.dept_id,
+            d.code deptCode
+        FROM
+        sys_user_dept ud
+        join sys_dept d on d.id = ud.dept_id
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != '' and id != null">
+                and ud.id = #{id}
+            </if>
+            <if test="userId != '' and userId != null">
+                and ud.user_id = #{userId}
+            </if>
+            <if test="deptId != '' and deptId != null">
+                and ud.dept_id = #{deptId}
+            </if>
+        </trim>
+    </select>
+
 </mapper>

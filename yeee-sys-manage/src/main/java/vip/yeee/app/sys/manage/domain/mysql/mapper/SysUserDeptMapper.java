@@ -2,6 +2,9 @@ package vip.yeee.app.sys.manage.domain.mysql.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import vip.yeee.app.common.domain.mysql.entity.SysUserDept;
+import vip.yeee.app.sys.manage.model.dto.SysUserDeptDto;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import vip.yeee.app.common.domain.mysql.entity.SysUserDept;
  */
 public interface SysUserDeptMapper extends BaseMapper<SysUserDept> {
 
+    List<SysUserDeptDto> getList(SysUserDept sysUserDept);
 }

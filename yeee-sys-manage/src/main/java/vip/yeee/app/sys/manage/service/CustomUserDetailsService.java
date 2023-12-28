@@ -52,6 +52,7 @@ public class CustomUserDetailsService extends AbstractCustomUserDetailsService {
         Map<String, List<String>> menuAuthz = sysMenuService.getMenuAuthz(sysUser.getId()
                 , Integer.valueOf(1).equals(sysUser.getSuperAdmin()));
         authUser.setRoles(new HashSet<>(menuAuthz.get("roles")));
+        authUser.setGroups(new HashSet<>(menuAuthz.get("groups")));
         authUser.setPermissions(new HashSet<>(menuAuthz.get("stringPermissions")));
 
         return authUser;

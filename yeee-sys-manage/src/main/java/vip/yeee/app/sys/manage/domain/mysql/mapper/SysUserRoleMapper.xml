@@ -30,18 +30,30 @@
         </trim>
     </sql>
 
-    <select id="getList" resultType="vip.yeee.app.common.domain.mysql.entity.SysUserRole">
+    <select id="getList" resultType="vip.yeee.app.sys.manage.model.dto.SysUserRoleDto">
         SELECT
-            id,
-            user_id,
-            role_id,
-            create_by,
-            create_time,
-            update_by,
-            update_time
+            ur.id,
+            ur.user_id,
+            ur.role_id,
+            ur.create_by,
+            ur.create_time,
+            ur.update_by,
+            ur.update_time,
+            r.code roleCode
         FROM
-            sys_user_role
-        <include refid="searchBy"/>
+            sys_user_role ur
+        join sys_role r on r.id = ur.role_id
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != '' and id != null">
+                and ur.id = #{id}
+            </if>
+            <if test="userId != '' and userId != null">
+                and ur.user_id = #{userId}
+            </if>
+            <if test="roleId != '' and roleId != null">
+                and ur.role_id = #{roleId}
+            </if>
+        </trim>
     </select>
 
     <select id="getOne" resultType="vip.yeee.app.common.domain.mysql.entity.SysUserRole">

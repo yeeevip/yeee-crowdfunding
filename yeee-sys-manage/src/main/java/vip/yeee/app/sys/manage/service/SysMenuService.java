@@ -9,17 +9,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import vip.yeee.app.common.constant.SysMenuTypeEnum;
+import vip.yeee.app.common.domain.mysql.entity.*;
 import vip.yeee.app.sys.manage.convert.SysMenuConvert;
+import vip.yeee.app.sys.manage.domain.mysql.mapper.*;
+import vip.yeee.app.sys.manage.model.dto.SysUserDeptDto;
+import vip.yeee.app.sys.manage.model.dto.SysUserRoleDto;
 import vip.yeee.app.sys.manage.model.vo.SysMenuHasSetVO;
 import vip.yeee.app.sys.manage.model.vo.SysMenuVO;
-import vip.yeee.app.sys.manage.domain.mysql.mapper.SysMenuMapper;
-import vip.yeee.app.sys.manage.domain.mysql.mapper.SysRoleMapper;
-import vip.yeee.app.sys.manage.domain.mysql.mapper.SysRoleMenuMapper;
-import vip.yeee.app.sys.manage.domain.mysql.mapper.SysUserRoleMapper;
-import vip.yeee.app.common.domain.mysql.entity.SysMenu;
-import vip.yeee.app.common.domain.mysql.entity.SysRole;
-import vip.yeee.app.common.domain.mysql.entity.SysRoleMenu;
-import vip.yeee.app.common.domain.mysql.entity.SysUserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import vip.yeee.memo.base.model.exception.BizException;
@@ -49,6 +45,8 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
 
     private final SysUserRoleMapper sysUserRoleMapper;
 
+    private final SysUserDeptMapper sysUserDeptMapper;
+
     private final SysMenuConvert sysMenuConvert;
 
     private final SysRoleMenuMapper sysRoleMenuMapper;
@@ -64,7 +62,7 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
             sysMenuList = sysMenuMapper.selectList(query);
         } else {
             Integer userId = Integer.valueOf(SecurityContext.getCurUserId());
-            List<SysUserRole> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(userId));
+            List<SysUserRoleDto> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(userId));
             if (CollectionUtil.isEmpty(userRoles)) {
                 return Collections.emptyList();
             }
@@ -119,15 +117,13 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
 
     public Map<String, List<String>> getMenuAuthz(Integer userId, boolean isSuperAdmin) {
         List<String> roles = Lists.newArrayList();
+        List<String> groups = Lists.newArrayList();
         List<String> stringPermissions = Lists.newArrayList();
+        List<SysUserRoleDto> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(userId));
+        roles.addAll(userRoles.stream().map(SysUserRoleDto::getRoleCode).collect(Collectors.toList()));
+        List<SysUserDeptDto> userDeps = sysUserDeptMapper.getList(new SysUserDept().setUserId(userId));
+        groups.addAll(userDeps.stream().map(SysUserDeptDto::getDeptCode).collect(Collectors.toList()));
         List<SysMenu> sysMenuList;
-        List<SysUserRole> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(userId));
-        userRoles.forEach(role -> {
-            SysRole sysRole = sysRoleMapper.getOne(new SysRole().setId(role.getRoleId()));
-            if (sysRole != null && StrUtil.isNotEmpty(sysRole.getCode())) {
-                roles.add(sysRole.getCode());
-            }
-        });
         if (isSuperAdmin) {
             LambdaQueryWrapper<SysMenu> query = Wrappers.lambdaQuery();
             query.orderByAsc(SysMenu::getSeq);
@@ -148,7 +144,7 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
                 }
             });
         }
-        return ImmutableMap.of("roles", roles, "stringPermissions", stringPermissions);
+        return ImmutableMap.of("roles", roles, "groups", groups, "stringPermissions", stringPermissions);
     }
 
     public Void addSysMenu(SysMenuVO editVO) {

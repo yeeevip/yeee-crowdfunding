@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import vip.yeee.app.sys.manage.convert.SysRoleConvert;
+import vip.yeee.app.sys.manage.model.dto.SysUserRoleDto;
 import vip.yeee.app.sys.manage.model.vo.SysRoleVO;
 import vip.yeee.app.sys.manage.domain.mysql.mapper.SysRoleMapper;
 import vip.yeee.app.sys.manage.domain.mysql.mapper.SysRoleMenuMapper;
@@ -119,7 +120,7 @@ public class SysRoleService extends ServiceImpl<SysRoleMapper, SysRole> {
 
     public SysRoleHasSetVO sysRoleListAndHasSet(Integer userId) {
         SysRoleHasSetVO roleHasSetVO = new SysRoleHasSetVO();
-        List<SysUserRole> userRoles = userId != null ? sysUserRoleMapper.getList(new SysUserRole().setUserId(userId)) : Collections.emptyList();
+        List<SysUserRoleDto> userRoles = userId != null ? sysUserRoleMapper.getList(new SysUserRole().setUserId(userId)) : Collections.emptyList();
         roleHasSetVO.setCheckedKeys(Optional.ofNullable(userRoles).orElseGet(Lists::newArrayList)
                 .stream()
                 .map(SysUserRole::getRoleId)
