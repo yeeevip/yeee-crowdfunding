@@ -1,7 +1,7 @@
 
 ## 系统说明
 
-- 基于 Spring Boot + Vue + Jwt 开发的 **众筹平台系统**
+- 基于 Spring Boot + SpringSecurity-Oauth2 + Jwt + Vue 开发的 **众筹平台系统**
 - 轻量级 + 组件化 + 可扩展
 
 ## 程序预览
@@ -49,21 +49,26 @@ yeee-crowdfunding
 - maven 3.6+
 
 ```
+# 下载yeee-memo工程
+git clone https://github.com/yeeevip/yeee-memo.git
+
+# 打包[JavaWeb通用脚手架]
+cd yeee-memo/memo-parent && mvn clean install
 
 # 下载众筹项目
 git clone https://github.com/yeeevip/yeee-crowdfunding.git
 
 # 运行web服务
-mvn clean install && java -jar -Dspring.profiles.active=test yeee-crowdfunding-bootstrap/target/yeee-crowdfunding-bootstrap-1.0.0-SNAPSHOT.jar
+cd yeee-crowdfunding && mvn clean install && java -jar yeee-crowdfunding-bootstrap/target/yeee-crowdfunding-bootstrap-1.0.0-SNAPSHOT.jar
 
 # 运行众筹管理端ui
-cd app-h5/yeee-admin-ui && npm install && npm run dev
+cd yeee-crowdfunding/app-h5/yeee-admin-ui && npm install && npm run dev
 
 ```
 
 ### 其他说明
 
-1. 欢迎提交 [PR](https://www.yeee.vip)，注意对应提交对应 `crowdfunding-dev` 分支
+1. 欢迎提交 [PR](https://www.yeee.vip)
 
 2. 欢迎提交 [issue](https://gitee.com/yeeevip/yeee-crowdfunding/issues)，请写清楚遇到问题的原因、开发环境、复显步骤。
 

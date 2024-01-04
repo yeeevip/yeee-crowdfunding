@@ -41,6 +41,7 @@ public class SysDeptService extends ServiceImpl<SysDeptMapper, SysDept> {
 
     public PageVO<SysDeptVO> sysDeptPageList(String query) {
         MyPageWrapper<SysDept> pageWrapper = new MyPageWrapper<>(query);
+        pageWrapper.getPage().setSize(1000);
         IPage<SysDept> page = this.page(pageWrapper.getPage(), pageWrapper.getQueryWrapper());
         List<SysDeptVO> deptVOList = page.getRecords()
                 .stream()
