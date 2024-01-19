@@ -1,5 +1,6 @@
 package vip.yeee.app.sys.manage.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import vip.yeee.app.sys.manage.model.vo.*;
 import vip.yeee.app.sys.manage.service.SysUserService;
 import io.swagger.annotations.Api;
@@ -48,48 +49,56 @@ public class SysUserController {
     }
 
     @ApiOperation("用户分页")
+    @PreAuthorize("hasAuthority('sys:user:page')")
     @PostMapping(value = "/page")
     public CommonResult<PageVO<UserVO>> sysUserPageList(SysUserPageReqVO sysUserPageReqVO) {
         return CommonResult.success(sysUserService.sysUserPageList(sysUserPageReqVO));
     }
 
     @ApiOperation("用户分页")
+    @PreAuthorize("hasAuthority('sys:user:page')")
     @GetMapping(value = "/page")
     public CommonResult<PageVO<UserVO>> sysUserPageList(String query) {
         return CommonResult.success(sysUserService.sysUserPageList(query));
     }
 
     @ApiOperation("用户是否存在")
+    @PreAuthorize("hasAuthority('sys:user:exist')")
     @GetMapping(value = "/exist")
     public CommonResult<Boolean> sysUserExist(String query) {
         return CommonResult.success(sysUserService.sysUserExist(query));
     }
 
     @ApiOperation("创建用户")
+    @PreAuthorize("hasAuthority('sys:user:add')")
     @PostMapping(value = "/add")
     public CommonResult<Void> addSysUser(@Validated(SysUserEditVO.Add.class) @RequestBody SysUserEditVO editVO) {
         return CommonResult.success(sysUserService.addSysUser(editVO));
     }
 
     @ApiOperation("编辑用户")
+    @PreAuthorize("hasAuthority('sys:user:upd')")
     @PostMapping(value = "/upd")
     public CommonResult<Void> editSysUser(@Validated(SysUserEditVO.Edit.class) @RequestBody SysUserEditVO editVO) {
         return CommonResult.success(sysUserService.editSysUser(editVO));
     }
 
     @ApiOperation("修改密码")
+    @PreAuthorize("hasAuthority('sys:user:updPwd')")
     @PostMapping(value = "/upd-pwd")
     public CommonResult<Void> updSysUserPwd(@RequestBody SysUserUpdPwdVO userUpdPwdVO) {
         return CommonResult.success(sysUserService.updSysUserPwd(userUpdPwdVO));
     }
 
     @ApiOperation("用户详情")
+    @PreAuthorize("hasAuthority('sys:user:info')")
     @PostMapping(value = "/info")
     public CommonResult<SysUserInfoVO> sysUserInfo(@Validated(SysUserEditVO.Info.class) @RequestBody SysUserEditVO editVO) {
         return CommonResult.success(sysUserService.sysUserInfo(editVO));
     }
 
     @ApiOperation("删除用户")
+    @PreAuthorize("hasAuthority('sys:user:del')")
     @PostMapping(value = "/del")
     public CommonResult<Void> delSysUser(@Validated(SysUserEditVO.Del.class) @RequestBody SysUserEditVO editVO) {
         return CommonResult.success(sysUserService.delSysUser(editVO));

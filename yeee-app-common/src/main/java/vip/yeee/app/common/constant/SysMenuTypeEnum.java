@@ -1,22 +1,9 @@
-/**
- * Project: yeah1-system-api
- * Class SysRscoEn
- * Version 1.0
- * File Created at 2019年4月16日
- * $Id$
- * author yeah
- * email quhailong1995@gmail.com
- */
 package vip.yeee.app.common.constant;
 
 /**
- * <p>
- * 系统资源类型枚举
- * </p>
- *
- * @author yeah丶一页 (quhailong1995@gmail.com)
+ * description......
+ * @author yeeee
  */
-
 public enum SysMenuTypeEnum {
 
     menu(0, "菜单"),

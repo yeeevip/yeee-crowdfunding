@@ -64,8 +64,8 @@ public class SysRoleService extends ServiceImpl<SysRoleMapper, SysRole> {
     public Void addSysRole(SysRoleVO editVO) {
         SysRole sysRole = sysRoleConvert.vo2Entity(editVO);
         this.save(sysRole);
-        if (CollectionUtil.isNotEmpty(editVO.getRscoIdList())) {
-            this.setSysRoleMenus(editVO.getRscoIdList(), sysRole.getId());
+        if (CollectionUtil.isNotEmpty(editVO.getMenuIdList())) {
+            this.setSysRoleMenus(editVO.getMenuIdList(), sysRole.getId());
         }
         return null;
     }
@@ -80,19 +80,19 @@ public class SysRoleService extends ServiceImpl<SysRoleMapper, SysRole> {
         SysRole upd = sysRoleConvert.vo2Entity(editVO);
         this.updateById(upd);
         sysRoleMenuMapper.delete(Wrappers.<SysRoleMenu>lambdaQuery().eq(SysRoleMenu::getRoleId, roleId));
-        if (CollectionUtil.isNotEmpty(editVO.getRscoIdList())) {
-            this.setSysRoleMenus(editVO.getRscoIdList(), roleId);
+        if (CollectionUtil.isNotEmpty(editVO.getMenuIdList())) {
+            this.setSysRoleMenus(editVO.getMenuIdList(), roleId);
         }
         return null;
     }
 
-    private void setSysRoleMenus(List<Long> rscoList, Integer roleId) {
-        List<SysRoleMenu> roleMenuList = rscoList
+    private void setSysRoleMenus(List<Long> menuList, Integer roleId) {
+        List<SysRoleMenu> roleMenuList = menuList
                 .stream()
-                .map(rsco -> {
+                .map(menu -> {
                     SysRoleMenu sysRoleMenu = new SysRoleMenu();
                     sysRoleMenu.setRoleId(roleId);
-                    sysRoleMenu.setMenuId(rsco);
+                    sysRoleMenu.setMenuId(menu);
                     String username = SecurityContext.getCurUser().getUsername();
                     Date date = new Date();
                     sysRoleMenu.setCreateTime(date);

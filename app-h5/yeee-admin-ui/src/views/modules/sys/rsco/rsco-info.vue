@@ -83,7 +83,7 @@
       },
       // 获取系统权限资源信息
       getInfo () {
-        this.$http.get('/sys/rsco/info/' + this.id).then(({data: res}) => {
+        this.$http.get('/sys/menu/info/' + this.id).then(({data: res}) => {
           if (res.code !== 0) {
             return this.$message.error(res.msg)
           }

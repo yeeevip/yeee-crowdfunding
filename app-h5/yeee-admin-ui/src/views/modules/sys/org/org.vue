@@ -8,8 +8,6 @@
         <el-button size="small" @click="listData()">查询</el-button>
         <el-button v-if="$hasPerm('sys:dept:add')" size="small" type="primary" @click="editHandle()">新增</el-button>
         <el-button v-if="$hasPerm('sys:dept:del')" size="small" type="danger" @click="delHandle()" :disabled="dataListSelections.length <= 0">删除</el-button>
-        <el-button v-if="$hasPerm('sys:org:expt')" size="small" @click="exptHandle()">导出</el-button>
-        <el-button v-if="$hasPerm('sys:org:impt')" size="small" @click="imptHandle()">导入</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="dataList" border stripe v-loading="dataListLoading" :max-height="tableHeight"

@@ -148,7 +148,7 @@ INSERT INTO sys_menu
 VALUES(4059917154079744, 4059916341400576, '角色管理', 'sys/role/role', NULL, 'icon-geren', 10, 'view/sys/role/role.html', 0, NULL, NULL, '2019-02-11 15:42:24', NULL);
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4059917584143360, 4059916341400576, '资源管理', 'sys/rsco/rsco', NULL, 'icon-editor', 15, 'view/sys/rsco/rsco.html', 0, NULL, NULL, '2019-02-11 15:42:45', NULL);
+VALUES(4059917584143360, 4059916341400576, '资源管理', 'sys/menu/menu', NULL, 'icon-editor', 15, 'view/sys/menu/menu.html', 0, NULL, NULL, '2019-02-11 15:42:45', NULL);
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4059918640845824, 4323654351082496, '接口日志', 'sys/log/log', NULL, 'icon-log', 10, 'view/sys/log/log.html', 0, NULL, NULL, '2019-04-06 19:55:29', 'admin');
@@ -217,25 +217,25 @@ INSERT INTO sys_menu
 VALUES(4297735991448583, 4059917154079744, '审核', NULL, 'sys:role:audit', NULL, 70, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218625, 4059917584143360, '查看', NULL, 'sys:rsco:page, sys:rsco:list, sys:rsco:info', NULL, 10, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735992218625, 4059917584143360, '查看', NULL, 'sys:menu:page, sys:menu:list, sys:menu:info', NULL, 10, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218626, 4059917584143360, '新增', NULL, 'sys:rsco:add', NULL, 20, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735992218626, 4059917584143360, '新增', NULL, 'sys:menu:add', NULL, 20, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218627, 4059917584143360, '修改', NULL, 'sys:rsco:upd', NULL, 30, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735992218627, 4059917584143360, '修改', NULL, 'sys:menu:upd', NULL, 30, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218628, 4059917584143360, '删除', NULL, 'sys:rsco:del', NULL, 40, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735992218628, 4059917584143360, '删除', NULL, 'sys:menu:del', NULL, 40, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218629, 4059917584143360, '导出', NULL, 'sys:rsco:expt', NULL, 50, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735992218629, 4059917584143360, '导出', NULL, 'sys:menu:expt', NULL, 50, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218630, 4059917584143360, '导入', NULL, 'sys:rsco:impt', NULL, 60, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735992218630, 4059917584143360, '导入', NULL, 'sys:menu:impt', NULL, 60, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218631, 4059917584143360, '审核', NULL, 'sys:rsco:audit', NULL, 70, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735992218631, 4059917584143360, '审核', NULL, 'sys:menu:audit', NULL, 70, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4297735995577345, 4059916791092224, '查看', NULL, 'sys:user:page, sys:user:list, sys:user:info', NULL, 10, NULL, 1, NULL, 'auto', NULL, 'auto');

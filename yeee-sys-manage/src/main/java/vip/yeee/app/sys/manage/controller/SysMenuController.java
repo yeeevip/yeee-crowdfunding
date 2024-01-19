@@ -1,6 +1,7 @@
 package vip.yeee.app.sys.manage.controller;
 
 import io.swagger.annotations.Api;
+import org.springframework.security.access.prepost.PreAuthorize;
 import vip.yeee.app.sys.manage.model.vo.SysMenuHasSetVO;
 import vip.yeee.app.sys.manage.model.vo.SysMenuVO;
 import vip.yeee.app.sys.manage.service.SysMenuService;
@@ -34,6 +35,7 @@ public class SysMenuController {
     }
 
     @GetMapping("/list")
+    @PreAuthorize("hasAuthority('sys:menu:list')")
     public CommonResult<PageVO<SysMenuVO>> getSysMenuListTreeNode(String query) {
         return CommonResult.success(sysMenuService.getSysMenuListTreeNode(query));
     }
@@ -45,30 +47,35 @@ public class SysMenuController {
     }
 
     @ApiOperation("创建菜单")
+    @PreAuthorize("hasAuthority('sys:menu:add')")
     @PostMapping(value = "/add")
     public CommonResult<Void> addSysMenu(@Validated(SysMenuVO.Add.class) @RequestBody SysMenuVO editVO) {
         return CommonResult.success(sysMenuService.addSysMenu(editVO));
     }
 
     @ApiOperation("编辑菜单")
+    @PreAuthorize("hasAuthority('sys:menu:upd')")
     @PostMapping(value = "/upd")
     public CommonResult<Void> editSysMenu(@Validated(SysMenuVO.Edit.class) @RequestBody SysMenuVO editVO) {
         return CommonResult.success(sysMenuService.editSysMenu(editVO));
     }
 
     @ApiOperation("菜单详情")
+    @PreAuthorize("hasAuthority('sys:menu:info')")
     @PostMapping(value = "/info")
     public CommonResult<SysMenuVO> sysMenuInfo(@Validated(SysMenuVO.Info.class) @RequestBody SysMenuVO editVO) {
         return CommonResult.success(sysMenuService.sysMenuInfo(editVO));
     }
 
     @ApiOperation("删除菜单")
+    @PreAuthorize("hasAuthority('sys:menu:del')")
     @PostMapping(value = "/del")
     public CommonResult<Void> delSysMenu(@Validated(SysMenuVO.Del.class) @RequestBody SysMenuVO editVO) {
         return CommonResult.success(sysMenuService.delSysMenu(editVO));
     }
 
     @ApiOperation("查询菜单和及已设置的")
+    @PreAuthorize("hasAuthority('sys:menu:listSet')")
     @GetMapping(value = "/list-set")
     public CommonResult<SysMenuHasSetVO> sysMenuListAndHasSet(Integer roleId) {
         return CommonResult.success(sysMenuService.sysMenuListAndHasSet(roleId));

@@ -23,10 +23,10 @@
         <el-col :span="14">
           <el-form-item label="资源授权" size="mini">
             <el-tree
-              :data="rscoList"
+              :data="menuList"
               :props="{ label: 'name', children: 'children' }"
               node-key="id"
-              ref="rscoListTree"
+              ref="menuListTree"
               show-checkbox>
             </el-tree>
           </el-form-item>
@@ -64,11 +64,11 @@
       return {
         id: null,
         visible: false,
-        rscoList: [],
+        menuList: [],
         dataForm: {
           code: '',
           name: '',
-          rscoIdList: []
+          menuIdList: []
         },
         dataFormOrigin: [],
         dataRule: {
@@ -88,24 +88,24 @@
         this.dataFormOrigin = {}
         this.id = id
         this.visible = true
-        this.rscoList = []
+        this.menuList = []
         this.$nextTick(() => {
           this.$refs['dataForm'].resetFields()
-          this.$refs.rscoListTree.setCheckedKeys([])
+          this.$refs.menuListTree.setCheckedKeys([])
           // Promise.all([
-          //   this.listRsco()
+          //   this.listMenu()
           // ]).then(() => {
           //   if (this.id) {
           //     this.getInfo()
           //   }
           // })
-          this.listRsco()
+          this.listMenu()
           if (this.id) {
             this.getInfo()
           }
         })
       },
-      listRsco () {
+      listMenu () {
         this.$http.get('/manage/sys-menu/list-set', {
           params: {
             roleId: this.id
@@ -114,9 +114,9 @@
           if (res.code !== 200) {
             return this.$message.error(res.message)
           }
-          this.rscoList = res.data.list
+          this.menuList = res.data.list
           this.$nextTick(() => {
-            res.data.checkedKeys.forEach(item => this.$refs.rscoListTree.setChecked(item, true))
+            res.data.checkedKeys.forEach(item => this.$refs.menuListTree.setChecked(item, true))
           })
         }).catch(() => {})
       },
@@ -142,9 +142,9 @@
       dataFormSubmit: debounce(function () {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
-            this.dataForm.rscoIdList = [
-              ...this.$refs.rscoListTree.getCheckedKeys(),
-              ...this.$refs.rscoListTree.getHalfCheckedKeys()
+            this.dataForm.menuIdList = [
+              ...this.$refs.menuListTree.getCheckedKeys(),
+              ...this.$refs.menuListTree.getHalfCheckedKeys()
             ]
 
             let url = !this.id ? '/manage/sys-role/add' : '/manage/sys-role/upd'

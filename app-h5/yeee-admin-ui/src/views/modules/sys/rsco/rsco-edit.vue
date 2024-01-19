@@ -56,9 +56,9 @@
         </el-col>
         <el-col :span="11" v-if="dataForm.type=== 0">
           <el-form-item prop="icon" label="图标" class="icon-list">
-            <el-popover v-model="iconListVisible" ref="iconListPopover" placement="bottom-start" trigger="click" popper-class="mod-rsco-icon-popover">
-              <div class="mod-rsco-icon-inner">
-                <div class="mod-rsco-icon-list">
+            <el-popover v-model="iconListVisible" ref="iconListPopover" placement="bottom-start" trigger="click" popper-class="mod-menu-icon-popover">
+              <div class="mod-menu-icon-inner">
+                <div class="mod-menu-icon-list">
                   <el-button
                     v-for="(item, index) in iconList"
                     :key="index"
@@ -220,7 +220,7 @@
   }
 </script>
 <style lang="scss">
-.mod-rsco {
+.mod-menu {
   .menu-list,
   .icon-list {
     .el-input__inner,
