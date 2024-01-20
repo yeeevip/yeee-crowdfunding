@@ -148,7 +148,7 @@ INSERT INTO sys_menu
 VALUES(4059917154079744, 4059916341400576, '角色管理', 'sys/role/role', NULL, 'icon-geren', 10, 'view/sys/role/role.html', 0, NULL, NULL, '2019-02-11 15:42:24', NULL);
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4059917584143360, 4059916341400576, '资源管理', 'sys/menu/menu', NULL, 'icon-editor', 15, 'view/sys/menu/menu.html', 0, NULL, NULL, '2019-02-11 15:42:45', NULL);
+VALUES(4059917584143360, 4059916341400576, '菜单管理', 'sys/menu/menu', NULL, 'icon-editor', 15, 'view/sys/menu/menu.html', 0, NULL, NULL, '2019-02-11 15:42:45', NULL);
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4059918640845824, 4323654351082496, '接口日志', 'sys/log/log', NULL, 'icon-log', 10, 'view/sys/log/log.html', 0, NULL, NULL, '2019-04-06 19:55:29', 'admin');
@@ -217,7 +217,7 @@ INSERT INTO sys_menu
 VALUES(4297735991448583, 4059917154079744, '审核', NULL, 'sys:role:audit', NULL, 70, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735992218625, 4059917584143360, '查看', NULL, 'sys:menu:page, sys:menu:list, sys:menu:info', NULL, 10, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735992218625, 4059917584143360, '查看', NULL, 'sys:menu:page, sys:menu:list, sys:menu:info,sys:menu:listSet', NULL, 10, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4297735992218626, 4059917584143360, '新增', NULL, 'sys:menu:add', NULL, 20, NULL, 1, NULL, 'auto', NULL, 'auto');
@@ -238,7 +238,7 @@ INSERT INTO sys_menu
 VALUES(4297735992218631, 4059917584143360, '审核', NULL, 'sys:menu:audit', NULL, 70, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735995577345, 4059916791092224, '查看', NULL, 'sys:user:page, sys:user:list, sys:user:info', NULL, 10, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735995577345, 4059916791092224, '查看', NULL, 'sys:user:page, sys:user:list, sys:user:info,sys:user:exist,sys:user:getUserInfo', NULL, 10, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4297735995577346, 4059916791092224, '新增', NULL, 'sys:user:add', NULL, 20, NULL, 1, NULL, 'auto', NULL, 'auto');
@@ -310,7 +310,7 @@ INSERT INTO sys_menu
 VALUES(4353221119792133, 4353221119792128, '导出', NULL, 'sys:qrtzLog:expt', NULL, 50, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4353221119792134, 4347326007383040, '详情', '', 'sys:dept:info', '', 1, NULL, 1, '2022-05-29 14:52:26', 'admin', '2022-05-29 14:52:26', 'admin');
+VALUES(4353221119792134, 4347326007383040, '详情', '', 'sys:dept:info,sys:dept:page,sys:dept:exist,sys:dept:listSet', '', 1, NULL, 1, '2022-05-29 14:52:26', 'admin', '2022-05-29 14:52:26', 'admin');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4353221119792135, 4347326007383040, '删除', '', 'sys:dept:del', '', 1, NULL, 1, '2022-05-29 14:53:00', 'admin', '2022-05-29 14:53:00', 'admin');
@@ -661,7 +661,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'admin', '9db06bcff9248837f86d1a6bcf41c9e7', '超级管理员', NULL, '13888888888', NULL, NULL, 8, NULL, 0, NULL, '2021-07-12 11:24:02', '2022-01-05 17:04:43', '1', '1', '管理员', 1);
+INSERT INTO `sys_user` VALUES (1, 'admin', '9db06bcff09248837f86d1a6bcf41c9e7', '超级管理员', NULL, '13888888888', NULL, NULL, 8, NULL, 0, NULL, '2021-07-12 11:24:02', '2022-01-05 17:04:43', '1', '1', '管理员', 1);
 INSERT INTO `sys_user` VALUES (2, 'shenhe', '9db06bcff9248837f86d1a6bcf41c9e7', '审核员', NULL, '13888888888', NULL, NULL, 131, NULL, 0, NULL, '2021-07-12 11:24:02', '2021-12-16 16:59:44', '1', '1', '管理员', 0);
 
 -- ----------------------------

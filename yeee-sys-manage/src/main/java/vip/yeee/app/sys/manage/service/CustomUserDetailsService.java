@@ -1,5 +1,6 @@
 package vip.yeee.app.sys.manage.service;
 
+import cn.hutool.core.util.StrUtil;
 import vip.yeee.app.common.constant.MessageConstant;
 import vip.yeee.memo.base.model.exception.BizException;
 import vip.yeee.memo.base.websecurityoauth2.constant.SecurityUserTypeEnum;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import vip.yeee.memo.common.platformauth.server.service.AbstractCustomUserDetailsService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * description......
@@ -51,9 +53,9 @@ public class CustomUserDetailsService extends AbstractCustomUserDetailsService {
 
         Map<String, List<String>> menuAuthz = sysMenuService.getMenuAuthz(sysUser.getId()
                 , Integer.valueOf(1).equals(sysUser.getSuperAdmin()));
-        authUser.setRoles(new HashSet<>(menuAuthz.get("roles")));
-        authUser.setGroups(new HashSet<>(menuAuthz.get("groups")));
-        authUser.setPermissions(new HashSet<>(menuAuthz.get("stringPermissions")));
+        authUser.setRoles(new HashSet<>(menuAuthz.get("roles")).stream().filter(StrUtil::isNotBlank).collect(Collectors.toSet()));
+        authUser.setGroups(new HashSet<>(menuAuthz.get("groups")).stream().filter(StrUtil::isNotBlank).collect(Collectors.toSet()));
+        authUser.setPermissions(new HashSet<>(menuAuthz.get("stringPermissions")).stream().filter(StrUtil::isNotBlank).collect(Collectors.toSet()));
 
         return authUser;
     }

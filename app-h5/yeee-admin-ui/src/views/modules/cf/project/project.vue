@@ -98,10 +98,10 @@
       infoHandle (id) {
         let api = index.baseUrl2()
         let token = Vue.cookie.get('yeee-manageweb-token')
-        window.open(api + '/pages/admin/v1/shenhe.html?id=' + id + '&tt=' + token, '_blank')
+        window.open(api + 'pages/admin/v1/shenhe.html?id=' + id + '&tt=' + token, '_blank')
       },
       getImgPath (path) {
-        let domain = index.baseUrl2()
+        let domain = process.env.VUE_APP_BASE_HOST_URL
         return domain + path
       }
     }
