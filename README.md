@@ -50,13 +50,13 @@ yeee-crowdfunding
 
 ```
 # 下载yeee-memo工程
-git clone https://github.com/yeeevip/yeee-memo.git
+git clone https://gitee.com/yeeevip/yeee-memo.git
 
 # 打包[JavaWeb通用脚手架]
 cd yeee-memo/memo-parent && mvn clean install
 
 # 下载众筹项目
-git clone https://github.com/yeeevip/yeee-crowdfunding.git
+git clone https://gitee.com/yeeevip/yeee-crowdfunding.git
 
 # 运行web服务
 cd yeee-crowdfunding && mvn clean install && java -jar yeee-crowdfunding-bootstrap/target/yeee-crowdfunding-bootstrap-1.0.0-SNAPSHOT.jar
