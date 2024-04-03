@@ -12,7 +12,7 @@ import vip.yeee.app.crowdfunding.client.domain.mysql.mapper.ApiCfUserMapper;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/4/29 16:19
  */
 @Slf4j

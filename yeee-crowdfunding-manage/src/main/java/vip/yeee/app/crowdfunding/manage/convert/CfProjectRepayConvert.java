@@ -7,7 +7,7 @@ import vip.yeee.app.crowdfunding.manage.model.vo.ProjectRepayVO;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/4/30 20:18
  */
 @Mapper(componentModel = "spring")

@@ -10,7 +10,7 @@ import vip.yeee.app.crowdfunding.manage.domain.mysql.mapper.CfInitiatorPersonInf
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/6/28 18:15
  */
 @Service

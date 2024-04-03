@@ -2,7 +2,7 @@ package vip.yeee.app.common.constant;
 
 /**
  * description......
- * @author yeeee
+ * @author https://www.yeee.vip
  */
 public enum SysMenuTypeEnum {
 

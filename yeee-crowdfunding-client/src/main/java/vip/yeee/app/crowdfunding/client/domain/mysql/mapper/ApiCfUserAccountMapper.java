@@ -8,7 +8,7 @@ import vip.yeee.app.common.domain.mysql.entity.CfUserAccount;
  *  Mapper 接口
  * </p>
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023-02-07
  */
 public interface ApiCfUserAccountMapper extends BaseMapper<CfUserAccount> {

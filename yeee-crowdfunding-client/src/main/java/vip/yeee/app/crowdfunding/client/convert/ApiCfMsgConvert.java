@@ -7,7 +7,7 @@ import vip.yeee.app.crowdfunding.client.model.vo.MsgListVO;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/2/6 18:37
  */
 public class ApiCfMsgConvert {

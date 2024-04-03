@@ -10,7 +10,7 @@ import vip.yeee.app.crowdfunding.manage.domain.mysql.mapper.CfMsgMapper;
  *  服务实现类
  * </p>
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023-02-06
  */
 @Service

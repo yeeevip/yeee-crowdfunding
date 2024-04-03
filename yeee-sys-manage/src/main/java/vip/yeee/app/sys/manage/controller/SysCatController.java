@@ -13,7 +13,7 @@ import vip.yeee.memo.base.model.vo.PageVO;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/5/28 18:12
  */
 @Api(tags = "系统后台-数据字典管理")
