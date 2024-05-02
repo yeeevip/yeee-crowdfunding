@@ -6,7 +6,10 @@ import { clearLoginInfo } from '@/utils'
 import isPlainObject from 'lodash/isPlainObject'
 
 const baseUrl = () => {
-  // return process.env.NODE_ENV !== 'production' && process.env.OPEN_PROXY ? '/proxyApi/' : window.SITE_CONFIG.baseUrl
+  console.log(process.env)
+  if (process.env.NODE_ENV !== 'production') {
+    return process.env.VUE_APP_BASE_API;
+  }
 }
 
 const http = axios.create({

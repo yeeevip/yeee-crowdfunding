@@ -28,13 +28,14 @@ export function getUUID () {
  * 获取baseUrl
  */
 export function baseUrl () {
-  // return process.env.NODE_ENV !== 'production' && process.env.OPEN_PROXY ? '/proxyApi/' : window.SITE_CONFIG.baseUrl
-}
+  if (process.env.NODE_ENV !== 'production') {
+    return process.env.VUE_APP_BASE_API;
+  }}
 
 export function baseUrl2 () {
   console.log(process.env)
-  let url = process.env.VUE_APP_BASE_HOST_URL + process.env.VUE_APP_BASE_API
-  return (url === '/' ? '' : url)
+  let url = process.env.VUE_APP_BASE_HOST_URL
+  return (url === '/' ? '' : url + '/')
 }
 
 /**
