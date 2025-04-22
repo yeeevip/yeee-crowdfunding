@@ -118,7 +118,7 @@ CREATE TABLE `t_cf_initiator_person_info`  (
 -- ----------------------------
 -- Records of t_cf_initiator_person_info
 -- ----------------------------
-INSERT INTO `t_cf_initiator_person_info` VALUES (48, 201, '渠急急急', '2222299503207232', '1324459373', NULL, '/img/project/IDphoto/ef0164cf-2c05-48a5-9aa6-b8a7c62e62d7.jpg', NULL);
+INSERT INTO `t_cf_initiator_person_info` VALUES (48, 201, '渠急急急', '2222299503207232', '394230080', NULL, '/img/project/IDphoto/ef0164cf-2c05-48a5-9aa6-b8a7c62e62d7.jpg', NULL);
 INSERT INTO `t_cf_initiator_person_info` VALUES (49, 209, 'eekdsjhf', '45465465', '1212546545', NULL, '/img/project/IDphoto/d7d44e8f-269c-49b8-8f34-49208eb5a60f.jpg', '/img/project/IDphoto/d7d44e8f-269c-49b8-8f34-49208eb5a60f.jpg');
 INSERT INTO `t_cf_initiator_person_info` VALUES (50, 210, '11', '150122665656565', '44645', NULL, '/img/project/IDphoto/0cfc2d91-ae27-4347-aaf7-638593a19776.jpg', '/img/project/IDphoto/0cfc2d91-ae27-4347-aaf7-638593a19776.jpg');
 INSERT INTO `t_cf_initiator_person_info` VALUES (54, 214, '青海湖', '56454', '11212', NULL, '/img/project/IDphoto/109b5ecb-f598-47e8-a2de-ff830f31a49d.jpg', '/img/project/IDphoto/ee70efc2-fcc9-4efe-a7c8-1ea4c4bc2f67.jpg');
@@ -322,8 +322,8 @@ INSERT INTO `t_cf_project_progress` VALUES (5, 1, '<p>黄金客户见客户 </p>
 INSERT INTO `t_cf_project_progress` VALUES (6, 1, '<p>发斯蒂芬</p>', '2023-11-14 11:09:50', '17855830787');
 INSERT INTO `t_cf_project_progress` VALUES (7, 1, '<p>手动阀发送到是</p>', '2023-11-14 11:13:10', '17855830787');
 INSERT INTO `t_cf_project_progress` VALUES (8, 1, '<p>是打发点发啥地方撒地方</p>', '2023-11-14 11:56:26', '17855830787');
-INSERT INTO `t_cf_project_progress` VALUES (9, 210, '<p>我们已经开始；额</p>', '2023-01-03 15:39:21', '1324459373');
-INSERT INTO `t_cf_project_progress` VALUES (10, 210, '<p>1111</p>', '2023-01-03 15:40:34', '1324459373');
+INSERT INTO `t_cf_project_progress` VALUES (9, 210, '<p>我们已经开始；额</p>', '2023-01-03 15:39:21', '394230080');
+INSERT INTO `t_cf_project_progress` VALUES (10, 210, '<p>1111</p>', '2023-01-03 15:40:34', '394230080');
 INSERT INTO `t_cf_project_progress` VALUES (14, 210, '<p>8888888888888888</p>', '2022-05-08 17:00:12', '17855830787');
 
 -- ----------------------------
@@ -3986,8 +3986,8 @@ CREATE TABLE `t_cf_user`  (
 -- ----------------------------
 -- Records of t_cf_user
 -- ----------------------------
-INSERT INTO `t_cf_user` VALUES (30, 'QQ1324459373', 'QQ1324459373', '96e79218965eb72c92a549dd5a330112', '打算发', 1, '565465465', '2022-05-21', '2023-09-22 09:22:40', '178558307879', '湖南,张家界', '', 'lvfengxian88@163.com');
-INSERT INTO `t_cf_user` VALUES (35, NULL, 'qq1324459373', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, '2023-12-29 07:17:59', '1324459373', NULL, NULL, NULL);
+INSERT INTO `t_cf_user` VALUES (30, 'QQ394230080', 'QQ394230080', '96e79218965eb72c92a549dd5a330112', '打算发', 1, '565465465', '2022-05-21', '2023-09-22 09:22:40', '178558307879', '湖南,张家界', '', 'lvfengxian88@163.com');
+INSERT INTO `t_cf_user` VALUES (35, NULL, 'qq394230080', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, '2023-12-29 07:17:59', '394230080', NULL, NULL, NULL);
 INSERT INTO `t_cf_user` VALUES (41, NULL, '17855830001', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `t_cf_user` VALUES (42, NULL, '17855830002', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `t_cf_user` VALUES (43, NULL, '17855830003', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
