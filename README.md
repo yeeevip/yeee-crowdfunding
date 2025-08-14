@@ -46,31 +46,33 @@ yeee-crowdfunding
 
 - jdk1.8
 - mysql >= 5.7
-- maven 3.6+
+- maven >= 3.6
+- node.js >= 18
+
+- 需要远程安装配置请联系，作者QQ：394230080
 
 ```
 # 下载yeee-memo工程
 git clone https://gitee.com/yeeevip/yeee-memo.git
 
 # 打包[JavaWeb通用脚手架]
-cd yeee-memo/memo-parent && mvn clean install
+cd yeee-memo/memo-parent 
+mvn clean install
 
 # 下载众筹项目
 git clone https://gitee.com/yeeevip/yeee-crowdfunding.git
 
 # 运行web服务
-cd yeee-crowdfunding && mvn clean install && java -jar yeee-crowdfunding-bootstrap/target/yeee-crowdfunding-bootstrap-1.0.0-SNAPSHOT.jar
+cd yeee-crowdfunding 
+mvn clean install 
+java -jar yeee-crowdfunding-bootstrap/target/yeee-crowdfunding-bootstrap-1.0.0-SNAPSHOT.jar
 
 # 运行众筹管理端ui
-cd yeee-crowdfunding/app-h5/yeee-admin-ui && npm install && npm run dev
+cd yeee-crowdfunding/app-h5/yeee-admin-ui 
+npm install 
+npm run dev
 
 ```
-
-### 其他说明
-
-1. 欢迎提交 [PR](https://www.yeee.vip)
-
-2. 欢迎提交 [issue](https://gitee.com/yeeevip/yeee-crowdfunding/issues)，请写清楚遇到问题的原因、开发环境、复显步骤。
 
 ## 交流群
 
