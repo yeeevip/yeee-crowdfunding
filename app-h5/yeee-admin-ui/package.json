@@ -4,6 +4,8 @@
   "description": "yeee-admin-ui基于vue、element-ui构建开发，实现后台管理前端功能。",
   "author": "yeee一页 <wwwyeeevip@gmail.com>",
   "scripts": {
+    "admin": "npm run dev",
+    "admin-mac": "NODE_OPTIONS=--openssl-legacy-provider npm run dev",
     "dev": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
     "build:prod": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
