@@ -55,7 +55,8 @@
   import info from './cat-info'
   import impt from './cat-impt'
   import grid from '@/mixins/grid'
-  import { mainRoutes } from '@/router'
+  import { mainRoutes, _import } from '@/router'
+
   export default {
     mixins: [grid],
     data () {
@@ -99,7 +100,9 @@
         // 否则: 添加并全局变量保存, 再跳转
         route = {
           path: routeName,
-          component: () => import(`@/views/modules/${this.$route.name.replace(/-/g, '/')}Itm`),
+          // component: () => import(`@/views/modules/${this.$route.name.replace(/-/g, '/')}Itm`),
+          // component: () => _import(`@/views/modules/${this.$route.name.replace(/-/g, '/')}Itm`),
+          component: (resolve) => require([`@/views/modules/${this.$route.name.replace(/-/g, '/')}Itm`], resolve),
           name: routeName,
           meta: {
             ...window.SITE_CONFIG['contentTabDefault'],

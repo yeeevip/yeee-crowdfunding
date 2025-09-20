@@ -36,7 +36,7 @@
     },
     methods: {
       childStyles (row) {
-        return { 'padding-left': (row[this.levelKey] > 1 ? row[this.levelKey] * 7 : 0) + 'px' }
+        return { 'padding-left': (row[this.levelKey] > 1 ? row[this.levelKey] * 10 : 0) + 'px' }
       },
       iconClasses (row) {
         return [ !row._expanded ? 'el-icon-caret-right' : 'el-icon-caret-bottom' ]

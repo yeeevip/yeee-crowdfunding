@@ -10,7 +10,7 @@
         <el-button v-if="$hasPerm('sys:menu:del')" size="small" type="danger" @click="delHandle()" :disabled="dataListSelections.length <= 0">删除</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="dataList" border stripe v-loading="dataListLoading" :max-height="tableHeight"
+    <el-table :data="processedDataList" border stripe v-loading="dataListLoading" :max-height="tableHeight"
             @selection-change="selectionChangeHandle" @sort-change="sortChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
       <table-tree-column prop="name"
@@ -74,6 +74,26 @@
           listUrl: '/manage/sys-menu/list'
         },
         dataForm: {}
+      }
+    },
+    computed: {
+      processedDataList () {
+        return this.addLevelToData(this.dataList, 1)
+      }
+    },
+    methods: {
+      // 为数据添加层级信息
+      addLevelToData (data, level) {
+        if (!data || !Array.isArray(data)) {
+          return []
+        }
+        return data.map(item => {
+          const newItem = { ...item, level }
+          if (item.children && Array.isArray(item.children) && item.children.length > 0) {
+            newItem.children = this.addLevelToData(item.children, level + 1)
+          }
+          return newItem
+        })
       }
     },
     components: {
