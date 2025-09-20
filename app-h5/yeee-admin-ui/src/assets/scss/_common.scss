@@ -3,14 +3,108 @@
 .el-table tbody .cell{
   font-size:12px;
   line-height: 1.5;
+  color: #1a1a1a;
+  font-weight: 500;
 }
 .el-table tbody .cell .el-button{
   font-size:12px;
   line-height: 1.5;
+  font-weight: 500;
 }
 
 .el-table tbody .cell .el-button--text{
   padding: 0;
+  //color: #1a1a1a;
+  font-weight: 500;
+}
+
+/* 全局按钮文字样式优化（不影响表格内按钮） */
+.el-button:not(.el-table .el-button) {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #1a1a1a !important;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  
+  &.el-button--primary {
+    color: #fff !important;
+  }
+  
+  &.el-button--success {
+    color: #fff !important;
+  }
+  
+  &.el-button--warning {
+    color: #fff !important;
+  }
+  
+  &.el-button--danger {
+    color: #fff !important;
+  }
+  
+  &.el-button--info {
+    color: #fff !important;
+  }
+  
+  &.el-button--text {
+    color: #409EFF !important;
+  }
+}
+
+/* 表格操作列图标样式优化 */
+.el-table tbody .cell .el-button {
+  i {
+    font-size: 16px !important;
+    font-weight: bold !important;
+  }
+  
+  .el-icon {
+    font-size: 16px !important;
+    font-weight: bold !important;
+  }
+  
+  svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  
+  /* 增加按钮内边距，让点击区域更大 */
+  padding: 6px 8px !important;
+  
+  /* 增加按钮间距 */
+  margin: 0 2px !important;
+}
+
+/* 增强表格文字清晰度 */
+.el-table {
+  color: #1a1a1a;
+  border-color: #e8e8e8;
+
+  td {
+    color: #1a1a1a;
+    border-color: #e8e8e8;
+  }
+
+  th {
+    background: #fafafa;
+    color: #606266;
+    font-weight: 600;
+    border-color: #e8e8e8;
+  }
+
+  .el-table__row {
+    color: #1a1a1a;
+  }
+
+  &::before {
+    background-color: #e8e8e8;
+  }
+
+  &--border::after,
+  &--group::after {
+    background-color: #e8e8e8;
+  }
 }
 .el-dialog{
   margin-top: 5vh !important;
