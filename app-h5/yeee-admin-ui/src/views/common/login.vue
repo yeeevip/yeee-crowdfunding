@@ -56,7 +56,9 @@
           </el-form>
         </div>
         <div class="login-footer">
-          <p><a href="/" target="_blank">综合管理平台</a>yeee一页</p>
+          <span>&copy; {{ currentYear }} 一页一科技. 保留所有权利.</span>
+          <span class="login-footer__divider">|</span>
+          <span>版本 v1.0.0 | 技术支持: <a href="https://yeee.vip" target="_blank">YEEE.VIP</a></span>
         </div>
       </main>
     </div>
@@ -76,6 +78,9 @@ export default {
     }
   },
   computed: {
+    currentYear () {
+      return new Date().getFullYear()
+    },
     dataRule () {
       return {
         username: [
@@ -85,6 +90,9 @@ export default {
           { required: true, message: '密码不能为空', trigger: 'blur' }
         ]
       }
+    },
+    currentYear () {
+      return new Date().getFullYear()
     }
   },
   methods: {
@@ -181,7 +189,7 @@ export default {
   }
   .login-body,
   .login-footer {
-    width: 460px;
+    width: 500px;
   }
   .login-body {
     padding: 20px 30px;
@@ -250,8 +258,15 @@ export default {
     bottom: 0;
     padding: 20px;
     color: rgba(255, 255, 255, .6);
+    text-align: center;
     p {
-      margin: 10px 0;
+      margin: 5px 0;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .version-info {
+      font-size: 12px;
+      color: rgba(255, 255, 255, .4);
     }
     a {
       padding: 0 5px;

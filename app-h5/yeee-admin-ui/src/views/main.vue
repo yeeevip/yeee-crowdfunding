@@ -10,6 +10,14 @@
       <div class="site-content__wrapper" :style="{ 'min-height': documentClientHeight + 'px' }">
         <main-content v-if="!$store.state.common.contentIsNeedRefresh"/>
       </div>
+      <!-- 底部版权条带 -->
+      <div class="site-footer-bar">
+        <div class="site-footer-bar__content">
+          <span class="copyright-text">&copy; {{ currentYear }} 一页一科技. 保留所有权利.</span>
+          <span class="divider">|</span>
+          <span class="version-text">版本 v1.0.0 | 技术支持: <a href="https://yeee.vip" target="_blank">YEEE.VIP</a></span>
+        </div>
+      </div>
     </template>
   </div>
 </template>
@@ -59,6 +67,9 @@ export default {
     avatar: {
       get () { return this.$store.state.user.avatar },
       set (val) { this.$store.commit('user/updateAvatar', val) }
+    },
+    currentYear () {
+      return new Date().getFullYear()
     }
   },
   created () {
@@ -103,3 +114,46 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+/* 底部版权条带样式 - 仿顶部导航栏 */
+.site-footer-bar {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1020;
+  height: 40px;
+  //background-color: #334157; /* 与顶部导航栏相同的颜色 */
+  //box-shadow: 0 -2px 4px rgba(0, 0, 0, .08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    color: #abb1ba;
+    font-size: 14px;
+
+    .copyright-text {
+      color: #abb1ba;
+    }
+
+    .divider {
+      margin: 0 15px;
+      color: #abb1ba;
+    }
+
+    .version-text {
+      color: #abb1ba;
+      font-size: 13px;
+    }
+  }
+}
+
+/* 为主内容区域添加底部边距，避免被固定底部条遮挡 */
+.site-content__wrapper {
+  padding-bottom: 50px;
+}
+</style>
