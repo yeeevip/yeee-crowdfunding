@@ -1,0 +1,221 @@
+/* Element Plus 兼容性修复 */
+
+/* 导航栏样式修复 */
+.site-navbar {
+  .site-navbar__menu {
+    .el-menu-item {
+      &.site-navbar__switch {
+        padding: 0 15px;
+
+        .icon-svg {
+          font-size: 16px;
+          color: #fff;
+          transition: color 0.3s;
+        }
+
+        &:hover .icon-svg {
+          color: #fff;
+        }
+      }
+
+      &.site-navbar__avatar {
+        .el-dropdown-link {
+          display: flex;
+          align-items: center;
+          color: #606266;
+          cursor: pointer;
+
+          img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* 图标组件样式 */
+.icon-svg {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+/* Element Plus 下拉菜单样式修复 */
+.el-dropdown-menu {
+  .el-dropdown-menu__item {
+    &:hover {
+      background-color: var(--el-color-primary-light-9, #ecf5ff);
+      color: var(--el-color-primary, #409eff);
+    }
+  }
+}
+
+/* Element Plus 组件样式修复 */
+
+/* 修复下拉箭头图标样式 */
+.el-icon-arrow-down {
+  font-size: 14px;
+  color: #909399;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--el-color-primary, #409eff);
+  }
+}
+
+/* 确保 Element Plus 样式不会覆盖基础布局 */
+.el-menu {
+  border-right: none !important;
+}
+
+.el-tabs__header {
+  margin: 0 !important;
+}
+
+/* 轻量级布局修复 - 只修复必要的固定定位问题 */
+/* 尝试温和的方式，不破坏原有功能 */
+
+/* 仅针对导航栏和侧边栏的固定定位问题 */
+.site-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+}
+
+.site-sidebar {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  bottom: 0;
+  z-index: 1020;
+}
+
+/* 为主内容区域添加适当的偏移 */
+.site-content__wrapper {
+  //margin-top: 50px;
+}
+
+/* 导航栏平铺布局样式 */
+.site-navbar__body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 15px;
+}
+
+.site-navbar__left,
+.site-navbar__right {
+  display: flex;
+  align-items: center;
+  //gap: 10px;
+}
+
+.navbar-btn {
+  color: #fff !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 8px 12px !important;
+  border-radius: 4px !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.navbar-btn .icon-svg {
+  color: #fff !important;
+  fill: #fff !important;
+}
+
+.navbar-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.navbar-btn:hover .icon-svg {
+  color: #fff !important;
+  fill: #fff !important;
+}
+
+.site-navbar__user {
+  display: flex;
+  align-items: center;
+}
+
+.site-navbar__user .el-dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+.site-navbar__user .el-dropdown-link:focus {
+  outline: none;
+  border: none;
+}
+
+/* 移除Element Plus下拉菜单的默认样式 */
+.site-navbar__user .el-dropdown {
+  border: none !important;
+  outline: none !important;
+}
+
+.site-navbar__user .el-dropdown .el-dropdown-link {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.user-avatar {
+  width: 36px;
+  height: auto;
+  margin-right: 5px;
+  border-radius: 100%;
+  vertical-align: middle;
+}
+
+.user-name {
+  color: #fff !important;
+  font-size: 14px;
+}
+
+/* 确保用户名颜色正确显示 */
+.site-navbar__user .el-dropdown-link .user-name {
+  color: #fff !important;
+}
+
+.site-navbar__user .el-dropdown-link span.user-name {
+  color: #fff !important;
+}
+
+/* 下拉箭头样式 */
+.site-navbar__user .dropdown-arrow {
+  color: rgba(255, 255, 255, 0.65) !important;
+  font-size: 12px;
+  margin-left: 4px;
+  transition: transform 0.3s ease;
+}
+
+.site-navbar__user .el-dropdown.is-opened .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.el-sub-menu__title {
+  color: #d1d9e0 !important;
+}
+.el-sub-menu__title:hover {
+  color: rgb(232, 236, 239.5);
+  background-color: rgb(56.1, 69.75, 91.2);
+}
+//.el-menu-item  {
+//  color: rgb(232, 236, 239.5);
+//  background-color: rgb(56.1, 69.75, 91.2);
+//}
