@@ -1,5 +1,6 @@
 import router from '@/router'
 import { useUserStore } from '@/stores'
+import envConfig from '@/config/env'
 
 /**
  * 获取浏览器高度
@@ -29,15 +30,11 @@ export function getUUID(): string {
  * 获取baseUrl
  */
 export function baseUrl(): string | undefined {
-  if (import.meta.env.MODE !== 'production') {
-    return import.meta.env.VITE_APP_BASE_API
-  }
+  return envConfig.apiTarget + '/'
 }
 
 export function baseUrl2(): string {
-  console.log(import.meta.env)
-  const url = import.meta.env.VITE_APP_BASE_HOST_URL
-  return (url === '/' ? '' : url + '/')
+  return envConfig.apiTarget + '/'
 }
 
 /**
@@ -76,11 +73,11 @@ export function hasPermission(key: string): boolean {
 export function treeDataTranslate(data: any[], id = 'id', pid = 'parentId'): any[] {
   const res: any[] = []
   const temp: Record<string, any> = {}
-  
+
   for (let i = 0; i < data.length; i++) {
     temp[data[i][id]] = data[i]
   }
-  
+
   for (let k = 0; k < data.length; k++) {
     if (temp[data[k][pid]] && data[k][id] !== data[k][pid]) {
       if (!temp[data[k][pid]]['children']) {
@@ -107,13 +104,13 @@ export function clearLoginInfo(): void {
   sessionStorage.removeItem('dynamicMenuRoutes')
   sessionStorage.removeItem('roles')
   sessionStorage.removeItem('permissions')
-  
+
   // 清除 Pinia store 数据
   const userStore = useUserStore()
   userStore.updateId(0)
   userStore.updateName('')
   userStore.updateAvatar('')
-  
+
   // 重置路由状态
   if (router.options) {
     (router as any).isAddDynamicMenuRoutes = false
