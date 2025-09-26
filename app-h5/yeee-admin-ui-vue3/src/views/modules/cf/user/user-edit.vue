@@ -1,8 +1,8 @@
 <template>
   <el-dialog :title="!id ? '新增' : '修改'" class="mod-user-edit"
     :close-on-click-modal="false"
-    :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="120px">
+    v-model="visible">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter="dataFormSubmit()" label-width="120px">
       <el-row :gutter="20">
         <el-col :span="11">
           <el-form-item label="登录帐号" prop="username">
@@ -36,10 +36,12 @@
         </el-col>
       </el-row>
     </el-form>
-    <span slot="footer" class="dialog-footer">
-      <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
-    </span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="visible = false">取消</el-button>
+        <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
+      </span>
+    </template>
   </el-dialog>
 </template>
 

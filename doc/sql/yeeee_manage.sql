@@ -196,7 +196,7 @@ INSERT INTO sys_menu
 VALUES(4297179758302211, 4059919704003584, '修改', NULL, 'sys:param:upd', NULL, 30, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(4297735991448577, 4059917154079744, '查看', NULL, 'sys:role:page, sys:role:list, sys:role:info', NULL, 10, NULL, 1, NULL, 'auto', NULL, 'auto');
+VALUES(4297735991448577, 4059917154079744, '查看', NULL, 'sys:role:page, sys:role:list, sys:role:info, sys:role:listSet', NULL, 10, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
 VALUES(4297735991448578, 4059917154079744, '新增', NULL, 'sys:role:add', NULL, 20, NULL, 1, NULL, 'auto', NULL, 'auto');

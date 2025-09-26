@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="详情" :close-on-click-modal="false" :visible.sync="visible">
+  <el-dialog title="详情" :close-on-click-modal="false" v-model="visible">
     <el-form :model="dataForm" ref="dataForm" label-width="120px">
       <el-row :gutter="20">
         <el-col :span="12">
@@ -49,9 +49,11 @@
         </el-col>
       </el-row>
     </el-form>
-    <span slot="footer" class="dialog-footer">
-      <el-button @click="visible = false">取消</el-button>
-    </span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="visible = false">取消</el-button>
+      </span>
+    </template>
   </el-dialog>
 </template>
 

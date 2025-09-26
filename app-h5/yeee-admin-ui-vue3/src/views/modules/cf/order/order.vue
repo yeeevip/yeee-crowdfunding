@@ -1,12 +1,12 @@
 <template>
   <div class="mod-order">
-    <el-form :inline="true" :model="dataForm" @keyup.enter.native="listData()">
+    <el-form :inline="true" :model="dataForm" @keyup.enter="listData()">
       <el-form-item>
         <el-input v-model="dataForm.code" placeholder="订单号" clearable></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" @click="listData()">查询</el-button>
-        <el-button v-if="$hasPerm('sys:user:del')" type="danger" size="small" @click="delHandle()" :disabled="dataListSelections.length <= 0">删除</el-button>
+        <el-button size="default" @click="listData()">查询</el-button>
+        <el-button v-if="$hasPerm('sys:user:del')" type="danger" size="default" @click="delHandle()" :disabled="dataListSelections.length <= 0">删除</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="dataList" border stripe v-loading="dataListLoading" :max-height="tableHeight"
@@ -20,21 +20,21 @@
       <el-table-column prop="receiveInfoVO.phone" label="电话" sortable="custom" header-align="center" align="center"></el-table-column>
       <el-table-column prop="orderDate" label="创建时间" sortable="custom" header-align="center" align="center"></el-table-column>
       <el-table-column prop="hasPay" label="是否付款" sortable="custom" header-align="center" align="center">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tag v-if="scope.row.hasPay === 1" size="small" type="success">是</el-tag>
           <el-tag v-else-if="scope.row.hasPay === 0" size="small" type="danger">否</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="hasSend" label="是否发货" sortable="custom" header-align="center" align="center">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tag v-if="scope.row.hasSend === 1" size="small" type="success">是</el-tag>
           <el-tag v-else-if="scope.row.hasSend === 0" size="small" type="danger">否</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作" fixed="right" header-align="center" align="center" width="100">
-        <template slot-scope="scope">
-          <el-button v-if="$hasPerm('sys:user:del')" type="text" size="small" @click="infoHandle(scope.row.id)" icon="el-icon-document" title="详情"></el-button>
-          <el-button v-if="$hasPerm('sys:user:del')" type="text" size="small" @click="delHandle(scope.row.id)" icon="el-icon-delete" title="删除"></el-button>
+        <template #default="scope">
+          <el-button v-if="$hasPerm('sys:user:del')" type="text" size="small" @click="infoHandle(scope.row.id)" :icon="Document" title="详情"></el-button>
+          <el-button v-if="$hasPerm('sys:user:del')" type="text" size="small" @click="delHandle(scope.row.id)" :icon="Delete" title="删除"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -45,7 +45,7 @@
       :page-sizes="pageSizes"
       :page-size="pageSize"
       :total="total"
-      layout="total, sizes, prev, pager, next, jumper">
+      layout="->, total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 详情 -->
     <info v-if="infoVisible" ref="info"></info>
@@ -53,10 +53,16 @@
 </template>
 
 <script>
-  import info from './order-info'
+  import info from './order-info.vue'
   import grid from '@/mixins/grid'
+  import { Document, Delete } from '@element-plus/icons-vue'
+  import { markRaw } from 'vue'
+  
   export default {
     mixins: [grid],
+    components: {
+      info
+    },
     data () {
       return {
         module: '/manage/cf/order/',
@@ -69,11 +75,11 @@
         // dataMode: {
         //   username: 'EQ'
         // },
-        dataForm: {}
+        dataForm: {},
+        // 图标组件（使用 markRaw 避免响应式包装）
+        Document: markRaw(Document),
+        Delete: markRaw(Delete)
       }
-    },
-    components: {
-      info
     },
     methods: {
     }
