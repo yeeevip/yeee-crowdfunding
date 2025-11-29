@@ -1,6 +1,6 @@
 package vip.yeee.app.crowdfunding.client.convert;
 
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 import vip.yeee.app.common.domain.mysql.entity.CfProjectDetail;
 import vip.yeee.app.crowdfunding.client.model.vo.ProjectItemVO;
 
@@ -10,11 +10,27 @@ import vip.yeee.app.crowdfunding.client.model.vo.ProjectItemVO;
  * @author https://www.yeee.vip
  * @since 2022/4/29 22:25
  */
-@Mapper(componentModel = "spring")
-public interface ApiCfProjectDetailConvert {
+@Component
+public class ApiCfProjectDetailConvert {
 
-    ProjectItemVO detail2VO(CfProjectDetail detail);
+    public ProjectItemVO detail2VO(CfProjectDetail detail) {
+        if (detail == null) {
+            return null;
+        }
+        ProjectItemVO vo = new ProjectItemVO();
+        vo.setItemTitle(detail.getItemTitle());
+        vo.setItemContent(detail.getItemContent());
+        return vo;
+    }
 
-    CfProjectDetail vo2Entity(ProjectItemVO itemVO);
+    public CfProjectDetail vo2Entity(ProjectItemVO itemVO) {
+        if (itemVO == null) {
+            return null;
+        }
+        CfProjectDetail entity = new CfProjectDetail();
+        entity.setItemTitle(itemVO.getItemTitle());
+        entity.setItemContent(itemVO.getItemContent());
+        return entity;
+    }
 
 }

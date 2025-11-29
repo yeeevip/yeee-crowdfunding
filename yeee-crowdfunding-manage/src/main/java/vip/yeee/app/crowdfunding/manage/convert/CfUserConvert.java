@@ -1,6 +1,6 @@
 package vip.yeee.app.crowdfunding.manage.convert;
 
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 import vip.yeee.app.common.domain.mysql.entity.CfUser;
 import vip.yeee.app.crowdfunding.manage.model.vo.CfUserInfoVO;
 import vip.yeee.app.crowdfunding.manage.model.vo.UserVO;
@@ -11,11 +11,45 @@ import vip.yeee.app.crowdfunding.manage.model.vo.UserVO;
  * @author https://www.yeee.vip
  * @since 2022/4/30 20:18
  */
-@Mapper(componentModel = "spring")
-public interface CfUserConvert {
+@Component
+public class CfUserConvert {
 
-    UserVO user2VO(CfUser user);
+    public UserVO user2VO(CfUser user) {
+        if (user == null) {
+            return null;
+        }
+        UserVO vo = new UserVO();
+        vo.setId(user.getId());
+        vo.setUsername(user.getUsername());
+        vo.setNickName(user.getNickName());
+        vo.setEmail(user.getEmail());
+        vo.setSex(user.getSex());
+        vo.setRealName(user.getRealName());
+        vo.setIdNumber(user.getIdNumber());
+        vo.setDateOfBirth(user.getDateOfBirth());
+        vo.setMobile(user.getMobile());
+        vo.setCity(user.getCity());
+        vo.setDateOfRegistration(user.getDateOfRegistration());
+        return vo;
+    }
 
-    CfUserInfoVO user2InfoVO(CfUser user);
+    public CfUserInfoVO user2InfoVO(CfUser user) {
+        if (user == null) {
+            return null;
+        }
+        CfUserInfoVO vo = new CfUserInfoVO();
+        vo.setId(user.getId());
+        vo.setUsername(user.getUsername());
+        vo.setNickName(user.getNickName());
+        vo.setEmail(user.getEmail());
+        vo.setSex(user.getSex());
+        vo.setRealName(user.getRealName());
+        vo.setIdNumber(user.getIdNumber());
+        vo.setDateOfBirth(user.getDateOfBirth());
+        vo.setMobile(user.getMobile());
+        vo.setCity(user.getCity());
+        vo.setDateOfRegistration(user.getDateOfRegistration());
+        return vo;
+    }
 
 }

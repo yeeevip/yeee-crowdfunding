@@ -1,6 +1,6 @@
 package vip.yeee.app.crowdfunding.client.convert;
 
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 import vip.yeee.app.common.domain.mysql.entity.CfProjectProgress;
 import vip.yeee.app.crowdfunding.client.model.vo.ProjectProgressVO;
 
@@ -10,9 +10,19 @@ import vip.yeee.app.crowdfunding.client.model.vo.ProjectProgressVO;
  * @author https://www.yeee.vip
  * @since 2022/4/29 22:25
  */
-@Mapper(componentModel = "spring")
-public interface ApiCfProjectProgressConvert {
+@Component
+public class ApiCfProjectProgressConvert {
 
-    ProjectProgressVO progress2VO(CfProjectProgress projectProgress);
+    public ProjectProgressVO progress2VO(CfProjectProgress projectProgress) {
+        if (projectProgress == null) {
+            return null;
+        }
+        ProjectProgressVO vo = new ProjectProgressVO();
+        vo.setContent(projectProgress.getContent());
+        vo.setPublishDate(projectProgress.getPublishDate());
+        vo.setPubUser(projectProgress.getPubUser());
+        vo.setProjectId(projectProgress.getProjectId());
+        return vo;
+    }
 
 }
