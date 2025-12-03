@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import vip.yeee.app.common.domain.mysql.entity.CfProvinceCityDistrict;
 import vip.yeee.app.crowdfunding.client.service.ApiCfProvinceCityDistrictService;
+import vip.yeee.memo.base.model.rest.CommonResult;
 import vip.yeee.memo.base.web.utils.SpringContextUtils;
 
 import javax.annotation.Resource;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
@@ -58,16 +60,45 @@ public class ApiCfCommonBiz {
     }
 
     public String localUpload(List<MultipartFile> file, String path) {
+
+        // 清理 path，避免前后带 "/"
+        path = path.replaceAll("^/+", "").replaceAll("/+$", "");
+
         List<String> paths = Lists.newArrayList();
+
+        String finalPath = path;
         file.forEach(f -> {
-            String dirPath;
-            try (OutputStream out = FileUtil.getOutputStream(FileUtil.file(uploadPath + (dirPath = ("upload/" + path + "/" + RandomUtil.randomNumbers(5) + f.getOriginalFilename()))))) {
-                IoUtil.copy(f.getInputStream(), out);
+            try {
+                // 处理原始文件名和后缀
+                String original = f.getOriginalFilename();
+                String ext = "";
+                if (original != null && original.contains(".")) {
+                    ext = original.substring(original.lastIndexOf(".")); // 包含 .
+                }
+
+                // 拼接新文件名
+                String filename = RandomUtil.randomNumbers(5) + ext;
+
+                // 最终存储目录
+                String dirPath = "upload/" + finalPath + "/" + filename;
+
+                // 生成绝对路径（你的工具保持不变）
+                File target = FileUtil.file(PathUtils.getClassLoadRootPath() + "/" + dirPath);
+
+                // 创建目录并写入
+                FileUtil.mkParentDirs(target);
+                try (OutputStream out = FileUtil.getOutputStream(target)) {
+                    IoUtil.copy(f.getInputStream(), out);
+                }
+
+                // 返回给前端使用的路径，保持斜杠统一
                 paths.add("/" + dirPath.replace("\\", "/"));
-            } catch (IOException e) {
+
+            } catch (Exception e) {
                 log.error("upload err", e);
             }
         });
+
         return String.join(";", paths);
     }
 
